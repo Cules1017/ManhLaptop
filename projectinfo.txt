@@ -532,3 +532,92 @@ API -> DB: Xóa sản phẩm
 DB --> API: Xác nhận xóa
 API --> FE: Xóa thành công
 @enduml
+
+@startuml
+'======================================================================
+'  Use Case: Quản lý đơn hàng (Admin)
+'======================================================================
+' a. Chức năng:
+'    - Cho phép admin xem, cập nhật trạng thái hoặc hủy đơn hàng.
+'
+' b. Dòng sự kiện:
+'    ➢ Dòng sự kiện chính:
+'      - Admin truy cập trang quản lý đơn hàng.
+'      - Xem danh sách đơn:
+'         ▪ Gửi yêu cầu -> API lấy danh sách -> hiển thị.
+'      - Cập nhật trạng thái:
+'         ▪ Chọn đơn -> chọn trạng thái mới -> gửi API -> cập nhật DB.
+'      - Hủy đơn:
+'         ▪ Chọn đơn -> xác nhận hủy -> gửi API -> cập nhật trạng thái.
+'
+'    ➢ Dòng sự kiện khác:
+'      - Nếu đơn đã giao/hủy thì không thể chỉnh sửa hoặc hủy nữa.
+'
+' c. Điều kiện tiên quyết:
+'    - Admin đã đăng nhập.
+
+actor Admin
+participant FE as "Trang Admin"
+participant API as "Backend API"
+participant DB as "Database"
+
+Admin -> FE: Truy cập quản lý đơn hàng
+FE -> API: Gửi yêu cầu lấy danh sách đơn hàng
+API -> DB: Truy vấn danh sách đơn hàng
+DB --> API: Trả về danh sách
+API --> FE: Hiển thị danh sách đơn
+
+== Cập nhật trạng thái ==
+Admin -> FE: Chọn trạng thái mới cho đơn hàng
+FE -> API: Gửi yêu cầu cập nhật trạng thái
+API -> DB: Cập nhật trạng thái đơn hàng
+DB --> API: Xác nhận cập nhật
+API --> FE: Cập nhật thành công
+
+== Hủy đơn hàng ==
+Admin -> FE: Chọn hủy đơn hàng
+FE -> API: Gửi yêu cầu hủy đơn
+API -> DB: Cập nhật trạng thái "Đã hủy"
+DB --> API: Xác nhận
+API --> FE: Hiển thị trạng thái mới
+
+== Đơn đã giao hoặc đã hủy ==
+API --> FE: Trả lỗi không thể chỉnh sửa/hủy
+FE -> Admin: Hiển thị thông báo lỗi
+@enduml
+
+@startuml
+'======================================================================
+'  Use Case: Thống kê báo cáo (Admin)
+'======================================================================
+' a. Chức năng:
+'    - Cho phép admin xem báo cáo doanh thu, số đơn, top sản phẩm bán chạy.
+'
+' b. Dòng sự kiện:
+'    ➢ Dòng sự kiện chính:
+'      - Admin chọn loại báo cáo (doanh thu, sản phẩm, người dùng).
+'      - Frontend gửi yêu cầu API kèm theo bộ lọc thời gian.
+'      - API truy vấn dữ liệu thống kê từ DB.
+'      - Trả kết quả thống kê dạng bảng hoặc biểu đồ.
+'
+'    ➢ Dòng sự kiện khác:
+'      - Nếu chọn thời gian quá rộng -> hiển thị cảnh báo giảm phạm vi.
+'
+' c. Điều kiện tiên quyết:
+'    - Admin đã đăng nhập.
+
+actor Admin
+participant FE as "Trang Admin"
+participant API as "Backend API"
+participant DB as "Database"
+
+Admin -> FE: Chọn loại thống kê và thời gian
+FE -> API: Gửi yêu cầu thống kê
+API -> DB: Truy vấn dữ liệu thống kê
+DB --> API: Trả dữ liệu thống kê
+API --> FE: Hiển thị bảng / biểu đồ
+
+== Cảnh báo phạm vi ==
+API --> FE: Cảnh báo giới hạn dữ liệu
+FE -> Admin: Hiển thị cảnh báo
+@enduml
