@@ -1,0 +1,534 @@
+TÓM TẮT ĐỀ TÀI
+Đề tài xây dựng website thương mại điện tử bán laptop, gồm hệ thống người dùng (FE) và quản trị (Admin), sử dụng Laravel (backend) và Next.js/React (frontend). Hệ thống hỗ trợ quản lý sản phẩm, đơn hàng, đánh giá sản phẩm, thống kê doanh thu, quản lý người dùng, phân quyền, và các chức năng mua hàng hiện đại.
+
+NỘI DUNG LUẬN VĂN
+- Xây dựng hệ thống bán laptop online với đầy đủ chức năng đặt hàng, quản lý, đánh giá sản phẩm.
+- Tối ưu trải nghiệm người dùng, bảo mật, và khả năng mở rộng.
+
+CHƯƠNG 1: TỔNG QUAN ĐỀ TÀI
+1.1. Lý do chọn đề tài
+- Nhu cầu mua sắm laptop online ngày càng tăng.
+- Cần hệ thống quản lý hiện đại, dễ sử dụng, bảo mật tốt.
+
+1.2. Mục tiêu của đề tài
+- Xây dựng website bán laptop với đầy đủ chức năng: quản lý sản phẩm, đơn hàng, người dùng, đánh giá, thống kê.
+- Đảm bảo giao diện thân thiện, bảo mật, dễ mở rộng.
+
+1.3. Giới hạn và phạm vi của đề tài
+- Quản lý sản phẩm, danh mục, đơn hàng, người dùng, đánh giá sản phẩm.
+- Không triển khai thanh toán online thực tế (chỉ mô phỏng).
+- Không tích hợp vận chuyển thực tế.
+
+1.4. Kết quả đạt được
+- Website hoạt động ổn định, đầy đủ chức năng quản lý và mua hàng.
+- Hỗ trợ đánh giá sản phẩm, thống kê doanh thu, phân quyền admin/user.
+
+CHƯƠNG 2: CƠ SỞ LÝ THUYẾT
+2.1. Ngôn ngữ lập trình phía client
+- HTML: Xây dựng cấu trúc trang web.
+- CSS: Thiết kế giao diện, responsive.
+- JavaScript: Xử lý logic động, tương tác người dùng.
+- Jquery: (Nếu có sử dụng, chủ yếu cho hiệu ứng nhỏ).
+- Bootstrap: Hỗ trợ responsive, layout nhanh.
+
+2.2. Ngôn ngữ lập trình phía server
+- PHP (Laravel): Xây dựng API, xử lý logic nghiệp vụ, bảo mật, quản lý dữ liệu.
+
+2.3. Database MySQL
+- Lưu trữ thông tin sản phẩm, đơn hàng, người dùng, đánh giá, thống kê.
+
+Công nghệ sử dụng:
+- Backend: Laravel (PHP), MySQL
+- Frontend: Next.js (React), React Context, React Toastify, React Star Ratings, Axios/fetch
+- Admin: Next.js/React, sử dụng riêng API cho admin, phân quyền
+- Khác: JWT/Sanctum cho xác thực, RESTful API, responsive UI, toast notification, popup, phân trang, lọc/sắp xếp, upload ảnh, bảo mật CSRF.
+
+Các chức năng chính:
+- Đăng ký/đăng nhập, phân quyền user/admin
+- Quản lý sản phẩm, danh mục, đơn hàng, người dùng, thống kê,...
+- Đặt hàng, xem lịch sử đơn hàng, đánh giá sản phẩm (chỉ khi đã nhận hàng)
+- Thống kê doanh thu, số lượng đơn, sản phẩm, người dùng
+- Giao diện đẹp, responsive, popup/toast thông báo, UX hiện đại
+
+Phạm vi mở rộng:
+- Có thể tích hợp thanh toán online, vận chuyển, chat hỗ trợ, báo cáo nâng cao trong tương lai.
+
+CHƯƠNG 3: PHÂN TÍCH VÀ THIẾT KẾ HỆ THỐNG
+
+3.1. Khảo sát
+3.1.1. Hiện trạng thị trường việc làm hiện nay
+- Thị trường thương mại điện tử phát triển mạnh, nhu cầu mua sắm laptop online tăng cao.
+- Nhiều website bán laptop nhưng còn thiếu các tính năng hiện đại như đánh giá sản phẩm, quản lý đơn hàng tiện lợi, giao diện thân thiện, bảo mật tốt.
+- Người dùng mong muốn trải nghiệm mua hàng nhanh chóng, dễ dàng so sánh sản phẩm, theo dõi đơn hàng, đánh giá chất lượng dịch vụ.
+
+3.1.2. Mục đích và phương pháp giải quyết
+- Xây dựng hệ thống bán laptop online đáp ứng đầy đủ nhu cầu quản lý sản phẩm, đơn hàng, người dùng, đánh giá sản phẩm.
+- Ứng dụng công nghệ web hiện đại (Laravel, Next.js/React) để tối ưu hiệu năng, bảo mật, trải nghiệm người dùng.
+- Phương pháp: khảo sát các hệ thống thực tế, phân tích yêu cầu, thiết kế hệ thống, xây dựng và kiểm thử.
+
+3.2. Phân tích yêu cầu hệ thống
+3.2.1. Yêu cầu chức năng nghiệp vụ
+- Quản lý sản phẩm, danh mục, tồn kho.
+- Quản lý đơn hàng: đặt hàng, xác nhận, giao hàng, hủy đơn.
+- Quản lý người dùng: đăng ký, đăng nhập, phân quyền user/admin.
+- Đánh giá sản phẩm: chỉ cho phép đánh giá khi đơn hàng đã giao thành công.
+- Thống kê doanh thu, số lượng đơn, sản phẩm, người dùng.
+- Quản lý thông tin cá nhân, đổi mật khẩu, lịch sử mua hàng.
+
+3.2.2. Yêu cầu chức năng hệ thống
+- Giao diện thân thiện, responsive trên mọi thiết bị.
+- Bảo mật thông tin người dùng, xác thực qua token (Sanctum/JWT).
+- Phân quyền rõ ràng giữa user và admin.
+- API RESTful, dễ dàng mở rộng, tích hợp.
+- Hệ thống thông báo (popup/toast) cho các thao tác quan trọng.
+- Hỗ trợ upload ảnh sản phẩm, lưu trữ an toàn.
+
+3.2.3. Dữ liệu đưa vào hệ thống quản lý
+- Thông tin sản phẩm: tên, mô tả, giá, tồn kho, hình ảnh, danh mục, đánh giá trung bình.
+- Thông tin người dùng: tên, email, mật khẩu, số điện thoại, vai trò.
+- Thông tin đơn hàng: mã đơn, sản phẩm, số lượng, giá, trạng thái, ngày đặt, ngày giao.
+- Thông tin đánh giá: user, sản phẩm, số sao, nội dung, ngày đánh giá.
+
+3.3. Phân tích Use case diagram
+
+- User:
+  + Đăng ký, đăng nhập, cập nhật thông tin cá nhân
+  + Xem danh sách sản phẩm, tìm kiếm, lọc, xem chi tiết
+  + Thêm sản phẩm vào giỏ hàng, đặt hàng
+  + Xem lịch sử đơn hàng, trạng thái đơn hàng
+  + Đánh giá sản phẩm đã mua
+- Admin:
+  + Quản lý sản phẩm, danh mục
+  + Quản lý đơn hàng, xác nhận/trạng thái đơn
+  + Quản lý người dùng
+  + Xem thống kê doanh thu, số lượng đơn, sản phẩm, người dùng
+
+Mô tả sơ đồ Use case:
+- Hệ thống gồm 2 tác nhân chính: User và Admin.
+- User có thể thực hiện các chức năng mua hàng, đánh giá, quản lý tài khoản cá nhân.
+- Admin có thể quản lý toàn bộ dữ liệu hệ thống, xác nhận đơn hàng, thống kê.
+- Các chức năng giao tiếp qua API, bảo mật phân quyền rõ ràng.
+
+---
+MÔ TẢ CHI TIẾT CHỨC NĂNG THEO TÁC NHÂN
+
+I. NGƯỜI DÙNG (USER)
+
+1. User chưa đăng nhập:
+- Xem danh sách sản phẩm: Người dùng có thể duyệt tất cả sản phẩm, xem thông tin cơ bản (tên, giá, hình ảnh, đánh giá trung bình).
+- Tìm kiếm sản phẩm: Nhập từ khóa để tìm kiếm sản phẩm theo tên/mô tả.
+- Xem chi tiết sản phẩm: Xem thông tin chi tiết, hình ảnh lớn, mô tả, đánh giá, giá, tồn kho.
+- Thêm vào danh sách yêu thích: Lưu sản phẩm vào danh sách yêu thích (localStorage, không cần đăng nhập).
+- Đăng ký tài khoản: Nhập thông tin cá nhân để tạo tài khoản mới.
+- Đăng nhập: Nhập email/mật khẩu để truy cập các chức năng nâng cao.
+
+2. User đã đăng nhập:
+- Tất cả chức năng của user chưa đăng nhập.
+- Thêm vào giỏ hàng: Chọn số lượng, thêm sản phẩm vào giỏ hàng cá nhân.
+- Xem giỏ hàng: Xem danh sách sản phẩm đã chọn, cập nhật/xóa sản phẩm khỏi giỏ.
+- Đặt hàng: Nhập/chọn địa chỉ nhận hàng, xác nhận đơn, chọn phương thức thanh toán (COD/mô phỏng).
+- Xem lịch sử đơn hàng: Xem danh sách đơn đã đặt, trạng thái từng đơn (đang xử lý, đã giao, đã hủy).
+- Xem chi tiết đơn hàng: Xem chi tiết từng đơn, sản phẩm, trạng thái, tổng tiền, ghi chú.
+- Đánh giá sản phẩm đã mua: Chỉ cho phép đánh giá khi đơn hàng đã giao thành công, nhập số sao và nhận xét.
+- Xem và quản lý danh sách yêu thích: Thêm/xóa sản phẩm khỏi danh sách yêu thích cá nhân.
+- Cập nhật thông tin cá nhân: Đổi tên, số điện thoại, địa chỉ nhận hàng.
+- Đổi mật khẩu: Đổi mật khẩu tài khoản.
+- Đăng xuất: Thoát khỏi tài khoản, trở về trạng thái chưa đăng nhập.
+
+
+II. QUẢN TRỊ VIÊN (ADMIN)
+
+- Đăng nhập admin: Truy cập trang quản trị với tài khoản admin.
+- Quản lý sản phẩm: Thêm mới, sửa, xóa sản phẩm (tên, giá, mô tả, tồn kho, hình ảnh, danh mục).
+- Quản lý danh mục: Thêm mới, sửa, xóa danh mục sản phẩm.
+- Quản lý đơn hàng: Xem danh sách đơn, xem chi tiết, xác nhận đơn, cập nhật trạng thái (đang xử lý, đang giao, đã giao, đã hủy), hủy đơn hàng.
+- Quản lý người dùng: Xem danh sách user, phân quyền, xóa user.
+- Xem thống kê: Thống kê doanh thu, số lượng đơn hàng, sản phẩm, người dùng, đơn hàng theo trạng thái.
+- Đăng xuất admin: Thoát khỏi trang quản trị.
+
+---
+
+Tiếp theo tôi sẽ vẽ sơ đồ tuần tự (Sequence Diagram) cho các chức năng chính bằng draw.io (file XML chuẩn). Nếu bạn muốn ưu tiên chức năng nào, hãy báo nhé!
+
+Người dùng truy cập vào giao diện trang sản phẩm. Frontend gửi yêu cầu đến API để lấy danh sách sản phẩm. API truy vấn Database và trả về danh sách gồm: tên, giá, hình ảnh, đánh giá trung bình.
+
+🧑‍💻 I. CHỨC NĂNG NGƯỜI DÙNG (USER CHƯA ĐĂNG NHẬP)
+1. Xem danh sách sản phẩm
+plantuml
+Sao chép
+Chỉnh sửa
+@startuml
+'======================================================================
+'  Use Case: Xem danh sách sản phẩm (User chưa đăng nhập)
+'======================================================================
+' a. Chức năng:
+'    - Cho phép người dùng chưa đăng nhập duyệt tất cả sản phẩm, xem tên, giá, hình ảnh, đánh giá trung bình.
+'
+' b. Dòng sự kiện:
+'    ➢ Dòng sự kiện chính:
+'       - Bắt đầu khi người dùng truy cập trang danh sách sản phẩm.
+'       ▪ Các bước:
+'           - Gửi yêu cầu xem danh sách.
+'           - Gọi API.
+'           - Backend truy vấn từ DB.
+'           - Trả dữ liệu.
+'           - Hiển thị danh sách.
+'    ➢ Dòng sự kiện khác:
+'       - Nếu API lỗi: hiển thị lỗi.
+'
+' c. Điều kiện tiên quyết:
+'    - Không cần đăng nhập.
+
+actor User
+participant FE as "Frontend"
+participant API as "Backend"
+participant DB
+
+User -> FE: Truy cập trang danh sách
+FE -> API: Gọi API danh sách sản phẩm
+API -> DB: Truy vấn dữ liệu
+DB --> API: Trả danh sách
+API --> FE: Trả dữ liệu
+FE -> User: Hiển thị danh sách sản phẩm
+
+== Lỗi ==
+API -> FE: Trả lỗi
+FE -> User: Hiển thị thông báo lỗi
+@enduml
+2. Tìm kiếm sản phẩm
+plantuml
+Sao chép
+Chỉnh sửa
+@startuml
+'======================================================================
+'  Use Case: Tìm kiếm sản phẩm
+'======================================================================
+' a. Chức năng:
+'    - Cho phép người dùng tìm sản phẩm theo từ khóa.
+'
+' b. Dòng sự kiện chính:
+'    - Nhập từ khóa -> Gửi API -> Tìm trong DB -> Trả kết quả -> Hiển thị.
+'    ➢ Khác:
+'       - Không tìm thấy: báo “Không có kết quả”.
+'
+' c. Điều kiện tiên quyết:
+'    - Không cần đăng nhập.
+
+actor User
+participant FE
+participant API
+participant DB
+
+User -> FE: Nhập từ khóa
+FE -> API: Gửi yêu cầu tìm kiếm
+API -> DB: Truy vấn sản phẩm
+DB --> API: Trả kết quả
+API --> FE: Trả dữ liệu
+FE -> User: Hiển thị kết quả
+
+== Không tìm thấy ==
+API --> FE: Danh sách rỗng
+FE -> User: Hiển thị "không có kết quả"
+@enduml
+3. Xem chi tiết sản phẩm
+plantuml
+Sao chép
+Chỉnh sửa
+@startuml
+'======================================================================
+'  Use Case: Xem chi tiết sản phẩm
+'======================================================================
+' a. Chức năng:
+'    - Xem chi tiết sản phẩm (ảnh lớn, mô tả, tồn kho...).
+'
+' b. Dòng sự kiện chính:
+'    - Chọn sản phẩm -> Gửi API -> DB trả chi tiết -> Hiển thị.
+'    ➢ Khác:
+'       - Nếu sản phẩm không tồn tại, báo lỗi.
+'
+' c. Điều kiện tiên quyết:
+'    - Không cần đăng nhập.
+
+actor User
+participant FE
+participant API
+participant DB
+
+User -> FE: Nhấp vào sản phẩm
+FE -> API: Gửi yêu cầu chi tiết
+API -> DB: Truy vấn dữ liệu
+DB --> API: Trả dữ liệu chi tiết
+API --> FE: Trả về frontend
+FE -> User: Hiển thị chi tiết sản phẩm
+
+== Lỗi ==
+API --> FE: Lỗi / không tồn tại
+FE -> User: Thông báo lỗi
+@enduml
+4. Thêm vào danh sách yêu thích (local)
+plantuml
+Sao chép
+Chỉnh sửa
+@startuml
+'======================================================================
+'  Use Case: Thêm vào danh sách yêu thích (local)
+'======================================================================
+' a. Chức năng:
+'    - Lưu vào localStorage trình duyệt, không cần đăng nhập.
+'
+' b. Dòng sự kiện:
+'    - Nhấn nút yêu thích -> lưu vào local -> hiển thị lại.
+'
+' c. Điều kiện tiên quyết:
+'    - Trình duyệt hỗ trợ localStorage.
+
+actor User
+participant FE as "Frontend (localStorage)"
+
+User -> FE: Nhấn yêu thích
+FE -> FE: Lưu sản phẩm vào localStorage
+FE -> User: Cập nhật danh sách hiển thị
+
+== Trình duyệt không hỗ trợ ==
+FE -> User: Báo lỗi
+@enduml
+5. Đăng ký tài khoản
+plantuml
+Sao chép
+Chỉnh sửa
+@startuml
+'======================================================================
+'  Use Case: Đăng ký tài khoản
+'======================================================================
+' a. Chức năng:
+'    - Cho phép tạo tài khoản mới.
+'
+' b. Dòng sự kiện chính:
+'    - Nhập thông tin -> Gửi API -> Kiểm tra hợp lệ -> Lưu DB -> Thông báo thành công.
+'
+' c. Điều kiện tiên quyết:
+'    - Không cần đăng nhập.
+
+actor User
+participant FE
+participant API
+participant DB
+
+User -> FE: Nhập form đăng ký
+FE -> API: Gửi thông tin đăng ký
+API -> DB: Kiểm tra + lưu dữ liệu
+DB --> API: Xác nhận tạo thành công
+API --> FE: Trả thông báo
+FE -> User: Hiển thị đăng ký thành công / thất bại
+@enduml
+6. Đăng nhập
+plantuml
+Sao chép
+Chỉnh sửa
+@startuml
+'======================================================================
+'  Use Case: Đăng nhập
+'======================================================================
+' a. Chức năng:
+'    - Đăng nhập hệ thống bằng email/mật khẩu.
+'
+' b. Dòng sự kiện chính:
+'    - Nhập thông tin -> Gửi API -> Xác thực -> Trả JWT -> Lưu token -> Truy cập.
+'
+' c. Điều kiện tiên quyết:
+'    - Phải có tài khoản hợp lệ.
+
+actor User
+participant FE
+participant API
+participant DB
+
+User -> FE: Nhập email/mật khẩu
+FE -> API: Gửi thông tin
+API -> DB: Kiểm tra thông tin
+DB --> API: Kết quả xác thực
+API --> FE: Trả token đăng nhập
+FE -> User: Hiển thị đăng nhập thành công
+@enduml
+
+@startuml
+'======================================================================
+'  Use Case: Thêm vào giỏ hàng (User đã đăng nhập)
+'======================================================================
+' a. Chức năng:
+'    - Cho phép người dùng đã đăng nhập thêm sản phẩm vào giỏ hàng cá nhân.
+'
+' b. Dòng sự kiện:
+'    ➢ Dòng sự kiện chính:
+'      - Bắt đầu khi người dùng nhấn nút "Thêm vào giỏ hàng" trên sản phẩm.
+'        ▪ Các bước thực hiện:
+'           - User nhấn "Thêm vào giỏ hàng".
+'           - Frontend gửi yêu cầu API kèm ID sản phẩm và số lượng.
+'           - Backend xác thực người dùng, kiểm tra tồn kho.
+'           - Nếu hợp lệ, lưu vào bảng giỏ hàng trong CSDL.
+'           - Trả kết quả thành công về frontend.
+'           - Frontend hiển thị cập nhật.
+'
+'    ➢ Dòng sự kiện khác:
+'      - Nếu không đủ tồn kho, hệ thống trả lỗi và không thêm vào giỏ.
+'
+' c. Điều kiện tiên quyết:
+'    - Người dùng phải đăng nhập.
+
+actor User
+participant FE as "Frontend"
+participant API as "Backend API"
+participant DB as "Database"
+
+User -> FE: Nhấn "Thêm vào giỏ hàng"
+FE -> API: Gửi yêu cầu thêm giỏ (ID SP, số lượng)
+API -> DB: Kiểm tra tồn kho, lưu vào giỏ hàng
+DB --> API: Kết quả lưu
+API --> FE: Thêm thành công
+FE -> User: Hiển thị cập nhật giỏ
+
+== Lỗi tồn kho ==
+API --> FE: Trả lỗi tồn kho
+FE -> User: Hiển thị thông báo lỗi
+@enduml
+
+@startuml
+'======================================================================
+'  Use Case: Đặt hàng (User đã đăng nhập)
+'======================================================================
+' a. Chức năng:
+'    - Cho phép người dùng đặt hàng từ giỏ hàng của mình.
+'
+' b. Dòng sự kiện:
+'    ➢ Dòng sự kiện chính:
+'      - Bắt đầu khi user vào giỏ hàng và nhấn "Đặt hàng".
+'        ▪ Các bước:
+'           - User chọn địa chỉ, phương thức thanh toán.
+'           - FE gửi yêu cầu API tạo đơn hàng.
+'           - BE xác thực, kiểm tra lại tồn kho.
+'           - Lưu đơn hàng vào DB (chi tiết, tổng tiền, trạng thái).
+'           - Trừ hàng trong tồn kho.
+'           - Trả kết quả đơn hàng.
+'
+'    ➢ Dòng sự kiện khác:
+'      - Nếu có SP không đủ hàng -> trả lỗi, đơn không được tạo.
+'
+' c. Điều kiện tiên quyết:
+'    - User đã đăng nhập và có sản phẩm trong giỏ.
+
+actor User
+participant FE as "Frontend"
+participant API as "Backend API"
+participant DB as "Database"
+
+User -> FE: Nhấn "Đặt hàng"
+FE -> API: Gửi yêu cầu tạo đơn hàng
+API -> DB: Kiểm tra tồn kho, lưu đơn hàng
+DB --> API: Ghi nhận đơn hàng
+API --> FE: Trả mã đơn hàng
+FE -> User: Hiển thị xác nhận
+
+== Thiếu hàng ==
+API --> FE: Trả lỗi hết hàng
+FE -> User: Hiển thị lỗi
+@enduml
+
+@startuml
+
+@startuml
+'======================================================================
+'  Use Case: Đánh giá sản phẩm (User đã đăng nhập)
+'======================================================================
+' a. Chức năng:
+'    - Cho phép người dùng đánh giá sản phẩm sau khi đơn hàng đã giao thành công.
+'
+' b. Dòng sự kiện:
+'    ➢ Dòng sự kiện chính:
+'      - Bắt đầu khi user nhấn "Đánh giá" sản phẩm trong đơn hàng đã giao.
+'        ▪ Các bước:
+'           - FE hiển thị form đánh giá (số sao, nhận xét).
+'           - User nhập đánh giá và gửi.
+'           - API xác nhận user đã mua và đơn hàng đã giao.
+'           - Lưu đánh giá vào DB.
+'           - Trả kết quả về FE.
+'
+'    ➢ Dòng sự kiện khác:
+'      - Nếu đơn hàng chưa giao -> từ chối đánh giá.
+'
+' c. Điều kiện tiên quyết:
+'    - User đã đăng nhập và có đơn hàng đã giao thành công.
+
+actor User
+participant FE as "Frontend"
+participant API as "Backend API"
+participant DB as "Database"
+
+User -> FE: Nhấn "Đánh giá sản phẩm"
+FE -> User: Hiển thị form đánh giá
+User -> FE: Nhập sao và nhận xét
+FE -> API: Gửi đánh giá sản phẩm
+API -> DB: Kiểm tra đơn hàng đã giao + lưu đánh giá
+DB --> API: Xác nhận lưu
+API --> FE: Trả kết quả thành công
+FE -> User: Hiển thị thông báo thành công
+
+== Đơn chưa giao ==
+API --> FE: Từ chối đánh giá
+FE -> User: Hiển thị lỗi "Chỉ đánh giá sau khi giao hàng"
+@enduml
+
+@startuml
+'======================================================================
+'  Use Case: Quản lý sản phẩm (Admin)
+'======================================================================
+' a. Chức năng:
+'    - Cho phép admin thêm, sửa, xóa sản phẩm.
+'
+' b. Dòng sự kiện:
+'    ➢ Dòng sự kiện chính:
+'      - Admin truy cập trang quản trị sản phẩm.
+'      - Thêm:
+'         ▪ Nhập thông tin sản phẩm -> gửi API -> lưu DB -> thông báo thành công.
+'      - Sửa:
+'         ▪ Chọn sản phẩm -> cập nhật -> gửi API -> cập nhật DB.
+'      - Xóa:
+'         ▪ Chọn -> xác nhận -> gửi API -> xóa DB.
+'
+'    ➢ Dòng sự kiện khác:
+'      - Nếu lỗi (trùng tên, ảnh lớn, DB lỗi) thì báo lỗi.
+'
+' c. Điều kiện tiên quyết:
+'    - Admin đã đăng nhập.
+
+actor Admin
+participant FE as "Trang Admin"
+participant API as "Backend API"
+participant DB as "Database"
+
+Admin -> FE: Truy cập quản lý sản phẩm
+FE -> API: Lấy danh sách sản phẩm
+API -> DB: Truy vấn danh sách
+DB --> API: Trả về dữ liệu
+API --> FE: Trả dữ liệu danh sách
+
+== Thêm sản phẩm ==
+Admin -> FE: Nhập thông tin sản phẩm mới
+FE -> API: Gửi yêu cầu thêm sản phẩm
+API -> DB: Lưu sản phẩm mới
+DB --> API: Xác nhận lưu
+API --> FE: Thông báo thành công
+
+== Sửa sản phẩm ==
+Admin -> FE: Cập nhật thông tin sản phẩm
+FE -> API: Gửi yêu cầu cập nhật
+API -> DB: Cập nhật DB
+DB --> API: Xác nhận
+API --> FE: Cập nhật thành công
+
+== Xóa sản phẩm ==
+Admin -> FE: Nhấn xóa sản phẩm
+FE -> API: Gửi yêu cầu xóa
+API -> DB: Xóa sản phẩm
+DB --> API: Xác nhận xóa
+API --> FE: Xóa thành công
+@enduml

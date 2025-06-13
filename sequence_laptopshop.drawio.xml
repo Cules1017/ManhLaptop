@@ -1,0 +1,94 @@
+<mxfile host="app.diagrams.net">
+  <diagram name="Đăng nhập (User)">
+    <mxGraphModel dx="1000" dy="1000" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1200" pageHeight="800" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <!-- Lifelines -->
+        <mxCell id="user" value="User" style="swimlane;horizontal=0;startSize=20;" vertex="1" parent="1"><mxGeometry x="60" y="40" width="100" height="400" as="geometry" /></mxCell>
+        <mxCell id="fe" value="Frontend (FE)" style="swimlane;horizontal=0;startSize=20;" vertex="1" parent="1"><mxGeometry x="200" y="40" width="100" height="400" as="geometry" /></mxCell>
+        <mxCell id="api" value="API/Backend" style="swimlane;horizontal=0;startSize=20;" vertex="1" parent="1"><mxGeometry x="340" y="40" width="100" height="400" as="geometry" /></mxCell>
+        <mxCell id="db" value="Database" style="swimlane;horizontal=0;startSize=20;" vertex="1" parent="1"><mxGeometry x="480" y="40" width="100" height="400" as="geometry" /></mxCell>
+        <!-- Messages -->
+        <mxCell id="m1" value="Nhập email, mật khẩu" style="endArrow=block;html=1;" edge="1" parent="1" source="user" target="fe"><mxGeometry relative="1" as="geometry"><mxPoint x="160" y="80" as="targetPoint" /></mxGeometry></mxCell>
+        <mxCell id="m2" value="Gửi request login" style="endArrow=block;html=1;" edge="1" parent="1" source="fe" target="api"><mxGeometry relative="1" as="geometry"><mxPoint x="300" y="120" as="targetPoint" /></mxGeometry></mxCell>
+        <mxCell id="m3" value="Kiểm tra user, xác thực" style="endArrow=block;html=1;dashed=1;" edge="1" parent="1" source="api" target="db"><mxGeometry relative="1" as="geometry"><mxPoint x="440" y="160" as="targetPoint" /></mxGeometry></mxCell>
+        <mxCell id="m4" value="Kết quả xác thực" style="endArrow=block;html=1;dashed=1;" edge="1" parent="1" source="db" target="api"><mxGeometry relative="1" as="geometry"><mxPoint x="380" y="200" as="targetPoint" /></mxGeometry></mxCell>
+        <mxCell id="m5" value="Trả về token, thông tin user" style="endArrow=block;html=1;" edge="1" parent="1" source="api" target="fe"><mxGeometry relative="1" as="geometry"><mxPoint x="240" y="240" as="targetPoint" /></mxGeometry></mxCell>
+        <mxCell id="m6" value="Hiển thị giao diện đã đăng nhập" style="endArrow=block;html=1;" edge="1" parent="1" source="fe" target="user"><mxGeometry relative="1" as="geometry"><mxPoint x="100" y="280" as="targetPoint" /></mxGeometry></mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+  <diagram name="Đặt hàng (User)">
+    <mxGraphModel dx="1000" dy="1000" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1200" pageHeight="800" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="user" value="User" style="swimlane;horizontal=0;startSize=20;" vertex="1" parent="1"><mxGeometry x="60" y="40" width="100" height="400" as="geometry" /></mxCell>
+        <mxCell id="fe" value="Frontend (FE)" style="swimlane;horizontal=0;startSize=20;" vertex="1" parent="1"><mxGeometry x="200" y="40" width="100" height="400" as="geometry" /></mxCell>
+        <mxCell id="api" value="API/Backend" style="swimlane;horizontal=0;startSize=20;" vertex="1" parent="1"><mxGeometry x="340" y="40" width="100" height="400" as="geometry" /></mxCell>
+        <mxCell id="db" value="Database" style="swimlane;horizontal=0;startSize=20;" vertex="1" parent="1"><mxGeometry x="480" y="40" width="100" height="400" as="geometry" /></mxCell>
+        <mxCell id="m1" value="Chọn sản phẩm, nhập địa chỉ, xác nhận đặt hàng" style="endArrow=block;html=1;" edge="1" parent="1" source="user" target="fe"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="m2" value="Gửi request đặt hàng" style="endArrow=block;html=1;" edge="1" parent="1" source="fe" target="api"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="m3" value="Lưu đơn hàng, cập nhật tồn kho" style="endArrow=block;html=1;dashed=1;" edge="1" parent="1" source="api" target="db"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="m4" value="Kết quả lưu đơn hàng" style="endArrow=block;html=1;dashed=1;" edge="1" parent="1" source="db" target="api"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="m5" value="Trả về kết quả đặt hàng" style="endArrow=block;html=1;" edge="1" parent="1" source="api" target="fe"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="m6" value="Hiển thị thông báo đặt hàng thành công" style="endArrow=block;html=1;" edge="1" parent="1" source="fe" target="user"><mxGeometry relative="1" as="geometry" /></mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+  <diagram name="Đánh giá sản phẩm (User)">
+    <mxGraphModel dx="1000" dy="1000" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1200" pageHeight="800" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="user" value="User" style="swimlane;horizontal=0;startSize=20;" vertex="1" parent="1"><mxGeometry x="60" y="40" width="100" height="400" as="geometry" /></mxCell>
+        <mxCell id="fe" value="Frontend (FE)" style="swimlane;horizontal=0;startSize=20;" vertex="1" parent="1"><mxGeometry x="200" y="40" width="100" height="400" as="geometry" /></mxCell>
+        <mxCell id="api" value="API/Backend" style="swimlane;horizontal=0;startSize=20;" vertex="1" parent="1"><mxGeometry x="340" y="40" width="100" height="400" as="geometry" /></mxCell>
+        <mxCell id="db" value="Database" style="swimlane;horizontal=0;startSize=20;" vertex="1" parent="1"><mxGeometry x="480" y="40" width="100" height="400" as="geometry" /></mxCell>
+        <mxCell id="m1" value="Chọn đơn hàng đã giao, nhập số sao, nhận xét" style="endArrow=block;html=1;" edge="1" parent="1" source="user" target="fe"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="m2" value="Gửi request đánh giá" style="endArrow=block;html=1;" edge="1" parent="1" source="fe" target="api"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="m3" value="Lưu review vào DB, cập nhật rating trung bình" style="endArrow=block;html=1;dashed=1;" edge="1" parent="1" source="api" target="db"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="m4" value="Kết quả lưu review" style="endArrow=block;html=1;dashed=1;" edge="1" parent="1" source="db" target="api"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="m5" value="Trả về kết quả đánh giá" style="endArrow=block;html=1;" edge="1" parent="1" source="api" target="fe"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="m6" value="Hiển thị thông báo đánh giá thành công" style="endArrow=block;html=1;" edge="1" parent="1" source="fe" target="user"><mxGeometry relative="1" as="geometry" /></mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+  <diagram name="Quản lý sản phẩm (Admin)">
+    <mxGraphModel dx="1000" dy="1000" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1200" pageHeight="800" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="admin" value="Admin" style="swimlane;horizontal=0;startSize=20;" vertex="1" parent="1"><mxGeometry x="60" y="40" width="100" height="400" as="geometry" /></mxCell>
+        <mxCell id="fe" value="Admin FE" style="swimlane;horizontal=0;startSize=20;" vertex="1" parent="1"><mxGeometry x="200" y="40" width="100" height="400" as="geometry" /></mxCell>
+        <mxCell id="api" value="API/Backend" style="swimlane;horizontal=0;startSize=20;" vertex="1" parent="1"><mxGeometry x="340" y="40" width="100" height="400" as="geometry" /></mxCell>
+        <mxCell id="db" value="Database" style="swimlane;horizontal=0;startSize=20;" vertex="1" parent="1"><mxGeometry x="480" y="40" width="100" height="400" as="geometry" /></mxCell>
+        <mxCell id="m1" value="Chọn chức năng thêm/sửa/xóa sản phẩm" style="endArrow=block;html=1;" edge="1" parent="1" source="admin" target="fe"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="m2" value="Gửi request thêm/sửa/xóa sản phẩm" style="endArrow=block;html=1;" edge="1" parent="1" source="fe" target="api"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="m3" value="Thực hiện thao tác trên DB" style="endArrow=block;html=1;dashed=1;" edge="1" parent="1" source="api" target="db"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="m4" value="Kết quả thao tác" style="endArrow=block;html=1;dashed=1;" edge="1" parent="1" source="db" target="api"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="m5" value="Trả về kết quả cho FE" style="endArrow=block;html=1;" edge="1" parent="1" source="api" target="fe"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="m6" value="Hiển thị thông báo thành công/thất bại" style="endArrow=block;html=1;" edge="1" parent="1" source="fe" target="admin"><mxGeometry relative="1" as="geometry" /></mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+  <diagram name="Quản lý đơn hàng (Admin)">
+    <mxGraphModel dx="1000" dy="1000" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1200" pageHeight="800" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="admin" value="Admin" style="swimlane;horizontal=0;startSize=20;" vertex="1" parent="1"><mxGeometry x="60" y="40" width="100" height="400" as="geometry" /></mxCell>
+        <mxCell id="fe" value="Admin FE" style="swimlane;horizontal=0;startSize=20;" vertex="1" parent="1"><mxGeometry x="200" y="40" width="100" height="400" as="geometry" /></mxCell>
+        <mxCell id="api" value="API/Backend" style="swimlane;horizontal=0;startSize=20;" vertex="1" parent="1"><mxGeometry x="340" y="40" width="100" height="400" as="geometry" /></mxCell>
+        <mxCell id="db" value="Database" style="swimlane;horizontal=0;startSize=20;" vertex="1" parent="1"><mxGeometry x="480" y="40" width="100" height="400" as="geometry" /></mxCell>
+        <mxCell id="m1" value="Chọn đơn hàng, xác nhận/cập nhật trạng thái/hủy" style="endArrow=block;html=1;" edge="1" parent="1" source="admin" target="fe"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="m2" value="Gửi request cập nhật đơn hàng" style="endArrow=block;html=1;" edge="1" parent="1" source="fe" target="api"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="m3" value="Cập nhật trạng thái đơn hàng trên DB" style="endArrow=block;html=1;dashed=1;" edge="1" parent="1" source="api" target="db"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="m4" value="Kết quả cập nhật" style="endArrow=block;html=1;dashed=1;" edge="1" parent="1" source="db" target="api"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="m5" value="Trả về kết quả cho FE" style="endArrow=block;html=1;" edge="1" parent="1" source="api" target="fe"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="m6" value="Hiển thị thông báo thành công/thất bại" style="endArrow=block;html=1;" edge="1" parent="1" source="fe" target="admin"><mxGeometry relative="1" as="geometry" /></mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile> 

@@ -1,0 +1,93 @@
+# Cấu trúc cơ sở dữ liệu hệ thống bán laptop
+
+## 1. Bảng Users
+| Trường | Kiểu dữ liệu | Mô tả |
+|--------|--------------|--------|
+| id | bigint | Khóa chính, tự động tăng |
+| name | varchar(255) | Tên người dùng |
+| email | varchar(255) | Email (unique) |
+| password | varchar(255) | Mật khẩu (đã mã hóa) |
+| phone | varchar(20) | Số điện thoại |
+| address | text | Địa chỉ |
+| role | enum('user','admin') | Vai trò người dùng |
+| created_at | timestamp | Thời gian tạo |
+| updated_at | timestamp | Thời gian cập nhật |
+
+## 2. Bảng Categories
+| Trường | Kiểu dữ liệu | Mô tả |
+|--------|--------------|--------|
+| id | bigint | Khóa chính, tự động tăng |
+| name | varchar(255) | Tên danh mục |
+| slug | varchar(255) | URL thân thiện |
+| description | text | Mô tả danh mục |
+| created_at | timestamp | Thời gian tạo |
+| updated_at | timestamp | Thời gian cập nhật |
+
+## 3. Bảng Products
+| Trường | Kiểu dữ liệu | Mô tả |
+|--------|--------------|--------|
+| id | bigint | Khóa chính, tự động tăng |
+| category_id | bigint | Khóa ngoại tới bảng Categories |
+| name | varchar(255) | Tên sản phẩm |
+| slug | varchar(255) | URL thân thiện |
+| description | text | Mô tả sản phẩm |
+| price | decimal(10,2) | Giá sản phẩm |
+| stock | int | Số lượng tồn kho |
+| image | varchar(255) | Đường dẫn ảnh |
+| is_featured | boolean | Sản phẩm nổi bật |
+| created_at | timestamp | Thời gian tạo |
+| updated_at | timestamp | Thời gian cập nhật |
+
+## 4. Bảng Orders
+| Trường | Kiểu dữ liệu | Mô tả |
+|--------|--------------|--------|
+| id | bigint | Khóa chính, tự động tăng |
+| user_id | bigint | Khóa ngoại tới bảng Users |
+| total_amount | decimal(10,2) | Tổng tiền đơn hàng |
+| status | enum('pending','processing','shipped','delivered','cancelled') | Trạng thái đơn hàng |
+| shipping_address | text | Địa chỉ giao hàng |
+| shipping_phone | varchar(20) | Số điện thoại giao hàng |
+| shipping_name | varchar(255) | Tên người nhận |
+| payment_method | varchar(50) | Phương thức thanh toán |
+| payment_status | enum('pending','paid','failed') | Trạng thái thanh toán |
+| created_at | timestamp | Thời gian tạo |
+| updated_at | timestamp | Thời gian cập nhật |
+
+## 5. Bảng Order_Items
+| Trường | Kiểu dữ liệu | Mô tả |
+|--------|--------------|--------|
+| id | bigint | Khóa chính, tự động tăng |
+| order_id | bigint | Khóa ngoại tới bảng Orders |
+| product_id | bigint | Khóa ngoại tới bảng Products |
+| quantity | int | Số lượng |
+| price | decimal(10,2) | Giá tại thời điểm mua |
+| created_at | timestamp | Thời gian tạo |
+| updated_at | timestamp | Thời gian cập nhật |
+
+## 6. Bảng Reviews
+| Trường | Kiểu dữ liệu | Mô tả |
+|--------|--------------|--------|
+| id | bigint | Khóa chính, tự động tăng |
+| user_id | bigint | Khóa ngoại tới bảng Users |
+| product_id | bigint | Khóa ngoại tới bảng Products |
+| order_id | bigint | Khóa ngoại tới bảng Orders |
+| rating | int | Đánh giá (1-5 sao) |
+| comment | text | Nhận xét |
+| created_at | timestamp | Thời gian tạo |
+| updated_at | timestamp | Thời gian cập nhật |
+
+## Mối quan hệ giữa các bảng
+
+1. Users (1) - Orders (n): Một người dùng có thể có nhiều đơn hàng
+2. Categories (1) - Products (n): Một danh mục có thể có nhiều sản phẩm
+3. Orders (1) - Order_Items (n): Một đơn hàng có thể có nhiều sản phẩm
+4. Products (1) - Order_Items (n): Một sản phẩm có thể xuất hiện trong nhiều đơn hàng
+5. Users (1) - Reviews (n): Một người dùng có thể đánh giá nhiều sản phẩm
+6. Products (1) - Reviews (n): Một sản phẩm có thể có nhiều đánh giá
+7. Orders (1) - Reviews (n): Một đơn hàng có thể có nhiều đánh giá
+
+## Ghi chú
+- Tất cả các bảng đều có timestamps (created_at, updated_at)
+- Các khóa ngoại đều có ràng buộc ON DELETE CASCADE
+- Các trường unique: email trong bảng Users
+- Các trường enum có giá trị mặc định phù hợp 

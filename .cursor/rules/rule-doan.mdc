@@ -1,0 +1,12 @@
+---
+description: 
+globs: 
+alwaysApply: true
+---
+Hãy đọc kỹ src code rồi hãy code( hãy tận dụng có sẳn để code được tối ưu)
+không làm ảnh hưởng (lỗi các chức năng trước đó)
+gọi api bằng lớp apiRequest (src fe)
+
+đối với src admin thì khi gọi api phải dùng lớp api.js
+
+khi viết vào file project info hãy lưu ý đọc kỹ src và phân tích cho chuẩn nhất, khi viết hãy viết tiếp chứ không xóa nd cũ
