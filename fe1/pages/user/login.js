@@ -60,7 +60,7 @@ export default function Login() {
     <PageContainer title="MANH STORE - Login">
       <FormContainer>
         <form onSubmit={handleSubmit}>
-          <h3 className="formTitle">login</h3>
+          <h3 className="formTitle">Đăng nhập</h3>
 
           {msgError && <AlertError message={msgError} />}
 
@@ -85,10 +85,10 @@ export default function Login() {
         </form>
 
         <Link href="/user/signup">
-          <a className="switchForm">I do not have a account</a>
+          <a className="switchForm">Tạo tài khoản</a>
         </Link>
         <Link href="/user/resetpassword">
-          <a className="switchForm">I forgot my password</a>
+          <a className="switchForm">Quên mật khẩu</a>
         </Link>
       </FormContainer>
 

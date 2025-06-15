@@ -68,7 +68,7 @@ export default function SignUp() {
     <PageContainer title="MANH STORE - Sign Up">
       <FormContainer>
         <form onSubmit={handleSubmit}>
-          <h3 className="formTitle">sign up</h3>
+          <h3 className="formTitle">Đăng ký</h3>
 
           {error && <AlertError message={error} />}
           <InputContainer>
@@ -108,12 +108,12 @@ export default function SignUp() {
               value={formData.password_confirmation}
             />
 
-            <Button type="submit" title="Sign Up" disabled={loading} />
+            <Button type="submit" title="Đăng ký" disabled={loading} />
           </InputContainer>
         </form>
 
         <Link href="/user/login">
-          <a className="switchForm">I already have a account</a>
+          <a className="switchForm">Tôi đã có tài khoản</a>
         </Link>
       </FormContainer>
 
