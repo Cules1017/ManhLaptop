@@ -33,6 +33,22 @@ class UserSeeder extends Seeder
                 'role' => 'user'
             ],
             [
+                'name' => 'ManhLapTop',
+                'email' => 'admin@example.com',
+                'password' => bcrypt('password'),
+                'phone' => '0987654321',
+                'address' => '456 Main Street, City',
+                'role' => 'admin'
+            ],
+            [
+                'name' => 'ManhMuaSam',
+                'email' => 'user@example.com',
+                'password' => bcrypt('password'),
+                'phone' => '0987654321',
+                'address' => '456 Main Street, City',
+                'role' => 'admin'
+            ],
+            [
                 'name' => 'Jane Smith',
                 'email' => 'jane@example.com',
                 'password' => bcrypt('password'),
