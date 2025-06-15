@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "dev": "next dev -p 3001",
-    "build": "next build",
+    "build": "next build", 
     "start": "next start -p 3001",
     "knex:migrate": "knex migrate:latest",
     "knex:seed": "knex seed:run"
@@ -34,6 +34,7 @@
   },
   "devDependencies": {
     "eslint": "^7.1.0",
-    "eslint-plugin-react": "^7.20.0"
+    "eslint-plugin-react": "^7.20.0",
+    "concurrently": "^8.2.2"
   }
 }

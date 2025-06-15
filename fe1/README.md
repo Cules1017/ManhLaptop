@@ -142,3 +142,4 @@ Released in 2020.
 This project is under the [MIT license](./LICENSE).
 
 Made with love by [RafaelGoulartB](https://github.com/RafaelGoulartB) 🚀
+npm run build -- --no-lint

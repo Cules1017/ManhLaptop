@@ -1,0 +1,14 @@
+{
+  "name": "laptop-shop",
+  "version": "1.0.0",
+  "description": "Laptop Shop Project",
+  "scripts": {
+    "install-all": "npm install && cd fe1 && npm install && cd ../be && npm install && cd ../admin && npm install",
+    "dev": "concurrently \"cd fe1 && npm run dev\" \"cd be && npm run dev\" \"cd admin && npm run dev\"",
+    "build": "concurrently \"cd fe1 && npm run build\" \"cd be && npm run build\" \"cd admin && npm run build\"",
+    "start": "concurrently \"cd fe1 && npm run start\" \"cd be && npm run start\" \"cd admin && npm run start\""
+  },
+  "devDependencies": {
+    "concurrently": "^8.2.2"
+  }
+} 

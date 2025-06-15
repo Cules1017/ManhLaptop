@@ -1,2 +1,11 @@
 node_modules/
 .next
+pages/product/[id].js
+components/products.js
+components/productSection.js
+components/productsGrid.js
+components/promoCard.js
+components/search-box.js
+components/SuccessPopup.js
+components/title.js
+src/app/cart/page.tsx
