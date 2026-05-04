@@ -8,15 +8,79 @@ import { useCart } from '../context/CartContext';
 
 const API_URL = 'http://127.0.0.1:8000/api';
 
+function parseAddressValue(rawAddress = '') {
+  const value = String(rawAddress || '').trim();
+  if (!value) {
+    return { addressDetail: '', district: '', city: '' };
+  }
+
+  const parts = value.split(',').map((p) => p.trim()).filter(Boolean);
+  const city = parts[parts.length - 1] || '';
+  const district = parts[parts.length - 2] || '';
+  const addressDetail = parts.slice(0, Math.max(parts.length - 2, 1)).join(', ');
+
+  return {
+    addressDetail: addressDetail || value,
+    district,
+    city,
+  };
+}
+
 export default function ProfilePage() {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [editing, setEditing] = useState(false);
-  const [form, setForm] = useState({ name: '', phone: '', address: '' });
+  const [form, setForm] = useState({ name: '', phone: '', addressDetail: '', district: '', city: '' });
+  const [provinces, setProvinces] = useState([]);
+  const [districts, setDistricts] = useState([]);
   const [saving, setSaving] = useState(false);
   const router = useRouter();
   const { refreshCartCount } = useCart();
+
+  const loadDistrictsByCity = async (cityName, preferredDistrict = '', provinceList = provinces) => {
+    const province = provinceList.find((p) => p.name === cityName);
+    if (!province?.code) {
+      setDistricts([]);
+      setForm((prev) => ({ ...prev, district: '' }));
+      return;
+    }
+
+    try {
+      const res = await apiRequest(`${API_URL}/locations/provinces/${province.code}/districts`);
+      const districtList = Array.isArray(res?.data) ? res.data : [];
+      setDistricts(districtList);
+      const hasPreferred = districtList.some((d) => d.name === preferredDistrict);
+      setForm((prev) => ({
+        ...prev,
+        district: hasPreferred ? preferredDistrict : districtList[0]?.name || '',
+      }));
+    } catch {
+      setDistricts([]);
+      setForm((prev) => ({ ...prev, district: '' }));
+    }
+  };
+
+  const loadProvinces = async (preferredCity = '', preferredDistrict = '') => {
+    try {
+      const res = await apiRequest(`${API_URL}/locations/provinces`);
+      const provinceList = Array.isArray(res?.data) ? res.data : [];
+      setProvinces(provinceList);
+      if (!provinceList.length) {
+        setDistricts([]);
+        return;
+      }
+
+      const selectedCity = provinceList.some((p) => p.name === preferredCity)
+        ? preferredCity
+        : provinceList[0].name;
+      setForm((prev) => ({ ...prev, city: selectedCity }));
+      await loadDistrictsByCity(selectedCity, preferredDistrict, provinceList);
+    } catch {
+      setProvinces([]);
+      setDistricts([]);
+    }
+  };
 
   useEffect(() => {
     const fetchUser = async () => {
@@ -32,11 +96,15 @@ export default function ProfilePage() {
         const res = await apiRequest(`${API_URL}/me`);
         if (res.status) {
           setUser(res.data);
+          const parsedAddress = parseAddressValue(res.data.address || '');
           setForm({
             name: res.data.name || '',
             phone: res.data.phone || '',
-            address: res.data.address || '',
+            addressDetail: parsedAddress.addressDetail,
+            district: parsedAddress.district,
+            city: parsedAddress.city,
           });
+          await loadProvinces(parsedAddress.city, parsedAddress.district);
         } else {
           setError(res.message || 'Không lấy được thông tin tài khoản');
         }
@@ -66,7 +134,7 @@ export default function ProfilePage() {
         body: JSON.stringify({
           name: form.name.trim(),
           phone: form.phone.trim(),
-          address: form.address.trim(),
+          address: [form.addressDetail.trim(), form.district, form.city].filter(Boolean).join(', '),
         }),
       });
       if (res?.status) {
@@ -130,11 +198,15 @@ export default function ProfilePage() {
                     className="btn btn-cancel"
                     onClick={() => {
                       setEditing(false);
+                      const parsedAddress = parseAddressValue(user.address || '');
                       setForm({
                         name: user.name || '',
                         phone: user.phone || '',
-                        address: user.address || '',
+                        addressDetail: parsedAddress.addressDetail,
+                        district: parsedAddress.district,
+                        city: parsedAddress.city,
                       });
+                      loadProvinces(parsedAddress.city, parsedAddress.district);
                     }}
                   >
                     Huỷ
@@ -184,11 +256,43 @@ export default function ProfilePage() {
             <div className="field">
               <label>Địa chỉ</label>
               {editing ? (
-                <input
-                  type="text"
-                  value={form.address}
-                  onChange={(e) => handleChange('address', e.target.value)}
-                />
+                <>
+                  <input
+                    type="text"
+                    value={form.addressDetail}
+                    onChange={(e) => handleChange('addressDetail', e.target.value)}
+                    placeholder="Số nhà, tên đường..."
+                  />
+                  <div className="address-grid">
+                    <select
+                      value={form.city}
+                      onChange={(e) => {
+                        const nextCity = e.target.value;
+                        setForm((prev) => ({ ...prev, city: nextCity, district: '' }));
+                        loadDistrictsByCity(nextCity, '', provinces);
+                      }}
+                    >
+                      <option value="">Chọn Tỉnh/Thành phố</option>
+                      {provinces.map((province) => (
+                        <option key={province.code} value={province.name}>
+                          {province.name}
+                        </option>
+                      ))}
+                    </select>
+                    <select
+                      value={form.district}
+                      onChange={(e) => handleChange('district', e.target.value)}
+                      disabled={!form.city || !districts.length}
+                    >
+                      <option value="">Chọn Quận/Huyện</option>
+                      {districts.map((district) => (
+                        <option key={district.code} value={district.name}>
+                          {district.name}
+                        </option>
+                      ))}
+                    </select>
+                  </div>
+                </>
               ) : (
                 <div className="val">
                   {user.address || <span style={{ color: '#bbb' }}>(Chưa cập nhật)</span>}
@@ -214,15 +318,28 @@ export default function ProfilePage() {
           color: #666;
           font-weight: 600;
         }
-        .field input {
+        .field input,
+        .field select {
           padding: 10px 12px;
           border: 1px solid #ddd;
           border-radius: 6px;
           font-size: 14px;
           outline: none;
+          background: #fff;
         }
-        .field input:focus {
+        .field input:focus,
+        .field select:focus {
           border-color: #e53935;
+        }
+        .address-grid {
+          display: grid;
+          grid-template-columns: 1fr 1fr;
+          gap: 10px;
+        }
+        @media (max-width: 640px) {
+          .address-grid {
+            grid-template-columns: 1fr;
+          }
         }
         .field .val {
           padding: 4px 0;
