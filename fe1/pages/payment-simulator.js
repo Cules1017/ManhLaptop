@@ -70,6 +70,10 @@ export default function PaymentSimulatorPage() {
   const isMomo = method === 'momo';
   const methodLabel = isMomo ? 'MoMo' : 'Chuyển khoản ngân hàng';
   const amountNumber = Math.round(Number(amount) || 0);
+  const momoPaymentLink = useMemo(() => {
+    if (!isMomo) return '';
+    return String(paymentUrl || qrCodeUrl || '').trim();
+  }, [isMomo, paymentUrl, qrCodeUrl]);
 
   const qrUrl = useMemo(() => {
     if (isMomo) {
@@ -163,6 +167,16 @@ export default function PaymentSimulatorPage() {
     toast.error('Không tải được ảnh QR. Kiểm tra mạng hoặc cấu hình VietQR.', { position: 'top-center' });
   };
 
+  const handleOpenMomo = () => {
+    if (!momoPaymentLink) {
+      toast.info('Chưa có link thanh toán MoMo khả dụng', { position: 'top-center' });
+      return;
+    }
+    if (typeof window !== 'undefined') {
+      window.location.href = momoPaymentLink;
+    }
+  };
+
   return (
     <Page>
       <div className="payment-page">
@@ -221,6 +235,16 @@ export default function PaymentSimulatorPage() {
                 >
                   Giả lập thanh toán thành công
                 </button>
+                {isMomo ? (
+                  <button
+                    type="button"
+                    className="payment-open-momo-btn"
+                    onClick={handleOpenMomo}
+                    disabled={!momoPaymentLink}
+                  >
+                    Mở bằng MoMo
+                  </button>
+                ) : null}
               </div>
 
               <div className="payment-info-col">
@@ -544,6 +568,22 @@ export default function PaymentSimulatorPage() {
           font-size: 15px;
         }
         .payment-success-btn:disabled {
+          opacity: 0.45;
+          cursor: not-allowed;
+        }
+        .payment-open-momo-btn {
+          margin-top: 10px;
+          width: 100%;
+          border: 1px solid #c026d3;
+          background: #fff;
+          color: #a21caf;
+          border-radius: 10px;
+          padding: 11px 14px;
+          font-weight: 800;
+          cursor: pointer;
+          font-size: 15px;
+        }
+        .payment-open-momo-btn:disabled {
           opacity: 0.45;
           cursor: not-allowed;
         }
