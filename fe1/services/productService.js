@@ -11,8 +11,9 @@ export const productService = {
   // Lấy danh sách sản phẩm với các bộ lọc
   getProducts: async (params = {}) => {
     const queryParams = new URLSearchParams();
-    
+
     if (params.category) queryParams.append('category', params.category);
+    if (params.search) queryParams.append('search', params.search);
     if (params.new) queryParams.append('new', params.new);
     if (params.discount) queryParams.append('discount', params.discount);
     if (params.sort_by) queryParams.append('sort_by', params.sort_by);
@@ -54,9 +55,22 @@ export const productService = {
     });
   },
 
-  // Thêm sản phẩm vào giỏ hàng
+  // Cộng dồn số lượng sản phẩm vào giỏ (hoặc trừ nếu gửi quantity âm)
   addToCart: async ({ product_id, quantity }) => {
     return apiRequest(`${API_URL}/cart/add`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        ...getAuthHeaders(),
+      },
+      credentials: 'include',
+      body: JSON.stringify({ product_id, quantity }),
+    });
+  },
+
+  // Gán số lượng tuyệt đối (quantity <= 0 sẽ xoá khỏi giỏ)
+  updateCartQuantity: async ({ product_id, quantity }) => {
+    return apiRequest(`${API_URL}/cart/update`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -79,4 +93,4 @@ export const productService = {
       body: JSON.stringify({ product_id }),
     });
   },
-}; 
+};

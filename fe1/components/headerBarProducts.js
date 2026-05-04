@@ -22,7 +22,7 @@ export default function HeaderBarProducts({ onSortChange = () => {}, sortParams 
       <div className="container">
         <div className="header-bar-products__content">
           <div className="header-bar-products__left">
-            <h2>Popular Products</h2>
+            <h2>Sản phẩm nổi bật</h2>
           </div>
 
           <div className="header-bar-products__right">
@@ -98,7 +98,8 @@ export default function HeaderBarProducts({ onSortChange = () => {}, sortParams 
 
         .sort-options {
           display: flex;
-          gap: 15px;
+          gap: 10px;
+          flex-wrap: wrap;
         }
 
         .sort-options button {
@@ -107,17 +108,29 @@ export default function HeaderBarProducts({ onSortChange = () => {}, sortParams 
           background: #fff;
           color: #666;
           cursor: pointer;
-          transition: all 0.3s;
+          border-radius: 6px;
+          font-size: 14px;
+          transition: all 0.2s;
         }
 
         .sort-options button:hover {
           background: #f5f5f5;
+          border-color: #e53935;
+          color: #e53935;
         }
 
         .sort-options button.active {
-          background: #007bff;
+          background: #e53935;
           color: #fff;
-          border-color: #007bff;
+          border-color: #e53935;
+        }
+
+        @media (max-width: 768px) {
+          .header-bar-products__content {
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 12px;
+          }
         }
       `}</style>
     </div>

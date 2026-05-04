@@ -13,10 +13,18 @@ export default function Page({ title, description, children }) {
       <style jsx>{`
         .content {
           display: flex;
-          align-items: center;
+          align-items: stretch;
           flex-direction: column;
-          width: 80%;
-          max-width: 1700px;
+          width: 100%;
+          max-width: 1400px;
+          margin: 0 auto;
+          padding: 20px 20px 40px;
+          min-height: 60vh;
+        }
+        @media (max-width: 768px) {
+          .content {
+            padding: 12px;
+          }
         }
       `}</style>
     </PageContainer>

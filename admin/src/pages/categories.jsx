@@ -1,250 +1,301 @@
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useMemo, useState } from 'react';
+import { Helmet } from 'react-helmet-async';
 import api from '../services/api';
+import AddIcon from '@mui/icons-material/Add';
+import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
+import EditIcon from '@mui/icons-material/Edit';
+import FolderOutlinedIcon from '@mui/icons-material/FolderOutlined';
+import SearchIcon from '@mui/icons-material/Search';
+import Alert from '@mui/material/Alert';
+import Box from '@mui/material/Box';
+import Button from '@mui/material/Button';
+import Card from '@mui/material/Card';
+import CircularProgress from '@mui/material/CircularProgress';
+import Container from '@mui/material/Container';
+import Dialog from '@mui/material/Dialog';
+import DialogActions from '@mui/material/DialogActions';
+import DialogContent from '@mui/material/DialogContent';
+import DialogTitle from '@mui/material/DialogTitle';
+import Divider from '@mui/material/Divider';
+import IconButton from '@mui/material/IconButton';
+import InputAdornment from '@mui/material/InputAdornment';
+import Paper from '@mui/material/Paper';
+import Stack from '@mui/material/Stack';
+import Table from '@mui/material/Table';
+import TableBody from '@mui/material/TableBody';
+import TableCell from '@mui/material/TableCell';
+import TableContainer from '@mui/material/TableContainer';
+import TableHead from '@mui/material/TableHead';
+import TableRow from '@mui/material/TableRow';
+import TextField from '@mui/material/TextField';
+import Tooltip from '@mui/material/Tooltip';
+import Typography from '@mui/material/Typography';
+
+const emptyForm = { name: '' };
 
 export default function CategoryManager() {
   const [categories, setCategories] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  const [editing, setEditing] = useState(null);
-  const [form, setForm] = useState({ name: '' });
+  const [success, setSuccess] = useState(null);
   const [searchTerm, setSearchTerm] = useState('');
-  const [successMessage, setSuccessMessage] = useState('');
+  const [formDialogOpen, setFormDialogOpen] = useState(false);
+  const [editingId, setEditingId] = useState(null);
+  const [form, setForm] = useState(emptyForm);
+  const [submitting, setSubmitting] = useState(false);
+  const [deleteTarget, setDeleteTarget] = useState(null);
 
-  useEffect(() => {
-    fetchCategories();
-  }, []);
-
-  const fetchCategories = async () => {
+  const fetchCategories = useCallback(async () => {
     setLoading(true);
+    setError(null);
     try {
       const res = await api.get('/categories');
-      setCategories(res.data.data);
-      setError(null);
+      setCategories(res.data.data || []);
     } catch (err) {
-      setError('Không lấy được danh sách danh mục');
+      setError(err.response?.data?.message || 'Không lấy được danh sách danh mục');
+      setCategories([]);
     } finally {
       setLoading(false);
     }
+  }, []);
+
+  useEffect(() => {
+    fetchCategories();
+  }, [fetchCategories]);
+
+  const filteredCategories = useMemo(() => {
+    const q = searchTerm.trim().toLowerCase();
+    if (!q) return categories;
+    return categories.filter((c) => String(c.name || '').toLowerCase().includes(q));
+  }, [categories, searchTerm]);
+
+  const openCreate = () => {
+    setEditingId(null);
+    setForm(emptyForm);
+    setFormDialogOpen(true);
+    setError(null);
   };
 
-  const handleChange = e => setForm({ ...form, [e.target.name]: e.target.value });
-
-  const handleEdit = category => {
-    setEditing(category.id);
-    setForm({ name: category.name });
-    setSuccessMessage('');
+  const openEdit = (category) => {
+    setEditingId(category.id);
+    setForm({ name: category.name || '' });
+    setFormDialogOpen(true);
+    setError(null);
   };
 
-  const handleCancel = () => {
-    setEditing(null);
-    setForm({ name: '' });
-    setSuccessMessage('');
+  const closeDialog = () => {
+    if (submitting) return;
+    setFormDialogOpen(false);
+    setEditingId(null);
+    setForm(emptyForm);
   };
 
-  const handleDelete = async id => {
-    if (!window.confirm('Bạn có chắc chắn muốn xóa danh mục này?')) return;
-    try {
-      await api.delete(`/categories/${id}`);
-      setSuccessMessage('Xóa danh mục thành công!');
-      fetchCategories();
-    } catch (err) {
-      setError('Không thể xóa danh mục này');
-    }
-  };
+  const handleChange = (e) => setForm({ ...form, [e.target.name]: e.target.value });
 
-  const handleSubmit = async e => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
+    const name = String(form.name || '').trim();
+    if (!name) {
+      setError('Vui lòng nhập tên danh mục');
+      return;
+    }
+    setSubmitting(true);
+    setError(null);
     try {
-      if (editing) {
-        await api.put(`/categories/${editing}`, form);
-        setSuccessMessage('Cập nhật danh mục thành công!');
+      if (editingId) {
+        await api.put(`/categories/${editingId}`, { name });
+        setSuccess('Cập nhật danh mục thành công.');
       } else {
-        await api.post('/categories', form);
-        setSuccessMessage('Thêm danh mục thành công!');
+        await api.post('/categories', { name });
+        setSuccess('Thêm danh mục thành công.');
       }
-      handleCancel();
-      fetchCategories();
+      closeDialog();
+      await fetchCategories();
     } catch (err) {
-      setError(err.response?.data?.message || 'Có lỗi xảy ra');
+      const msg =
+        err.response?.data?.message ||
+        err.response?.data?.errors?.name?.[0] ||
+        'Không lưu được danh mục';
+      setError(typeof msg === 'string' ? msg : 'Có lỗi xảy ra');
+    } finally {
+      setSubmitting(false);
     }
   };
 
-  const filteredCategories = categories.filter(category =>
-    category.name.toLowerCase().includes(searchTerm.toLowerCase())
-  );
+  const confirmDelete = async () => {
+    if (!deleteTarget) return;
+    try {
+      await api.delete(`/categories/${deleteTarget.id}`);
+      setDeleteTarget(null);
+      setSuccess('Đã xóa danh mục.');
+      await fetchCategories();
+    } catch (err) {
+      setError(err.response?.data?.message || 'Không thể xóa danh mục (có thể đang được dùng bởi sản phẩm).');
+      setDeleteTarget(null);
+    }
+  };
 
   return (
-    <div style={{ maxWidth: 1100, margin: '0 auto', padding: 32 }}>
-      <h2 style={{ fontSize: 28, fontWeight: 700, marginBottom: 24 }}>Quản lý danh mục</h2>
-      
-      {/* Form thêm/sửa */}
-      <form onSubmit={handleSubmit} style={{ display: 'flex', gap: 16, marginBottom: 32, background: '#f7f7fa', padding: 20, borderRadius: 10 }}>
-        <input 
-          name="name" 
-          value={form.name} 
-          onChange={handleChange} 
-          placeholder="Tên danh mục" 
-          required 
-          style={{ flex: 1, padding: 12, borderRadius: 8, border: '1px solid #ddd', fontSize: 16 }} 
-        />
-        <button 
-          type="submit" 
-          style={{ 
-            padding: '12px 32px', 
-            background: '#1a94ff', 
-            color: '#fff', 
-            border: 'none', 
-            borderRadius: 8, 
-            fontWeight: 600, 
-            fontSize: 16,
-            cursor: 'pointer',
-            transition: 'background 0.2s'
-          }}
-          onMouseOver={e => e.target.style.background = '#0070e0'}
-          onMouseOut={e => e.target.style.background = '#1a94ff'}
-        >
-          {editing ? 'Cập nhật' : 'Thêm mới'}
-        </button>
-        {editing && (
-          <button 
-            type="button" 
-            onClick={handleCancel} 
-            style={{ 
-              padding: '12px 24px', 
-              background: '#eee', 
-              color: '#222', 
-              border: 'none', 
-              borderRadius: 8, 
-              fontWeight: 500,
-              cursor: 'pointer',
-              transition: 'background 0.2s'
-            }}
-            onMouseOver={e => e.target.style.background = '#ddd'}
-            onMouseOut={e => e.target.style.background = '#eee'}
+    <>
+      <Helmet>
+        <title>Quản lý danh mục | Admin</title>
+      </Helmet>
+      <Container maxWidth="md" sx={{ py: 4 }}>
+        <Stack spacing={3}>
+          <Stack
+            direction={{ xs: 'column', sm: 'row' }}
+            alignItems={{ xs: 'stretch', sm: 'center' }}
+            justifyContent="space-between"
+            gap={2}
           >
-            Huỷ
-          </button>
-        )}
-      </form>
+            <Stack direction="row" alignItems="center" spacing={1.5}>
+              <FolderOutlinedIcon color="primary" sx={{ fontSize: 36 }} />
+              <Box>
+                <Typography variant="h4" fontWeight={700}>
+                  Quản lý danh mục
+                </Typography>
+                <Typography variant="body2" color="text.secondary">
+                  Nhóm sản phẩm hiển thị trên cửa hàng
+                </Typography>
+              </Box>
+            </Stack>
+            <Button variant="contained" startIcon={<AddIcon />} onClick={openCreate} sx={{ py: 1.25 }}>
+              Thêm danh mục
+            </Button>
+          </Stack>
 
-      {/* Thông báo */}
-      {successMessage && (
-        <div style={{ 
-          padding: '12px 20px', 
-          background: '#e8f5e9', 
-          color: '#2e7d32', 
-          borderRadius: 8, 
-          marginBottom: 20,
-          display: 'flex',
-          justifyContent: 'space-between',
-          alignItems: 'center'
-        }}>
-          {successMessage}
-          <button 
-            onClick={() => setSuccessMessage('')}
-            style={{ 
-              background: 'none', 
-              border: 'none', 
-              color: '#2e7d32', 
-              cursor: 'pointer',
-              fontSize: 20
-            }}
-          >
-            ×
-          </button>
-        </div>
-      )}
-
-      {/* Tìm kiếm */}
-      <div style={{ marginBottom: 20 }}>
-        <input
-          type="text"
-          placeholder="Tìm kiếm danh mục..."
-          value={searchTerm}
-          onChange={e => setSearchTerm(e.target.value)}
-          style={{
-            width: '100%',
-            padding: 12,
-            borderRadius: 8,
-            border: '1px solid #ddd',
-            fontSize: 16
-          }}
-        />
-      </div>
-
-      {/* Bảng danh sách */}
-      {loading ? (
-        <div style={{ textAlign: 'center', padding: 40 }}>Đang tải...</div>
-      ) : error ? (
-        <div style={{ color: 'red', padding: 20, background: '#ffebee', borderRadius: 8 }}>{error}</div>
-      ) : (
-        <div style={{ 
-          background: '#fff', 
-          borderRadius: 10, 
-          boxShadow: '0 2px 8px rgba(0,0,0,0.04)', 
-          overflow: 'hidden' 
-        }}>
-          <table style={{ width: '100%', borderCollapse: 'collapse' }}>
-            <thead style={{ background: '#f0f4f8' }}>
-              <tr>
-                <th style={{ padding: 16, textAlign: 'left' }}>ID</th>
-                <th style={{ padding: 16, textAlign: 'left' }}>Tên danh mục</th>
-                <th style={{ padding: 16, textAlign: 'right' }}>Thao tác</th>
-              </tr>
-            </thead>
-            <tbody>
-              {filteredCategories.map(c => (
-                <tr key={c.id} style={{ borderTop: '1px solid #eee' }}>
-                  <td style={{ padding: 16 }}>{c.id}</td>
-                  <td style={{ padding: 16 }}>{c.name}</td>
-                  <td style={{ padding: 16, textAlign: 'right' }}>
-                    <button 
-                      onClick={() => handleEdit(c)} 
-                      style={{ 
-                        marginRight: 8, 
-                        padding: '8px 16px', 
-                        background: '#1a94ff', 
-                        color: '#fff', 
-                        border: 'none', 
-                        borderRadius: 6, 
-                        fontWeight: 500,
-                        cursor: 'pointer',
-                        transition: 'background 0.2s'
-                      }}
-                      onMouseOver={e => e.target.style.background = '#0070e0'}
-                      onMouseOut={e => e.target.style.background = '#1a94ff'}
-                    >
-                      Sửa
-                    </button>
-                    <button 
-                      onClick={() => handleDelete(c.id)} 
-                      style={{ 
-                        padding: '8px 16px', 
-                        background: '#e53935', 
-                        color: '#fff', 
-                        border: 'none', 
-                        borderRadius: 6, 
-                        fontWeight: 500,
-                        cursor: 'pointer',
-                        transition: 'background 0.2s'
-                      }}
-                      onMouseOver={e => e.target.style.background = '#d32f2f'}
-                      onMouseOut={e => e.target.style.background = '#e53935'}
-                    >
-                      Xoá
-                    </button>
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-          {filteredCategories.length === 0 && (
-            <div style={{ padding: 40, textAlign: 'center', color: '#666' }}>
-              Không tìm thấy danh mục nào
-            </div>
+          {success && (
+            <Alert severity="success" onClose={() => setSuccess(null)}>
+              {success}
+            </Alert>
           )}
-        </div>
-      )}
-    </div>
+          {error && (
+            <Alert severity="error" onClose={() => setError(null)}>
+              {error}
+            </Alert>
+          )}
+
+          <Card elevation={1} sx={{ p: { xs: 2, md: 2.5 } }}>
+            <TextField
+              placeholder="Tìm theo tên danh mục…"
+              value={searchTerm}
+              onChange={(ev) => setSearchTerm(ev.target.value)}
+              fullWidth
+              InputProps={{
+                startAdornment: (
+                  <InputAdornment position="start">
+                    <SearchIcon fontSize="small" color="action" />
+                  </InputAdornment>
+                ),
+              }}
+            />
+          </Card>
+
+          <TableContainer component={Paper} elevation={1} sx={{ borderRadius: 2 }}>
+            <Table size="small">
+              <TableHead sx={{ bgcolor: 'action.hover' }}>
+                <TableRow>
+                  <TableCell width={88}>ID</TableCell>
+                  <TableCell>Tên danh mục</TableCell>
+                  <TableCell width={120} align="right">
+                    Thao tác
+                  </TableCell>
+                </TableRow>
+              </TableHead>
+              <TableBody>
+                {loading ? (
+                  <TableRow>
+                    <TableCell colSpan={3} align="center" sx={{ py: 8 }}>
+                      <CircularProgress size={36} />
+                    </TableCell>
+                  </TableRow>
+                ) : filteredCategories.length === 0 ? (
+                  <TableRow>
+                    <TableCell colSpan={3}>
+                      <Box sx={{ py: 6, textAlign: 'center', color: 'text.secondary' }}>
+                        <Typography>
+                          {categories.length === 0 ? 'Chưa có danh mục nào.' : 'Không có danh mục khớp bộ lọc.'}
+                        </Typography>
+                      </Box>
+                    </TableCell>
+                  </TableRow>
+                ) : (
+                  filteredCategories.map((c) => (
+                    <TableRow key={c.id} hover sx={{ '&:last-child td': { border: 0 } }}>
+                      <TableCell>
+                        <Typography variant="body2" color="text.secondary" fontWeight={600}>
+                          #{c.id}
+                        </Typography>
+                      </TableCell>
+                      <TableCell>
+                        <Typography fontWeight={600}>{c.name}</Typography>
+                      </TableCell>
+                      <TableCell align="right">
+                        <Tooltip title="Sửa">
+                          <IconButton color="primary" size="small" onClick={() => openEdit(c)}>
+                            <EditIcon fontSize="small" />
+                          </IconButton>
+                        </Tooltip>
+                        <Tooltip title="Xóa">
+                          <IconButton color="error" size="small" onClick={() => setDeleteTarget(c)}>
+                            <DeleteOutlineIcon fontSize="small" />
+                          </IconButton>
+                        </Tooltip>
+                      </TableCell>
+                    </TableRow>
+                  ))
+                )}
+              </TableBody>
+            </Table>
+          </TableContainer>
+        </Stack>
+
+        <Dialog open={formDialogOpen} onClose={closeDialog} fullWidth maxWidth="sm">
+          <DialogTitle>{editingId ? 'Sửa danh mục' : 'Thêm danh mục mới'}</DialogTitle>
+          <Divider />
+          <form onSubmit={handleSubmit}>
+            <DialogContent sx={{ pt: 2 }}>
+              <TextField
+                autoFocus
+                label="Tên danh mục"
+                name="name"
+                value={form.name}
+                onChange={handleChange}
+                required
+                fullWidth
+                placeholder="Ví dụ: Laptop gaming"
+                inputProps={{ maxLength: 200 }}
+                helperText="Tối đa 200 ký tự."
+              />
+            </DialogContent>
+            <DialogActions sx={{ px: 3, py: 2 }}>
+              <Button onClick={closeDialog} color="inherit" disabled={submitting}>
+                Hủy
+              </Button>
+              <Button type="submit" variant="contained" disabled={submitting}>
+                {submitting ? 'Đang lưu…' : editingId ? 'Cập nhật' : 'Tạo mới'}
+              </Button>
+            </DialogActions>
+          </form>
+        </Dialog>
+
+        <Dialog open={Boolean(deleteTarget)} onClose={() => setDeleteTarget(null)}>
+          <DialogTitle>Xóa danh mục?</DialogTitle>
+          <DialogContent>
+            <Typography>
+              Xóa <b>{deleteTarget?.name}</b>? Danh mục đang gán cho sản phẩm có thể không xóa được.
+            </Typography>
+          </DialogContent>
+          <DialogActions sx={{ pb: 2, px: 2 }}>
+            <Button onClick={() => setDeleteTarget(null)} color="inherit">
+              Không
+            </Button>
+            <Button variant="contained" color="error" onClick={confirmDelete}>
+              Xóa
+            </Button>
+          </DialogActions>
+        </Dialog>
+      </Container>
+    </>
   );
-} 
+}

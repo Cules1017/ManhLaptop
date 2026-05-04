@@ -43,6 +43,60 @@ class DashboardController extends Controller
         return response()->json($revenue);
     }
 
+    /**
+     * Dữ liệu gom cho biểu đồ: trạng thái đơn, PTTT, khối lượng đơn 30 ngày.
+     */
+    public function getAnalytics()
+    {
+        $statusLabels = ['pending', 'processing', 'shipping', 'completed', 'cancelled'];
+        $statusCounts = Order::query()
+            ->select('status', DB::raw('COUNT(*) as c'))
+            ->groupBy('status')
+            ->pluck('c', 'status')
+            ->all();
+
+        $ordersByStatus = [];
+        foreach ($statusLabels as $s) {
+            $ordersByStatus[$s] = (int) ($statusCounts[$s] ?? 0);
+        }
+
+        $paymentCounts = Order::query()
+            ->select('payment_method', DB::raw('COUNT(*) as c'))
+            ->groupBy('payment_method')
+            ->pluck('c', 'payment_method')
+            ->all();
+
+        $start = Carbon::now()->subDays(29)->startOfDay();
+        $volumeRows = Order::query()
+            ->where('created_at', '>=', $start)
+            ->select(
+                DB::raw('DATE(created_at) as d'),
+                DB::raw('COUNT(*) as orders')
+            )
+            ->groupBy('d')
+            ->orderBy('d')
+            ->get()
+            ->keyBy('d');
+
+        $orderVolume = [];
+        for ($i = 29; $i >= 0; $i--) {
+            $d = Carbon::now()->subDays($i)->format('Y-m-d');
+            $row = $volumeRows->get($d);
+            $orderVolume[] = [
+                'date' => $d,
+                'orders' => $row ? (int) $row->orders : 0,
+            ];
+        }
+
+        return response()->json([
+            'ordersByStatus' => $ordersByStatus,
+            'ordersByPayment' => collect($paymentCounts)
+                ->map(fn ($c) => (int) $c)
+                ->all(),
+            'orderVolume' => $orderVolume,
+        ]);
+    }
+
     public function getLatestOrders()
     {
         $latestOrders = Order::with('user')

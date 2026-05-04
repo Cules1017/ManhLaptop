@@ -28,10 +28,11 @@ class OrderController extends Controller
             $order = Order::create([
                 'user_id' => $user->id,
                 'total_price' => $request->total_price,
-                'payment_method' => $request->payment_method,
-                'status' => 'pending',
-                'note' => $request->note,
             ]);
+            $order->payment_method = $request->payment_method;
+            $order->status = 'pending';
+            $order->note = $request->note;
+            $order->save();
             foreach ($request->items as $item) {
                 OrderItem::create([
                     'order_id' => $order->id,

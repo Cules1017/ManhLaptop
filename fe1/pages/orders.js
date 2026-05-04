@@ -3,8 +3,8 @@ import Page from '../components/page';
 import Title from '../components/title';
 import { apiRequest } from '../utils/apiRequest';
 import StarRatings from 'react-star-ratings';
-import { ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
+import { toast } from 'react-toastify';
+import { formatVND } from '../utils/price';
 
 const TABS = [
   { key: 'all', label: 'Tất cả đơn' },
@@ -14,6 +14,13 @@ const TABS = [
   { key: 'cancelled', label: 'Đã huỷ' },
 ];
 
+const STATUS_META = {
+  pending: { label: 'Đang xử lý', color: '#f57c00' },
+  shipping: { label: 'Đang vận chuyển', color: '#1976d2' },
+  completed: { label: 'Đã giao', color: '#2e7d32' },
+  cancelled: { label: 'Đã huỷ', color: '#b71c1c' },
+};
+
 export default function OrdersPage() {
   const [orders, setOrders] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -21,99 +28,79 @@ export default function OrdersPage() {
   const [tab, setTab] = useState('all');
   const [search, setSearch] = useState('');
   const [reviews, setReviews] = useState({});
-  const [submitting, setSubmitting] = useState(false);
+  const [submittingId, setSubmittingId] = useState(null);
+
+  const fetchOrders = async () => {
+    setLoading(true);
+    setError(null);
+    try {
+      const res = await apiRequest('http://127.0.0.1:8000/api/orders');
+      if (res.status) {
+        setOrders(res.data || []);
+      } else {
+        setError(res.message || 'Không lấy được danh sách đơn hàng');
+      }
+    } catch (err) {
+      setError('Lỗi kết nối server');
+    } finally {
+      setLoading(false);
+    }
+  };
 
   useEffect(() => {
-    const fetchOrders = async () => {
-      setLoading(true);
-      setError(null);
-      try {
-        const token = localStorage.getItem('token');
-        const res = await apiRequest('http://127.0.0.1:8000/api/orders', {
-          headers: { 'Authorization': `Bearer ${token}` }
-        });
-        if (res.status) {
-          setOrders(res.data);
-        } else {
-          setError(res.message || 'Không lấy được danh sách đơn hàng');
-        }
-      } catch (err) {
-        setError('Lỗi kết nối server');
-      } finally {
-        setLoading(false);
-      }
-    };
     fetchOrders();
   }, []);
 
   const handleRatingChange = (productId, rating) => {
-    setReviews(prev => ({
+    setReviews((prev) => ({
       ...prev,
-      [productId]: {
-        ...prev[productId],
-        rating
-      }
+      [productId]: { ...prev[productId], rating },
     }));
   };
 
   const handleCommentChange = (productId, comment) => {
-    setReviews(prev => ({
+    setReviews((prev) => ({
       ...prev,
-      [productId]: {
-        ...prev[productId],
-        comment
-      }
+      [productId]: { ...prev[productId], comment },
     }));
   };
 
   const handleSubmitReview = async (productId) => {
     if (!reviews[productId]?.rating) {
-      alert('Vui lòng chọn số sao đánh giá');
+      toast.warn('Vui lòng chọn số sao đánh giá', { position: 'top-center' });
       return;
     }
-
-    setSubmitting(true);
+    setSubmittingId(productId);
     try {
-      const token = localStorage.getItem('token');
       const res = await apiRequest('http://127.0.0.1:8000/api/review', {
         method: 'POST',
-        headers: { 
-          'Authorization': `Bearer ${token}`,
-          'Content-Type': 'application/json'
-        },
+        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           product_id: productId,
           rating: reviews[productId].rating,
-          comment: reviews[productId].comment || ''
-        })
+          comment: reviews[productId].comment || '',
+        }),
       });
 
       if (res.status) {
-        toast.success('Đánh giá thành công!');
-        // Cập nhật lại danh sách đơn hàng để lấy rating mới
-        const ordersRes = await apiRequest('http://127.0.0.1:8000/api/orders', {
-          headers: { 'Authorization': `Bearer ${token}` }
-        });
-        if (ordersRes.status) {
-          setOrders(ordersRes.data);
-        }
+        toast.success('Đánh giá thành công!', { position: 'top-center' });
+        await fetchOrders();
       } else {
-        toast.error(res.message || 'Đánh giá thất bại');
+        toast.error(res.message || 'Đánh giá thất bại', { position: 'top-center' });
       }
-    } catch (err) {
-      alert('Lỗi kết nối server');
+    } catch {
+      // popup đã hiện
     } finally {
-      setSubmitting(false);
+      setSubmittingId(null);
     }
   };
 
-  // Lọc theo tab và search
-  const filteredOrders = orders.filter(order => {
+  const filteredOrders = orders.filter((order) => {
     const matchTab = tab === 'all' ? true : order.status === tab;
     const matchSearch =
       !search ||
-      order.id.toString().includes(search) ||
-      order.items.some(item =>
+      String(order.id).includes(search) ||
+      (order.items || []).some((item) =>
         item.product?.name?.toLowerCase().includes(search.toLowerCase())
       );
     return matchTab && matchSearch;
@@ -121,174 +108,333 @@ export default function OrdersPage() {
 
   return (
     <Page>
-      <ToastContainer />
-      <div style={{ maxWidth: 900, margin: '0 auto', padding: 24 }}>
+      <div className="orders-wrapper">
         <Title title="Đơn hàng của tôi" />
-        {/* Tabs */}
-        <div style={{ display: 'flex', gap: 24, borderBottom: '2px solid #f0f0f0', marginBottom: 18 }}>
-          {TABS.map(t => (
-            <div
+
+        <div className="orders-tabs">
+          {TABS.map((t) => (
+            <button
               key={t.key}
               onClick={() => setTab(t.key)}
-              style={{
-                padding: '12px 0',
-                cursor: 'pointer',
-                borderBottom: tab === t.key ? '2.5px solid #1a94ff' : '2.5px solid transparent',
-                color: tab === t.key ? '#1a94ff' : '#222',
-                fontWeight: tab === t.key ? 700 : 500,
-                fontSize: 17,
-                transition: 'all 0.2s'
-              }}
+              className={`orders-tab ${tab === t.key ? 'active' : ''}`}
             >
               {t.label}
-            </div>
+            </button>
           ))}
         </div>
-        {/* Search */}
-        <div style={{ display: 'flex', alignItems: 'center', marginBottom: 24 }}>
+
+        <div className="orders-search">
           <input
             type="text"
-            placeholder="Tìm đơn hàng theo Mã đơn hàng hoặc Tên sản phẩm"
+            placeholder="Tìm theo mã đơn hàng hoặc tên sản phẩm"
             value={search}
-            onChange={e => setSearch(e.target.value)}
-            style={{
-              flex: 1,
-              padding: '10px 16px',
-              borderRadius: 8,
-              border: '1px solid #ddd',
-              fontSize: 16,
-              marginRight: 12,
-              background: '#fafbfc'
-            }}
+            onChange={(e) => setSearch(e.target.value)}
           />
-          <button
-            style={{
-              padding: '10px 24px',
-              borderRadius: 8,
-              border: 'none',
-              background: '#1a94ff',
-              color: '#fff',
-              fontWeight: 600,
-              fontSize: 16,
-              cursor: 'pointer'
-            }}
-            onClick={() => {}}
-          >
-            Tìm đơn hàng
-          </button>
         </div>
-        {/* List */}
-        {loading && <div>Đang tải...</div>}
-        {error && <div style={{ color: 'red' }}>{error}</div>}
-        {!loading && !error && filteredOrders.length === 0 && <div>Không có đơn hàng nào phù hợp.</div>}
+
+        {loading && <div className="orders-msg">Đang tải...</div>}
+        {error && <div className="orders-msg orders-err">{error}</div>}
+        {!loading && !error && filteredOrders.length === 0 && (
+          <div className="orders-msg">Không có đơn hàng nào phù hợp.</div>
+        )}
+
         {!loading && !error && filteredOrders.length > 0 && (
-          <div style={{ display: 'flex', flexDirection: 'column', gap: 32 }}>
-            {filteredOrders.map(order => (
-              <div key={order.id} style={{ border: '1px solid #eee', borderRadius: 12, padding: 20, background: '#fff', boxShadow: '0 2px 8px rgba(0,0,0,0.04)' }}>
-                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 12 }}>
-                  <div>
-                    <b>Mã đơn hàng:</b> #{order.id}
+          <div className="orders-list">
+            {filteredOrders.map((order) => {
+              const meta = STATUS_META[order.status] || { label: order.status, color: '#888' };
+              return (
+                <div key={order.id} className="order-card">
+                  <div className="order-card-head">
+                    <div>
+                      <b>Mã đơn hàng:</b> #{order.id}
+                    </div>
+                    <div className="order-status" style={{ color: meta.color }}>
+                      {meta.label}
+                    </div>
                   </div>
-                  <div style={{ color: '#388e3c', fontWeight: 600 }}>{order.status}</div>
-                </div>
-                <div style={{ color: '#888', fontSize: 14, marginBottom: 8 }}>Ngày đặt: {new Date(order.created_at).toLocaleString()}</div>
-                <div style={{ marginBottom: 12 }}>
-                  <b>Sản phẩm:</b>
-                  <div style={{ display: 'flex', flexWrap: 'wrap', gap: 16, marginTop: 8 }}>
-                    {order.items.map(item => (
-                      <div key={item.id} style={{ display: 'flex', alignItems: 'center', gap: 8, background: '#f7f7fa', borderRadius: 8, padding: 8, minWidth: 220 }}>
-                        <img src={item.product?.image || item.product?.img_url} alt={item.product?.name} style={{ width: 48, height: 48, objectFit: 'contain', borderRadius: 6, background: '#fff' }} />
-                        <div>
-                          <div style={{ fontWeight: 500 }}>{item.product?.name}</div>
-                          <div style={{ color: '#888', fontSize: 13 }}>SL: {item.quantity}</div>
-                          <div style={{ color: '#e53935', fontWeight: 600 }}>{parseInt(item.price).toLocaleString()}₫</div>
-                          {order.status === 'completed' && (
-                            <div
-                              style={{
-                                marginTop: 12,
-                                background: '#f8fafc',
-                                border: '1px solid #e0e7ef',
-                                borderRadius: 10,
-                                boxShadow: '0 2px 8px rgba(30,136,229,0.06)',
-                                padding: 16,
-                                minWidth: 240,
-                                maxWidth: 340,
-                                display: 'flex',
-                                flexDirection: 'column',
-                                gap: 8,
-                              }}
-                            >
-                              <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
-                                <StarRatings
-                                  rating={item.review ? item.review.rating : (reviews[item.product.id]?.rating || 0)}
-                                  starRatedColor="#F9AD3D"
-                                  numberOfStars={5}
-                                  name={`rating-${item.product.id}`}
-                                  starDimension="22px"
-                                  starSpacing="2px"
-                                  changeRating={item.review ? undefined : (rating => handleRatingChange(item.product.id, rating))}
-                                />
-                                <span style={{ color: '#888', fontSize: 13, marginLeft: 4 }}>
-                                  {item.review ? `${item.review.rating}/5` : (reviews[item.product.id]?.rating ? `${reviews[item.product.id].rating}/5` : '')}
-                                </span>
-                              </div>
-                              <textarea
-                                placeholder="Nhập đánh giá của bạn (không bắt buộc)"
-                                value={item.review ? item.review.comment : (reviews[item.product.id]?.comment || '')}
-                                onChange={e => handleCommentChange(item.product.id, e.target.value)}
-                                style={{
-                                  width: '100%',
-                                  padding: 10,
-                                  borderRadius: 6,
-                                  border: '1px solid #cfd8dc',
-                                  fontSize: 14,
-                                  minHeight: 60,
-                                  background: item.review ? '#f3f3f3' : '#fff',
-                                  resize: 'vertical',
-                                  boxSizing: 'border-box',
-                                }}
-                                disabled={!!item.review}
-                              />
-                              <div style={{ display: 'flex', justifyContent: 'flex-end' }}>
-                                {item.review ? (
-                                  <span style={{ color: '#16a34a', fontWeight: 600, fontSize: 15, alignSelf: 'center' }}>Đã đánh giá</span>
-                                ) : (
-                                  <button
-                                    onClick={() => handleSubmitReview(item.product.id)}
-                                    disabled={submitting}
-                                    style={{
-                                      padding: '8px 20px',
-                                      borderRadius: 6,
-                                      border: 'none',
-                                      background: submitting ? '#90caf9' : '#1976d2',
-                                      color: '#fff',
-                                      fontSize: 15,
-                                      fontWeight: 600,
-                                      cursor: submitting ? 'not-allowed' : 'pointer',
-                                      boxShadow: '0 2px 6px rgba(25,118,210,0.08)',
-                                      transition: 'background 0.2s',
-                                    }}
-                                  >
-                                    {submitting ? 'Đang gửi...' : 'Gửi đánh giá'}
-                                  </button>
-                                )}
-                              </div>
-                            </div>
-                          )}
+                  <div className="order-date">
+                    Ngày đặt: {new Date(order.created_at).toLocaleString('vi-VN')}
+                  </div>
+
+                  <div className="order-items">
+                    {(order.items || []).map((item) => (
+                      <div key={item.id} className="order-item">
+                        <img
+                          src={item.product?.image || item.product?.img_url}
+                          alt={item.product?.name}
+                        />
+                        <div className="order-item-info">
+                          <div className="order-item-name">{item.product?.name}</div>
+                          <div className="order-item-qty">SL: {item.quantity}</div>
+                          <div className="order-item-price">{formatVND(item.price)}</div>
                         </div>
+
+                        {order.status === 'completed' && (
+                          <div className="order-review-box">
+                            <div className="order-review-head">
+                              <StarRatings
+                                rating={
+                                  item.review
+                                    ? Number(item.review.rating)
+                                    : reviews[item.product?.id]?.rating || 0
+                                }
+                                starRatedColor="#F9AD3D"
+                                numberOfStars={5}
+                                name={`rating-${order.id}-${item.id}`}
+                                starDimension="22px"
+                                starSpacing="2px"
+                                changeRating={
+                                  item.review
+                                    ? undefined
+                                    : (r) => handleRatingChange(item.product?.id, r)
+                                }
+                              />
+                              <span className="order-review-rating-text">
+                                {item.review
+                                  ? `${item.review.rating}/5`
+                                  : reviews[item.product?.id]?.rating
+                                  ? `${reviews[item.product.id].rating}/5`
+                                  : ''}
+                              </span>
+                            </div>
+                            <textarea
+                              placeholder="Nhập đánh giá của bạn (không bắt buộc)"
+                              value={
+                                item.review
+                                  ? item.review.comment || ''
+                                  : reviews[item.product?.id]?.comment || ''
+                              }
+                              onChange={(e) =>
+                                handleCommentChange(item.product?.id, e.target.value)
+                              }
+                              disabled={!!item.review}
+                              className={`order-review-textarea ${
+                                item.review ? 'is-readonly' : ''
+                              }`}
+                            />
+                            <div className="order-review-actions">
+                              {item.review ? (
+                                <span className="order-review-done">Đã đánh giá</span>
+                              ) : (
+                                <button
+                                  onClick={() => handleSubmitReview(item.product?.id)}
+                                  disabled={submittingId === item.product?.id}
+                                  className="order-review-submit"
+                                >
+                                  {submittingId === item.product?.id
+                                    ? 'Đang gửi...'
+                                    : 'Gửi đánh giá'}
+                                </button>
+                              )}
+                            </div>
+                          </div>
+                        )}
                       </div>
                     ))}
                   </div>
+
+                  <div className="order-foot">
+                    <div>
+                      <b>Ghi chú:</b>{' '}
+                      {order.note || <span style={{ color: '#bbb' }}>(Không có)</span>}
+                    </div>
+                    <div className="order-total">Tổng: {formatVND(order.total_price)}</div>
+                  </div>
                 </div>
-                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginTop: 12 }}>
-                  <div><b>Ghi chú:</b> {order.note || <span style={{ color: '#bbb' }}>(Không có)</span>}</div>
-                  <div style={{ fontWeight: 700, fontSize: 18, color: '#e53935' }}>Tổng: {parseInt(order.total_price).toLocaleString()}₫</div>
-                </div>
-              </div>
-            ))}
+              );
+            })}
           </div>
         )}
       </div>
+      <style jsx>{`
+        .orders-wrapper {
+          width: 100%;
+          max-width: 960px;
+          margin: 0 auto;
+          padding: 16px;
+          box-sizing: border-box;
+        }
+        .orders-tabs {
+          display: flex;
+          flex-wrap: wrap;
+          gap: 6px;
+          border-bottom: 2px solid #f0f0f0;
+          margin-bottom: 18px;
+        }
+        .orders-tab {
+          background: none;
+          border: none;
+          padding: 12px 14px;
+          cursor: pointer;
+          border-bottom: 2.5px solid transparent;
+          color: #222;
+          font-weight: 500;
+          font-size: 15px;
+          transition: color 0.2s, border-color 0.2s;
+        }
+        .orders-tab.active {
+          border-bottom-color: #1a94ff;
+          color: #1a94ff;
+          font-weight: 700;
+        }
+        .orders-search {
+          margin-bottom: 24px;
+        }
+        .orders-search input {
+          width: 100%;
+          padding: 10px 16px;
+          border-radius: 8px;
+          border: 1px solid #ddd;
+          font-size: 15px;
+          background: #fafbfc;
+          box-sizing: border-box;
+        }
+        .orders-msg {
+          padding: 32px 16px;
+          text-align: center;
+          color: #666;
+        }
+        .orders-err {
+          color: #d32f2f;
+        }
+        .orders-list {
+          display: flex;
+          flex-direction: column;
+          gap: 20px;
+        }
+        .order-card {
+          border: 1px solid #eee;
+          border-radius: 12px;
+          padding: 18px;
+          background: #fff;
+          box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+        }
+        .order-card-head {
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          margin-bottom: 8px;
+          flex-wrap: wrap;
+          gap: 8px;
+        }
+        .order-status {
+          font-weight: 700;
+        }
+        .order-date {
+          color: #888;
+          font-size: 13px;
+          margin-bottom: 12px;
+        }
+        .order-items {
+          display: flex;
+          flex-direction: column;
+          gap: 12px;
+          margin-bottom: 12px;
+        }
+        .order-item {
+          display: flex;
+          gap: 12px;
+          align-items: flex-start;
+          background: #f7f7fa;
+          border-radius: 8px;
+          padding: 10px;
+          flex-wrap: wrap;
+        }
+        .order-item img {
+          width: 56px;
+          height: 56px;
+          object-fit: contain;
+          border-radius: 6px;
+          background: #fff;
+          flex-shrink: 0;
+        }
+        .order-item-info {
+          display: flex;
+          flex-direction: column;
+          gap: 2px;
+          flex: 1 1 180px;
+        }
+        .order-item-name {
+          font-weight: 500;
+          font-size: 15px;
+        }
+        .order-item-qty {
+          color: #888;
+          font-size: 13px;
+        }
+        .order-item-price {
+          color: #e53935;
+          font-weight: 600;
+        }
+        .order-review-box {
+          background: #f8fafc;
+          border: 1px solid #e0e7ef;
+          border-radius: 10px;
+          padding: 12px;
+          display: flex;
+          flex-direction: column;
+          gap: 8px;
+          flex: 1 1 260px;
+        }
+        .order-review-head {
+          display: flex;
+          align-items: center;
+          gap: 8px;
+        }
+        .order-review-rating-text {
+          color: #888;
+          font-size: 13px;
+        }
+        .order-review-textarea {
+          width: 100%;
+          padding: 10px;
+          border-radius: 6px;
+          border: 1px solid #cfd8dc;
+          font-size: 14px;
+          min-height: 60px;
+          resize: vertical;
+          box-sizing: border-box;
+          font-family: inherit;
+        }
+        .order-review-textarea.is-readonly {
+          background: #f3f3f3;
+        }
+        .order-review-actions {
+          display: flex;
+          justify-content: flex-end;
+        }
+        .order-review-done {
+          color: #16a34a;
+          font-weight: 600;
+          font-size: 14px;
+        }
+        .order-review-submit {
+          padding: 8px 18px;
+          border-radius: 6px;
+          border: none;
+          background: #1976d2;
+          color: #fff;
+          font-weight: 600;
+          cursor: pointer;
+        }
+        .order-review-submit:disabled {
+          background: #90caf9;
+          cursor: not-allowed;
+        }
+        .order-foot {
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          margin-top: 8px;
+          flex-wrap: wrap;
+          gap: 8px;
+        }
+        .order-total {
+          font-weight: 700;
+          font-size: 16px;
+          color: #e53935;
+        }
+      `}</style>
     </Page>
   );
-} 
+}

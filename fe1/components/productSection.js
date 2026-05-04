@@ -31,14 +31,22 @@ export default function ProductSection({ category }) {
           flex-direction: row;
           justify-content: space-between;
           width: 100%;
+          gap: 24px;
+        }
+        #product aside {
+          width: 240px;
+          flex-shrink: 0;
         }
         #product .main {
           flex-grow: 1;
-          padding-left: 30px;
+          min-width: 0;
         }
         @media (max-width: 900px) {
-          #product .main {
-            padding-left: 0;
+          #product {
+            flex-direction: column;
+          }
+          #product aside {
+            width: 100%;
           }
         }
       `}</style>

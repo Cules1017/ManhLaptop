@@ -1,6 +1,6 @@
 export default function ToggleDrawerButton({ openDrawer }) {
   return (
-    <button onClick={openDrawer}>
+    <button onClick={openDrawer} aria-label="Mở menu">
       <div className="button-line" />
       <div className="button-line" />
       <div className="button-line" />

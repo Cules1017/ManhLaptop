@@ -19,11 +19,21 @@ api.interceptors.request.use(config => {
   return config;
 });
 
-// Interceptor để xử lý lỗi 401
+function isLoginApiRequest(config) {
+  if (!config?.url) return false;
+  const path = String(config.url).split('?')[0];
+  return path === '/login' || path.endsWith('/login');
+}
+
+// Interceptor: 401 → đăng xuất và về trang login (trừ khi đang gọi API login / caller yêu cầu giữ trang)
 api.interceptors.response.use(
   response => response,
   error => {
-    if (error.response && error.response.status === 401) {
+    const status = error.response?.status;
+    const cfg = error.config;
+    if (status === 401 && !cfg?.skipAuthRedirect && !isLoginApiRequest(cfg)) {
+      localStorage.removeItem('token');
+      localStorage.removeItem('user');
       window.location.href = '/admin/login';
     }
     return Promise.reject(error);

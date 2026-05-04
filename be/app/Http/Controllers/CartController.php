@@ -90,4 +90,54 @@ class CartController extends Controller
             'message' => 'Removed from cart'
         ]);
     }
+
+    // Cập nhật số lượng tuyệt đối cho sản phẩm trong giỏ (thay cho việc cộng dồn của /cart/add)
+    // quantity <= 0 sẽ xoá sản phẩm khỏi giỏ
+    public function update(Request $request)
+    {
+        try {
+            $user = $request->user();
+            $request->validate([
+                'product_id' => 'required|exists:products,id',
+                'quantity'   => 'required|integer',
+            ]);
+
+            $cartItem = CartItem::where('user_id', $user->id)
+                ->where('product_id', $request->product_id)
+                ->first();
+
+            $quantity = (int) $request->quantity;
+
+            if ($quantity <= 0) {
+                if ($cartItem) {
+                    $cartItem->delete();
+                }
+                return response()->json([
+                    'status'  => true,
+                    'message' => 'Removed from cart',
+                ]);
+            }
+
+            if ($cartItem) {
+                $cartItem->quantity = $quantity;
+                $cartItem->save();
+            } else {
+                $cartItem = CartItem::create([
+                    'user_id'    => $user->id,
+                    'product_id' => $request->product_id,
+                    'quantity'   => $quantity,
+                ]);
+            }
+
+            return response()->json([
+                'status' => true,
+                'data'   => $cartItem,
+            ]);
+        } catch (\Throwable $th) {
+            return response()->json([
+                'status'  => false,
+                'message' => $th->getMessage(),
+            ], 500);
+        }
+    }
 } 

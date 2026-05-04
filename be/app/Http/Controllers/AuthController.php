@@ -6,7 +6,6 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Validation\ValidationException;
 
 class AuthController extends Controller
 {
@@ -47,37 +46,29 @@ class AuthController extends Controller
 
     public function login(Request $request)
     {
-        try {
-            $request->validate([
-                'email' => 'required|email',
-                'password' => 'required',
-            ]);
-    
-            if (!Auth::attempt($request->only('email', 'password'))) {
-                throw ValidationException::withMessages([
-                    'email' => ['The provided credentials are incorrect.'],
-                ]);
-            }
-    
-            $user = User::where('email', $request->email)->firstOrFail();
-            $token = $user->createToken('auth_token')->plainTextToken;
-    
-            return response()->json([
-                'status' => true,
-                'message' => 'Login successful',
-                'data' => [
-                    'user' => $user,
-                    'token' => $token
-                ]
-            ]);
-        } catch (\Throwable $th) {
+        $request->validate([
+            'email' => 'required|email',
+            'password' => 'required',
+        ]);
+
+        if (! Auth::attempt($request->only('email', 'password'))) {
             return response()->json([
                 'status' => false,
-                'message' => 'Sai thông tin tài khoản hoặc mật khẩu',
-                'error' => $th->getTrace()
-            ], 500);
+                'message' => 'Sai email hoặc mật khẩu.',
+            ], 401);
         }
-        
+
+        $user = User::where('email', $request->email)->firstOrFail();
+        $token = $user->createToken('auth_token')->plainTextToken;
+
+        return response()->json([
+            'status' => true,
+            'message' => 'Đăng nhập thành công.',
+            'data' => [
+                'user' => $user,
+                'token' => $token,
+            ],
+        ]);
     }
 
     public function logout(Request $request)

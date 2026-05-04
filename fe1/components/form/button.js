@@ -1,7 +1,9 @@
-export default function Button({ type, title }) {
+export default function Button({ type, title, disabled = false, ...rest }) {
   return (
     <>
-      <button type={type}>{title}</button>
+      <button type={type} disabled={disabled} {...rest}>
+        {title}
+      </button>
 
       <style jsx>{`
         button {

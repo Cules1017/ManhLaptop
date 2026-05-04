@@ -1,10 +1,13 @@
 import { useState, useEffect } from 'react';
+import { useRouter } from 'next/router';
 import ProductItem from './productItem';
-import ProductsGrid from './productsGrid';
 import LoadingPage from './loading-page';
 import { productService } from '../services/productService';
 
 export default function Products({ category, sortParams }) {
+  const router = useRouter();
+  const search = (router?.query?.search || '').toString().trim();
+
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -14,8 +17,9 @@ export default function Products({ category, sortParams }) {
       setLoading(true);
       const response = await productService.getProducts({
         category,
+        search: search || undefined,
         sort_by: sortParams?.field || 'rating',
-        sort_order: sortParams?.order || 'DESC'
+        sort_order: sortParams?.order || 'DESC',
       });
       if (response && response.data) {
         if (Array.isArray(response.data)) {
@@ -30,7 +34,7 @@ export default function Products({ category, sortParams }) {
       }
       setError(null);
     } catch (err) {
-      setError('Failed to fetch products');
+      setError('Không tải được danh sách sản phẩm');
       setProducts([]);
     } finally {
       setLoading(false);
@@ -39,23 +43,37 @@ export default function Products({ category, sortParams }) {
 
   useEffect(() => {
     fetchProducts();
-  }, [category, sortParams]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [category, sortParams, search]);
 
   if (loading) {
     return <LoadingPage />;
   }
 
   if (error) {
-    return <div>Error: {error}</div>;
+    return (
+      <div style={{ padding: 40, textAlign: 'center', color: '#e53935' }}>{error}</div>
+    );
   }
 
   if (!Array.isArray(products) || products.length === 0) {
-    return <div style={{ padding: 40, textAlign: 'center', color: '#888' }}>Không có sản phẩm nào thuộc danh mục này</div>;
+    return (
+      <div style={{ padding: 40, textAlign: 'center', color: '#888' }}>
+        {search
+          ? `Không tìm thấy sản phẩm nào với từ khoá "${search}"`
+          : 'Không có sản phẩm nào thuộc danh mục này'}
+      </div>
+    );
   }
 
   return (
     <div className="products">
       <div className="container">
+        {search && (
+          <p style={{ margin: '0 0 12px', color: '#555' }}>
+            Kết quả tìm kiếm cho: <strong>{search}</strong> ({products.length} sản phẩm)
+          </p>
+        )}
         <div className="products-grid">
           {products.map((product) => (
             <ProductItem
@@ -65,6 +83,7 @@ export default function Products({ category, sortParams }) {
               rating={product.rating}
               img_url={product.image}
               price={product.price}
+              discount={product.discount}
             />
           ))}
         </div>
@@ -77,9 +96,9 @@ export default function Products({ category, sortParams }) {
 
         .products-grid {
           display: grid;
-          grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-          gap: 30px;
-          margin-top: 30px;
+          grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+          gap: 24px;
+          margin-top: 20px;
         }
       `}</style>
     </div>

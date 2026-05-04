@@ -1,48 +1,68 @@
 import { useState } from 'react';
-import { useRouter } from 'next/router';
 import PageContainer from '../../components/page-container';
 import Link from 'next/link';
-import { getErrorMessage } from '../../lib/form';
 
-import AlertError from '../../components/alerts/error';
 import Button from '../../components/form/button';
 import Input from '../../components/form/input';
 import InputContainer from '../../components/form/InputContainer';
 import FormContainer from '../../components/form/formContainer';
 
-export default function Login() {
+export default function ResetPassword() {
   const [email, setEmail] = useState('');
-  const [msgError, setMsgError] = useState('');
-
-  const router = useRouter();
+  const [message, setMessage] = useState('');
 
   async function handleSubmit(e) {
     e.preventDefault();
+    if (!email.trim()) {
+      setMessage('Vui lòng nhập email của bạn.');
+      return;
+    }
+    // Backend chưa hỗ trợ reset password qua email; thông báo rõ cho người dùng
+    setMessage(
+      'Chức năng đặt lại mật khẩu qua email hiện chưa được mở. Vui lòng liên hệ bộ phận hỗ trợ qua hotline 0123 456 789 để được trợ giúp.'
+    );
   }
 
   return (
-    <PageContainer title="MANH STORE - Reset Password">
+    <PageContainer title="MANH STORE - Quên mật khẩu">
       <FormContainer>
         <form onSubmit={handleSubmit}>
-          <h3 className="formTitle">Reset Password</h3>
+          <h3 className="formTitle">Quên mật khẩu</h3>
 
-          {msgError && <AlertError message={msgError} />}
+          {message && (
+            <div
+              style={{
+                color: '#1976d2',
+                background: '#e3f2fd',
+                padding: '12px 16px',
+                borderRadius: 6,
+                marginBottom: 16,
+                fontSize: 14,
+                textAlign: 'center',
+              }}
+            >
+              {message}
+            </div>
+          )}
 
           <InputContainer>
             <Input
               type="email"
               name="email"
-              placeholder="Email"
+              placeholder="Email đã đăng ký"
               onChange={(value) => setEmail(value)}
               value={email}
             />
 
-            <Button type="submit" title="Send Email" />
+            <Button type="submit" title="Gửi yêu cầu" />
           </InputContainer>
         </form>
 
+        <Link href="/user/login">
+          <a className="switchForm">Quay lại đăng nhập</a>
+        </Link>
         <Link href="/user/signup">
-          <a className="switchForm">I do not have a account</a>
+          <a className="switchForm">Tôi chưa có tài khoản</a>
         </Link>
       </FormContainer>
 
@@ -53,17 +73,20 @@ export default function Login() {
         }
         form .formTitle {
           text-align: center;
-          font-size: 38px;
-          font-weight: 1000;
-          letter-spacing: 1.65px;
-          color: #b2b2b2;
+          font-size: 32px;
+          font-weight: 700;
+          letter-spacing: 1.5px;
+          color: #333;
           text-transform: uppercase;
-          margin-bottom: 84px;
+          margin-bottom: 48px;
         }
         .switchForm {
-          color: #b2b2b2;
+          color: #555;
           margin-top: 12px;
           font-weight: 500;
+        }
+        .switchForm:hover {
+          color: #e53935;
         }
       `}</style>
     </PageContainer>

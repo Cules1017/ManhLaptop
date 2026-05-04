@@ -16,7 +16,15 @@ import {
 import  OverviewKpi  from 'src/sections/overview/overview-kpi';
 import  {OverviewLatestCustomers}  from 'src/sections/overview/overview-latest-customers';
 import  {OverviewSummary}  from 'src/sections/overview/overview-summary';
+import { DashboardAnalyticsCharts } from 'src/sections/overview/dashboard-analytics-charts';
 import api from '../services/api';
+
+function formatRevenueAxisDate(isoDate) {
+  if (!isoDate) return '';
+  const [y, m, d] = String(isoDate).split('-');
+  if (!d) return isoDate;
+  return `${d}/${m}`;
+}
 
 const Page = () => {
   const [stats, setStats] = useState({
@@ -27,6 +35,7 @@ const Page = () => {
   });
   const [revenueData, setRevenueData] = useState([]);
   const [latestOrders, setLatestOrders] = useState([]);
+  const [analytics, setAnalytics] = useState(null);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -43,6 +52,13 @@ const Page = () => {
         // Fetch latest orders
         const ordersResponse = await api.get('/admin/dashboard/latest-orders');
         setLatestOrders(ordersResponse.data);
+
+        try {
+          const analyticsResponse = await api.get('/admin/dashboard/analytics');
+          setAnalytics(analyticsResponse.data);
+        } catch {
+          setAnalytics(null);
+        }
       } catch (error) {
         console.error('Error fetching dashboard data:', error);
       } finally {
@@ -179,10 +195,16 @@ const Page = () => {
                   />
                 </Grid>
                 <Grid xs={12}>
+                  <DashboardAnalyticsCharts analytics={analytics} />
+                </Grid>
+                <Grid xs={12}>
                   <OverviewKpi
+                    chartCategories={revenueData.map((item) =>
+                      formatRevenueAxisDate(item.date)
+                    )}
                     chartSeries={[
                       {
-                        data: revenueData.map(item => item.revenue),
+                        data: revenueData.map((item) => Number(item.revenue) || 0),
                         name: 'Doanh thu'
                       }
                     ]}

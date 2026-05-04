@@ -8,14 +8,17 @@ export default function Logo() {
       </Link>
       <style jsx>{`
         .logo {
-          font-style: normal;
           font-weight: 900;
           font-size: 22px;
-          line-height: 60px;
-          letter-spacing: 1.65px;
+          line-height: 1.3;
+          letter-spacing: 1.2px;
           text-transform: uppercase;
-          color: #4d4d4d;
+          color: #e53935;
           text-decoration: none;
+          white-space: nowrap;
+        }
+        .logo:hover {
+          color: #c62828;
         }
       `}</style>
     </>

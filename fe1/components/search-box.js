@@ -9,7 +9,6 @@ export default function SearchBox() {
   const [selectedCategory, setSelectedCategory] = useState('');
   const [suggestions, setSuggestions] = useState([]);
   const [showSuggestions, setShowSuggestions] = useState(false);
-  const [loading, setLoading] = useState(false);
   const timeoutRef = useRef();
   const router = useRouter();
 
@@ -22,27 +21,24 @@ export default function SearchBox() {
         } else {
           setCategories([]);
         }
-      } catch (err) {
+      } catch {
         setCategories([]);
       }
     };
     fetchCategories();
   }, []);
 
-  const handleInputChange = (e) => {
-    const value = e.target.value;
-    setQuery(value);
+  const runSearchSuggest = (value, categoryId) => {
     clearTimeout(timeoutRef.current);
-    if (!value.trim()) {
+    if (!value || !value.trim()) {
       setSuggestions([]);
       setShowSuggestions(false);
       return;
     }
     timeoutRef.current = setTimeout(async () => {
-      setLoading(true);
       try {
         const params = { search: value };
-        if (selectedCategory) params.category = selectedCategory;
+        if (categoryId) params.category = categoryId;
         const response = await productService.getProducts(params);
         let products = [];
         if (response && response.data) {
@@ -52,28 +48,42 @@ export default function SearchBox() {
             products = response.data.data;
           }
         }
-        setSuggestions(products.slice(0, 8)); // chỉ lấy tối đa 8 gợi ý
+        setSuggestions(products.slice(0, 8));
         setShowSuggestions(true);
       } catch {
         setSuggestions([]);
         setShowSuggestions(false);
       }
-      setLoading(false);
     }, 300);
   };
 
+  const handleInputChange = (e) => {
+    const value = e.target.value;
+    setQuery(value);
+    runSearchSuggest(value, selectedCategory);
+  };
+
   const handleCategoryChange = (e) => {
-    setSelectedCategory(e.target.value);
-    // Nếu đã có query thì search lại theo category mới
-    if (query.trim()) {
-      handleInputChange({ target: { value: query } });
-    }
+    const value = e.target.value;
+    setSelectedCategory(value);
+    if (query.trim()) runSearchSuggest(query, value);
   };
 
   const handleSuggestionClick = (product) => {
-    setQuery(product.name);
+    setQuery('');
     setShowSuggestions(false);
     router.push(`/product/${product.id}`);
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    setShowSuggestions(false);
+    const q = query.trim();
+    if (!q) return;
+    const target = selectedCategory
+      ? `/category/${selectedCategory}?search=${encodeURIComponent(q)}`
+      : `/?search=${encodeURIComponent(q)}`;
+    router.push(target);
   };
 
   const handleBlur = () => {
@@ -81,19 +91,19 @@ export default function SearchBox() {
   };
 
   return (
-    <div style={{ position: 'relative', width: 350 }}>
+    <form onSubmit={handleSubmit} style={{ position: 'relative', flex: 1, maxWidth: 480 }}>
       <div className="search-box">
-        <button className="search-button" tabIndex={-1}>
-          <FaSearch color="#D8D8D8" size="15px" />
+        <button className="search-button" type="submit" aria-label="Tìm kiếm">
+          <FaSearch color="#999" size="16px" />
         </button>
         <input
           id="search"
           type="text"
           name="search"
-          placeholder="Search goods"
+          placeholder="Tìm kiếm sản phẩm..."
           value={query}
           onChange={handleInputChange}
-          onFocus={() => query && setShowSuggestions(true)}
+          onFocus={() => query && suggestions.length && setShowSuggestions(true)}
           onBlur={handleBlur}
           autoComplete="off"
         />
@@ -102,10 +112,9 @@ export default function SearchBox() {
           name="categories-search"
           value={selectedCategory}
           onChange={handleCategoryChange}
+          aria-label="Lọc theo danh mục"
         >
-          <option value="" defaultValue>
-            Category
-          </option>
+          <option value="">Tất cả</option>
           {categories.map((category) => (
             <option key={category.id} value={category.id}>
               {category.label || category.name}
@@ -114,44 +123,28 @@ export default function SearchBox() {
         </select>
       </div>
       {showSuggestions && suggestions.length > 0 && (
-        <ul
-          style={{
-            position: 'absolute',
-            top: '100%',
-            left: 0,
-            right: 0,
-            background: '#fff',
-            border: '1px solid #eee',
-            zIndex: 10,
-            listStyle: 'none',
-            margin: 0,
-            padding: 0,
-            maxHeight: 300,
-            overflowY: 'auto',
-          }}
-        >
+        <ul className="suggestions">
           {suggestions.map((product) => (
             <li
               key={product.id}
               onMouseDown={() => handleSuggestionClick(product)}
-              style={{
-                padding: '8px',
-                cursor: 'pointer',
-                borderBottom: '1px solid #f0f0f0',
-                display: 'flex',
-                alignItems: 'center',
-              }}
+              className="suggestion-item"
             >
               {product.image && (
                 <img
                   src={product.image}
                   alt={product.name}
-                  width={32}
-                  height={32}
-                  style={{ marginRight: 8, verticalAlign: 'middle', objectFit: 'cover', borderRadius: 4 }}
+                  width={36}
+                  height={36}
+                  style={{
+                    marginRight: 10,
+                    objectFit: 'contain',
+                    borderRadius: 4,
+                    background: '#fafafa',
+                  }}
                 />
               )}
-              <span>{product.name}</span>
+              <span className="sugg-name">{product.name}</span>
             </li>
           ))}
         </ul>
@@ -161,13 +154,15 @@ export default function SearchBox() {
           display: flex;
           flex-direction: row;
           align-items: center;
-          padding-left: 12px;
-          padding-right: 12px;
+          padding: 0 8px 0 12px;
           height: 42px;
           background: #ffffff;
-          border: 2px solid #f5f5f5;
+          border: 1px solid #e0e0e0;
           box-sizing: border-box;
-          border-radius: 4px;
+          border-radius: 6px;
+        }
+        .search-box:focus-within {
+          border-color: #e53935;
         }
         .search-box .search-button {
           display: flex;
@@ -175,39 +170,66 @@ export default function SearchBox() {
           background: none;
           border: none;
           height: 100%;
+          cursor: pointer;
         }
         .search-box .search-button:focus {
           outline: none;
         }
-        .search-box .search-button:hover {
-          opacity: 40%;
-        }
         .search-box input {
-          width: 75%;
+          flex: 1;
           height: 100%;
           border: none;
-          padding-left: 8px;
+          padding: 0 8px;
+          font-size: 14px;
         }
         .search-box input:focus {
           outline: none;
         }
         .search-box select {
-          align-self: flex-end;
-          max-width: 120px;
           height: 100%;
-          text-transform: uppercase;
-          font-style: normal;
-          font-weight: 900;
-          font-size: 10px;
-          letter-spacing: 1px;
-          color: #b2b2b2;
+          max-width: 140px;
+          font-size: 12px;
+          color: #666;
           border: none;
+          border-left: 1px solid #eee;
           background: none;
+          padding: 0 8px;
+          cursor: pointer;
         }
         .search-box select:focus {
           outline: none;
         }
+        .suggestions {
+          position: absolute;
+          top: 100%;
+          left: 0;
+          right: 0;
+          margin-top: 4px;
+          background: #fff;
+          border: 1px solid #eee;
+          border-radius: 6px;
+          z-index: 100;
+          list-style: none;
+          padding: 6px 0;
+          max-height: 340px;
+          overflow-y: auto;
+          box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+        }
+        .suggestion-item {
+          padding: 8px 12px;
+          cursor: pointer;
+          display: flex;
+          align-items: center;
+          transition: background 0.15s;
+        }
+        .suggestion-item:hover {
+          background: #f8f8f8;
+        }
+        .sugg-name {
+          font-size: 14px;
+          color: #333;
+        }
       `}</style>
-    </div>
+    </form>
   );
 }

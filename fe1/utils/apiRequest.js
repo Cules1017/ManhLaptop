@@ -1,41 +1,60 @@
 import { showErrorPopup } from '../components/Popup';
 
+const AUTH_FREE_PATHS = ['/user/login', '/user/signup', '/user/resetpassword'];
+
 export async function apiRequest(url, options = {}) {
-  // Get token from localStorage if available
+  const { silent = false, ...fetchOptions } = options;
+
   let token = null;
   if (typeof window !== 'undefined') {
     token = localStorage.getItem('token');
   }
   const headers = {
-    'Accept': 'application/json',
-    ...(options.headers || {}),
+    Accept: 'application/json',
+    ...(fetchOptions.headers || {}),
     ...(token ? { Authorization: `Bearer ${token}` } : {}),
   };
   const response = await fetch(url, {
-    ...options,
+    ...fetchOptions,
     credentials: 'include',
     headers,
   });
 
-  if (response.status === 401) {
-    let data = {};
+  const parseBody = async () => {
     try {
-      data = await response.json();
-    } catch {}
-    showErrorPopup(data.message || 'Bạn cần đăng nhập để thực hiện thao tác này!');
-    //CHUYỂN VỀ TRANG ĐĂNG NHẬP
-    window.location.href = '/user/login';  
-    throw new Error(data.message || 'Unauthorized');
+      return await response.json();
+    } catch {
+      return {};
+    }
+  };
+
+  if (response.status === 401) {
+    const data = await parseBody();
+    const message = data.message || 'Phiên đăng nhập đã hết hạn. Vui lòng đăng nhập lại!';
+    if (!silent) showErrorPopup(message);
+
+    if (typeof window !== 'undefined') {
+      const currentPath = window.location.pathname || '';
+      const isOnAuthPage = AUTH_FREE_PATHS.some((p) => currentPath.startsWith(p));
+      if (!isOnAuthPage) {
+        localStorage.removeItem('token');
+        localStorage.removeItem('user');
+        window.dispatchEvent(new Event('storage'));
+        const redirect = encodeURIComponent(currentPath);
+        window.location.href = `/user/login?redirect=${redirect}`;
+      }
+    }
+    throw new Error(message);
   }
 
   if (!response.ok) {
-    let data = {};
-    try {
-      data = await response.json();
-      } catch { }
-    showErrorPopup(data.message || 'Có lỗi xảy ra. Vui lòng thử lại!');
-    throw new Error(data.message || 'Có lỗi xảy ra');
+    const data = await parseBody();
+    const message = data.message || 'Có lỗi xảy ra. Vui lòng thử lại!';
+    if (!silent) showErrorPopup(message);
+    const err = new Error(message);
+    err.data = data;
+    throw err;
   }
 
   return response.json();
-} 
+}

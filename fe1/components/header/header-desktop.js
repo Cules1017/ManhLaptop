@@ -1,62 +1,24 @@
-import { useQuery } from '@apollo/client';
 import Link from 'next/link';
 import {
   FaShoppingCart,
   FaRegHeart,
   FaUser,
   FaSignOutAlt,
-  FaBars,
+  FaClipboardList,
 } from 'react-icons/fa';
-import { CART_COUNT } from '../../apollo/client/queries';
-import { gql } from '@apollo/client';
 import { useState, useEffect, useRef } from 'react';
 import { productService } from '../../services/productService';
 import { useCart } from '../../context/CartContext';
+import { getFinalPrice, formatVND } from '../../utils/price';
 
 import Logo from '../logo';
 import SearchBox from '../search-box';
 
-const GET_CART = gql`
-  query GetCart {
-    cart {
-      cartCount
-      items {
-        id
-        quantity
-        product {
-          id
-          name
-          price
-          image
-        }
-      }
-    }
-  }
-`;
-
 export default function HeaderDesktop({ user }) {
-  const { data: cart, loading, error } = useQuery(GET_CART);
   const { cartCount, refreshCartCount } = useCart();
-  const [categories, setCategories] = useState([]);
   const [cartItems, setCartItems] = useState([]);
   const [showCartDropdown, setShowCartDropdown] = useState(false);
   const cartDropdownRef = useRef(null);
-
-  useEffect(() => {
-    const fetchCategories = async () => {
-      try {
-        const response = await productService.getCategories();
-        if (response && response.data) {
-          setCategories(response.data);
-        } else {
-          setCategories([]);
-        }
-      } catch (err) {
-        setCategories([]);
-      }
-    };
-    fetchCategories();
-  }, []);
 
   const fetchCart = async () => {
     if (!user) {
@@ -66,7 +28,9 @@ export default function HeaderDesktop({ user }) {
     try {
       const response = await productService.getCart();
       if (response && response.status && response.data) {
-        setCartItems(Array.isArray(response.data) ? response.data : response.data.items || []);
+        setCartItems(
+          Array.isArray(response.data) ? response.data : response.data.items || []
+        );
       } else {
         setCartItems([]);
       }
@@ -114,7 +78,7 @@ export default function HeaderDesktop({ user }) {
               <a>
                 <FaShoppingCart color="#808080" />
                 <p>
-                  <sup className="items-total">{cartCount}</sup> Items
+                  <sup className="items-total">{cartCount}</sup> Giỏ hàng
                 </p>
               </a>
             </Link>
@@ -123,16 +87,25 @@ export default function HeaderDesktop({ user }) {
                 {user ? (
                   cartItems.length > 0 ? (
                     <ul>
-                      {cartItems.slice(0, 3).map((item) => (
-                        <li key={item.id} className="cart-dropdown-item">
-                          <img src={item.product?.image} alt={item.product?.name} />
-                          <div>
-                            <div className="cart-dropdown-name">{item.product?.name}</div>
-                            <div className="cart-dropdown-qty">Số lượng: {item.quantity}</div>
-                            <div className="cart-dropdown-price">Giá: {item.product?.price}₫</div>
-                          </div>
-                        </li>
-                      ))}
+                      {cartItems.slice(0, 3).map((item) => {
+                        const unitPrice = getFinalPrice(item.product || {});
+                        return (
+                          <li key={item.id} className="cart-dropdown-item">
+                            <img src={item.product?.image} alt={item.product?.name} />
+                            <div>
+                              <div className="cart-dropdown-name">
+                                {item.product?.name}
+                              </div>
+                              <div className="cart-dropdown-qty">
+                                Số lượng: {item.quantity}
+                              </div>
+                              <div className="cart-dropdown-price">
+                                Giá: {formatVND(unitPrice)}
+                              </div>
+                            </div>
+                          </li>
+                        );
+                      })}
                       {cartItems.length > 3 && (
                         <li className="cart-dropdown-viewall">
                           <Link href="/cart">
@@ -142,10 +115,12 @@ export default function HeaderDesktop({ user }) {
                       )}
                     </ul>
                   ) : (
-                    <div className="cart-dropdown-empty">Giỏ hàng của bạn đang trống.</div>
+                    <div className="cart-dropdown-empty">Giỏ hàng đang trống.</div>
                   )
                 ) : (
-                  <div className="cart-dropdown-empty">Vui lòng đăng nhập để xem giỏ hàng.</div>
+                  <div className="cart-dropdown-empty">
+                    Vui lòng đăng nhập để xem giỏ hàng.
+                  </div>
                 )}
                 <div className="cart-dropdown-footer">
                   <Link href="/cart">
@@ -158,14 +133,14 @@ export default function HeaderDesktop({ user }) {
           <Link href="/wishlist">
             <a className="nav-buttons-wishlist">
               <FaRegHeart color="#808080" />
-              <p>Wishlist</p>
+              <p>Yêu thích</p>
             </a>
           </Link>
           {!user && (
             <Link href="/user/login">
               <a className="nav-buttons-signin">
                 <FaUser color="#808080" />
-                <p>Sign In</p>
+                <p>Đăng nhập</p>
               </a>
             </Link>
           )}
@@ -173,7 +148,7 @@ export default function HeaderDesktop({ user }) {
             <>
               <Link href="/orders">
                 <a className="nav-buttons-orders">
-                  <FaShoppingCart color="#1976d2" />
+                  <FaClipboardList color="#1976d2" />
                   <p>Đơn hàng</p>
                 </a>
               </Link>
@@ -184,7 +159,7 @@ export default function HeaderDesktop({ user }) {
                 </a>
               </Link>
               <Link href="/user/signout">
-                <a className="nav-buttons-signout">
+                <a className="nav-buttons-signout" title="Đăng xuất">
                   <FaSignOutAlt />
                 </a>
               </Link>
@@ -193,13 +168,13 @@ export default function HeaderDesktop({ user }) {
         </div>
       </div>
       <style jsx>{`
-        /* Header Top */
         .header {
           display: flex;
           flex-direction: row;
           justify-content: space-between;
           align-items: center;
-          padding: 28px 10vw;
+          padding: 20px 10vw;
+          gap: 20px;
         }
         .nav-buttons {
           display: flex;
@@ -210,7 +185,7 @@ export default function HeaderDesktop({ user }) {
           display: flex;
           flex-direction: row;
           align-items: center;
-          margin-left: 32px;
+          margin-left: 24px;
           font-style: normal;
           font-weight: 500;
           font-size: 14px;
@@ -220,79 +195,24 @@ export default function HeaderDesktop({ user }) {
         .nav-buttons .items-total {
           font-size: 12px;
           align-self: flex-end;
+          background: #e53935;
+          color: #fff;
+          border-radius: 10px;
+          padding: 0 6px;
+          margin-right: 4px;
         }
         .nav-buttons .nav-buttons-signout {
           margin-left: 12px;
         }
         .nav-buttons a:hover {
-          text-decoration: underline;
+          color: #e53935;
         }
         .nav-buttons a p {
           margin-left: 8px;
         }
-        /* Header Bottom */
-        .header-bottom {
-          padding: 0px 10vw;
-          border-top: 2px solid #f5f5f5;
+        .cart-hover-area {
+          position: relative;
         }
-        .header-bottom .all-categories-box {
-          height: 100%;
-          display: flex;
-          align-items: center;
-          /* Border */
-          border-right: 2px solid #f5f5f5;
-          padding-top: 20px;
-          padding-bottom: 20px;
-          padding-right: 48px;
-        }
-        .header-bottom .all-categories-box select {
-          height: 100%;
-          padding-left: 15px;
-          font-family: Roboto;
-          font-style: normal;
-          font-weight: 500;
-          font-size: 14px;
-          line-height: 60px;
-          color: #808080;
-          border: none;
-          background: none;
-        }
-        .header-bottom .all-categories-box select:focus {
-          outline: none;
-        }
-        .header-bottom .main-nav {
-          display: flex;
-          align-items: center;
-        }
-        .header-bottom .main-nav a {
-          font-style: normal;
-          font-weight: 500;
-          font-size: 14px;
-          color: #666666;
-          text-decoration: none;
-          margin-left: 16px;
-          margin-right: 16px;
-        }
-        .header-bottom .main-nav a:hover {
-          text-decoration: underline;
-        }
-        .header-bottom .settings {
-          display: flex;
-          flex-direction: row;
-          align-items: center;
-        }
-        .header-bottom .settings .menu-dropdown {
-          /* Border */
-          border-left: 2px solid #f5f5f5;
-          padding: 20px 24px;
-        }
-        .header-bottom .settings .menu-dropdown p {
-          font-style: normal;
-          font-weight: 500;
-          font-size: 14px;
-          color: #b3b3b3;
-        }
-        .cart-hover-area { position: relative; }
         .cart-dropdown {
           position: absolute;
           top: 40px;
@@ -300,7 +220,7 @@ export default function HeaderDesktop({ user }) {
           width: 340px;
           background: #fff;
           border: 1px solid #eee;
-          box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+          box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
           border-radius: 8px;
           z-index: 100;
           padding: 16px 0 0 0;
@@ -331,7 +251,8 @@ export default function HeaderDesktop({ user }) {
           font-size: 15px;
           margin-bottom: 2px;
         }
-        .cart-dropdown-qty, .cart-dropdown-price {
+        .cart-dropdown-qty,
+        .cart-dropdown-price {
           font-size: 13px;
           color: #888;
         }
@@ -348,6 +269,7 @@ export default function HeaderDesktop({ user }) {
         .cart-dropdown-footer a {
           color: #1875f0;
           font-weight: 500;
+          margin: 0;
         }
         .cart-dropdown-viewall {
           text-align: center;
@@ -359,6 +281,7 @@ export default function HeaderDesktop({ user }) {
         .cart-dropdown-viewall a {
           color: #1875f0;
           text-decoration: underline;
+          margin: 0;
         }
       `}</style>
     </>

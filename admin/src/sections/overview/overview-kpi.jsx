@@ -3,7 +3,7 @@ import { Card, CardContent, CardHeader, Stack, Typography } from '@mui/material'
 import  {Chart}  from 'src/components/chart';
 
 export default function OverviewKpi(props) {
-  const { chartSeries, stats } = props;
+  const { chartSeries, stats, chartCategories = [] } = props;
   const theme = useTheme();
 
   const chartOptions = {
@@ -42,6 +42,7 @@ export default function OverviewKpi(props) {
       mode: theme.palette.mode
     },
     xaxis: {
+      categories: chartCategories.length ? chartCategories : undefined,
       axisBorder: {
         show: false
       },
@@ -59,14 +60,23 @@ export default function OverviewKpi(props) {
         offsetX: -10,
         style: {
           colors: theme.palette.text.secondary
-        }
+        },
+        formatter: (val) =>
+          typeof val === 'number' ? `${val.toLocaleString('vi-VN')}đ` : val
+      }
+    },
+    tooltip: {
+      theme: theme.palette.mode,
+      y: {
+        formatter: (val) =>
+          typeof val === 'number' ? `${Number(val).toLocaleString('vi-VN')}đ` : val
       }
     }
   };
 
   return (
     <Card>
-      <CardHeader title="Revenue Overview" />
+      <CardHeader title="Doanh thu 7 ngày gần nhất" subheader="Đơn đã hoàn thành" />
       <CardContent>
         <Stack spacing={3}>
           <Chart

@@ -11,7 +11,7 @@ import {
 } from 'react-icons/fa';
 import Logo from './logo';
 
-export default function Fotter() {
+export default function Footer() {
   return (
     <footer>
       <div className="footer footer-top">

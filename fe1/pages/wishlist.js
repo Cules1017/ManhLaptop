@@ -14,18 +14,36 @@ export default function Wishlist() {
   useEffect(() => {
     const fetchWishlist = async () => {
       setLoading(true);
-      // Lấy id sản phẩm từ localStorage
-      const wishlist = JSON.parse(localStorage.getItem('wishlist') || '{"products": []}');
-      if (!wishlist.products.length) {
+      if (typeof window === 'undefined') {
+        setLoading(false);
+        return;
+      }
+      let wishlist = { products: [] };
+      try {
+        wishlist = JSON.parse(localStorage.getItem('wishlist') || '{"products": []}');
+      } catch {
+        wishlist = { products: [] };
+      }
+      if (!wishlist.products?.length) {
         setProducts([]);
         setLoading(false);
         return;
       }
-      // Lấy chi tiết từng sản phẩm
-      const productPromises = wishlist.products.map(id => productService.getProductById(id));
-      const productResults = await Promise.all(productPromises);
-      setProducts(productResults.map(res => res.data));
-      setLoading(false);
+      try {
+        const productPromises = wishlist.products.map((id) =>
+          productService.getProductById(id).catch(() => null)
+        );
+        const productResults = await Promise.all(productPromises);
+        setProducts(
+          productResults
+            .filter((res) => res && res.data)
+            .map((res) => res.data)
+        );
+      } catch {
+        setProducts([]);
+      } finally {
+        setLoading(false);
+      }
     };
     fetchWishlist();
   }, []);
@@ -35,14 +53,14 @@ export default function Wishlist() {
   if (!products.length)
     return (
       <Page>
-        <Title title="Wishlist" />
+        <Title title="Sản phẩm yêu thích" />
         <EmptySection name="wishlist" />
       </Page>
     );
 
   return (
     <Page>
-      <Title title="Wishlist" />
+      <Title title="Sản phẩm yêu thích" />
       <section className="wishlist">
         <aside>
           <AsideCategories />
@@ -57,6 +75,7 @@ export default function Wishlist() {
                 rating={product.rating}
                 img_url={product.image || product.img_url}
                 price={product.price}
+                discount={product.discount}
               />
             ))}
           </ProductsGrid>
@@ -68,10 +87,15 @@ export default function Wishlist() {
           flex-direction: row;
           justify-content: space-between;
           width: 100%;
+          gap: 30px;
         }
         .wishlist .main {
           flex-grow: 1;
-          padding-left: 30px;
+        }
+        @media (max-width: 768px) {
+          .wishlist {
+            flex-direction: column;
+          }
         }
       `}</style>
     </Page>

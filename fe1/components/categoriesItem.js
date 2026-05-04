@@ -53,22 +53,26 @@ export default function CategoriesItem({ category, active }) {
           flex-direction: row;
           align-items: center;
           justify-content: space-between;
-          padding: 18px;
+          padding: 12px 16px;
           text-decoration: none;
           font-weight: 500;
-          font-size: 13px;
-          color: #808080;
-          border-bottom: 2px solid #f5f5f5;
-          transition: 0.4s;
+          font-size: 14px;
+          color: #555;
+          border-bottom: 1px solid #f5f5f5;
+          transition: background 0.2s, color 0.2s;
+        }
+        li:last-child a {
+          border-bottom: none;
         }
         li a:hover {
-          background: #f2f2f2;
+          background: #fff5f5;
+          color: #e53935;
         }
         li.active a,
         li a.active {
-          background: #e3f0ff;
-          color: #1976d2;
-          font-weight: 700;
+          background: #ffeeee;
+          color: #e53935;
+          font-weight: 600;
         }
         li a .content {
           display: flex;
@@ -76,10 +80,11 @@ export default function CategoriesItem({ category, active }) {
           align-items: center;
         }
         li a .content .icon {
-          padding-right: 18px;
+          padding-right: 12px;
+          display: inline-flex;
         }
         li a .arrow-button {
-          align-self: flex-end;
+          display: inline-flex;
         }
       `}</style>
     </li>

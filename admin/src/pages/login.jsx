@@ -1,21 +1,45 @@
 import { useState } from 'react';
 import api from '../services/api';
 
+/** Lấy nội dung lỗi từ JSON API (Laravel: errors trước, rồi message). */
+function getLoginErrorMessage(err) {
+  const d = err.response?.data;
+  if (!d) return null;
+  const fieldErrors = d.errors
+    ? Object.values(d.errors)
+        .flat()
+        .filter((x) => typeof x === 'string' && x.trim())
+    : [];
+  const firstField = fieldErrors[0];
+  const top = typeof d.message === 'string' ? d.message.trim() : '';
+  const raw = firstField || top || null;
+  if (!raw) return null;
+  if (/credentials are incorrect|provided credentials/i.test(raw)) {
+    return 'Sai email hoặc mật khẩu.';
+  }
+  return raw;
+}
+
 export default function AdminLogin() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
 
+  const authRequestConfig = { skipAuthRedirect: true };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
+    if (typeof window !== 'undefined') {
+      window.localStorage.clear();
+    }
     setLoading(true);
     setError(null);
     try {
-      const res = await api.post('/login', { email, password });
+      const res = await api.post('/login', { email, password }, authRequestConfig);
       if (res.data && res.data.status && res.data.data && res.data.data.token) {
-        // Lấy thông tin user
         const userRes = await api.get('/me', {
+          ...authRequestConfig,
           headers: { Authorization: `Bearer ${res.data.data.token}` }
         });
         if (userRes.data && userRes.data.status && userRes.data.data && userRes.data.data.role === 'admin') {
@@ -26,10 +50,10 @@ export default function AdminLogin() {
           setError('Bạn không có quyền truy cập trang admin!');
         }
       } else {
-        setError(res.data.message || 'Đăng nhập thất bại!');
+        setError(res.data?.message || 'Đăng nhập thất bại!');
       }
     } catch (err) {
-      setError('Sai tài khoản hoặc mật khẩu!');
+      setError(getLoginErrorMessage(err) || 'Sai email hoặc mật khẩu.');
     } finally {
       setLoading(false);
     }
@@ -55,7 +79,24 @@ export default function AdminLogin() {
           required
           style={{ width: '100%', padding: 10, marginBottom: 16, borderRadius: 8, border: '1px solid #ddd', fontSize: 16 }}
         />
-        {error && <div style={{ color: 'red', marginBottom: 12 }}>{error}</div>}
+        {error && (
+          <div
+            role="alert"
+            aria-live="polite"
+            style={{
+              color: '#b00020',
+              marginBottom: 12,
+              padding: '10px 12px',
+              borderRadius: 8,
+              background: '#ffebee',
+              border: '1px solid #ffcdd2',
+              fontSize: 15,
+              lineHeight: 1.4
+            }}
+          >
+            {error}
+          </div>
+        )}
         <button
           type="submit"
           disabled={loading}

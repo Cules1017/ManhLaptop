@@ -31,52 +31,52 @@ export default function AsideCategories() {
     fetchCategories();
   }, []);
 
-  if (loading) return <></>;
-
-  if (!categories.length || error)
-    return (
-      <ul className="categories">
-        {offlineCategories.map((category) => (
-          <CategoriesItem key={category.id} category={category} active={currentCategory == category.id} />
-        ))}
-        <style jsx>{`
-          .categories {
-            width: 255px;
-            max-width: 255px;
-            background: #ffff;
-            border-radius: 6px;
-            margin-bottom: 30px;
-            box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.05);
-          }
-          @media (max-width: 1000px) {
-            .categories {
-              display: none;
-            }
-          }
-        `}</style>
-      </ul>
-    );
+  const list = categories.length ? categories : offlineCategories;
 
   return (
-    <ul className="categories">
-      {categories.map((category) => (
-        <CategoriesItem key={category.id} category={category} active={currentCategory == category.id} />
-      ))}
+    <>
+      <ul className="categories">
+        <li className="title">Danh mục sản phẩm</li>
+        {loading ? (
+          <li className="loading">Đang tải...</li>
+        ) : error && !list.length ? (
+          <li className="loading">Không tải được danh mục</li>
+        ) : (
+          list.map((category) => (
+            <CategoriesItem
+              key={category.id}
+              category={category}
+              active={currentCategory == category.id}
+            />
+          ))
+        )}
+      </ul>
       <style jsx>{`
         .categories {
-          width: 255px;
-          max-width: 255px;
-          background: #ffff;
-          border-radius: 6px;
-          margin-bottom: 30px;
-          box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.05);
+          list-style: none;
+          margin: 0 0 20px;
+          padding: 0;
+          width: 100%;
+          background: #fff;
+          border-radius: 8px;
+          overflow: hidden;
+          box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
         }
-        @media (max-width: 1000px) {
-          .categories {
-            display: none;
-          }
+        .categories .title {
+          padding: 12px 16px;
+          font-weight: 700;
+          font-size: 14px;
+          text-transform: uppercase;
+          color: #333;
+          background: #f8f8f8;
+          border-bottom: 1px solid #eee;
+        }
+        .loading {
+          padding: 14px 16px;
+          color: #888;
+          font-size: 14px;
         }
       `}</style>
-    </ul>
+    </>
   );
 }

@@ -92,6 +92,6 @@ export const Chart = (props) => {
 Chart.propTypes = {
   options: PropTypes.object,
   series: PropTypes.array.isRequired,
-  type: PropTypes.oneOf(['line', 'area', 'bar', 'pie']).isRequired,
+  type: PropTypes.oneOf(['line', 'area', 'bar', 'pie', 'donut']).isRequired,
   height: PropTypes.number
 }; 

@@ -1,121 +1,133 @@
 import Link from 'next/link';
-import { useQuery } from '@apollo/client';
+import { FaTimes } from 'react-icons/fa';
 import SearchBox from '../search-box';
-import { GET_DRAWER_STATE } from '../../apollo/client/queries';
 
-export default function SideDrawer({ closeDrawer, user }) {
-  const { data, loading, error } = useQuery(GET_DRAWER_STATE);
-
+export default function SideDrawer({ closeDrawer, user, isOpen }) {
   return (
-    <div
-      className={`side-drawer ${data?.isDrawerOpen ? 'show' : 'hide'}`}
-      id="side-drawer"
-    >
-      <button className="close-drawer" onClick={closeDrawer}>
-        X
-      </button>
+    <>
+      {isOpen && <div className="overlay" onClick={closeDrawer} />}
+      <div className={`side-drawer ${isOpen ? 'show' : 'hide'}`} id="side-drawer">
+        <button className="close-drawer" onClick={closeDrawer} aria-label="Đóng menu">
+          <FaTimes />
+        </button>
 
-      <div className="search">
-        <SearchBox />
-      </div>
+        <div className="search">
+          <SearchBox />
+        </div>
 
-      <ul className="items">
-        <li id="home" className="item">
-          <Link href="/cart">
-            <a>Items</a>
-          </Link>
-        </li>
-        <li id="about" className="item">
-          <Link href="/wishlist">
-            <a>Wishlist</a>
-          </Link>
-        </li>
-        {!user && (
-          <li id="contact" className="item">
-            <Link href="/user/login">
-              <a>Sign In</a>
+        <ul className="items">
+          <li className="item">
+            <Link href="/">
+              <a onClick={closeDrawer}>Trang chủ</a>
             </Link>
           </li>
-        )}
-        {user && (
-          <>
+          <li className="item">
+            <Link href="/cart">
+              <a onClick={closeDrawer}>Giỏ hàng</a>
+            </Link>
+          </li>
+          <li className="item">
+            <Link href="/wishlist">
+              <a onClick={closeDrawer}>Yêu thích</a>
+            </Link>
+          </li>
+          {!user && (
             <li className="item">
-              <Link href="/profile">
-                <a>{user.name}</a>
+              <Link href="/user/login">
+                <a onClick={closeDrawer}>Đăng nhập</a>
               </Link>
             </li>
-            <li className="item">
-              <Link href="/user/signout">
-                <a>Sign Out</a>
-              </Link>
-            </li>
-          </>
-        )}
-      </ul>
+          )}
+          {user && (
+            <>
+              <li className="item">
+                <Link href="/orders">
+                  <a onClick={closeDrawer}>Đơn hàng</a>
+                </Link>
+              </li>
+              <li className="item">
+                <Link href="/profile">
+                  <a onClick={closeDrawer}>{user.name}</a>
+                </Link>
+              </li>
+              <li className="item">
+                <Link href="/user/signout">
+                  <a onClick={closeDrawer}>Đăng xuất</a>
+                </Link>
+              </li>
+            </>
+          )}
+        </ul>
 
-      <style jsx>{`
-        .side-drawer {
-          display: flex;
-          flex-direction: column;
-          position: fixed;
-          z-index: 999;
-          top: 0;
-          left: 0;
-          width: 80%;
-          height: 100vh;
-          background: #fff;
-          box-shadow: 2px 0px 5px rgba(0, 0, 0, 0.5);
-          transform: translateX(-100%);
-          transition: transform 0.3s ease-out;
-        }
-        .side-drawer.show {
-          transform: translateX(0);
-        }
-        .side-drawer .search {
-          padding-top: 1rem;
-          width: 80%;
-          align-self: center;
-        }
-        .side-drawer .items {
-          padding-top: 3rem;
-          box-sizing: border-box;
-          width: 100%;
-        }
-        .side-drawer .items .item + .item {
-          margin-top: 2rem;
-          padding-top: 2rem;
-          border-top: 1px solid #6666;
-        }
-        .side-drawer .items .item a {
-          padding-left: 4rem;
-          color: #4d4d4d;
-          text-decoration: none;
-          font-weight: 500;
-          font-size: 1.2rem;
-          transition: opacity 0.4s;
-        }
-        .side-drawer .items .item a:hover,
-        .side-drawer .items .item a:active {
-          opacity: 0.8;
-        }
-        .side-drawer .close-drawer {
-          width: 100%;
-          padding: 1.2rem 2rem;
-          text-align: right;
-          background: none;
-          border: none;
-          font-size: 1.8rem;
-          font-weight: 500;
-          color: #4d4d4d;
-          transition: opacity 0.2s;
-        }
-        .side-drawer .close-drawer:hover {
-          opacity: 0.8;
-        }
-        .side-drawer .close-drawer:focus {
-          outline: none;
-        }
-      `}</style>
-    </div>
+        <style jsx>{`
+          .overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.4);
+            z-index: 998;
+          }
+          .side-drawer {
+            display: flex;
+            flex-direction: column;
+            position: fixed;
+            z-index: 999;
+            top: 0;
+            left: 0;
+            width: 80%;
+            max-width: 340px;
+            height: 100vh;
+            background: #fff;
+            box-shadow: 2px 0px 5px rgba(0, 0, 0, 0.3);
+            transform: translateX(-100%);
+            transition: transform 0.3s ease-out;
+          }
+          .side-drawer.show {
+            transform: translateX(0);
+          }
+          .side-drawer .search {
+            padding: 1rem;
+          }
+          .side-drawer .items {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            box-sizing: border-box;
+            width: 100%;
+          }
+          .side-drawer .items .item {
+            border-bottom: 1px solid #eee;
+          }
+          .side-drawer .items .item a {
+            display: block;
+            padding: 16px 24px;
+            color: #333;
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 1rem;
+            transition: background 0.2s;
+          }
+          .side-drawer .items .item a:hover,
+          .side-drawer .items .item a:active {
+            background: #f5f5f5;
+            color: #e53935;
+          }
+          .side-drawer .close-drawer {
+            align-self: flex-end;
+            padding: 1rem 1.2rem;
+            background: none;
+            border: none;
+            font-size: 1.4rem;
+            color: #666;
+            cursor: pointer;
+          }
+          .side-drawer .close-drawer:hover {
+            color: #e53935;
+          }
+          .side-drawer .close-drawer:focus {
+            outline: none;
+          }
+        `}</style>
+      </div>
+    </>
   );
 }

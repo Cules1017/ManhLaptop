@@ -34,7 +34,7 @@ class UserSeeder extends Seeder
             ],
             [
                 'name' => 'ManhLapTop',
-                'email' => 'admin@example.com',
+                'email' => 'admin1@example.com',
                 'password' => bcrypt('password'),
                 'phone' => '0987654321',
                 'address' => '456 Main Street, City',

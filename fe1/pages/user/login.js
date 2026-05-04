@@ -2,7 +2,9 @@ import { useState } from 'react';
 import { useRouter } from 'next/router';
 import PageContainer from '../../components/page-container';
 import Link from 'next/link';
-import { getErrorMessage } from '../../lib/form';
+import { toast } from 'react-toastify';
+import { apiRequest } from '../../utils/apiRequest';
+import { useCart } from '../../context/CartContext';
 
 import AlertError from '../../components/alerts/error';
 import Button from '../../components/form/button';
@@ -19,45 +21,55 @@ export default function Login() {
   const [loading, setLoading] = useState(false);
 
   const router = useRouter();
+  const { refreshCartCount } = useCart();
 
   async function handleSubmit(e) {
     e.preventDefault();
     setMsgError('');
-    setLoading(true);
 
+    const emailTrim = email.trim();
+    const passTrim = password.trim();
+    if (!emailTrim || !passTrim) {
+      setMsgError('Vui lòng nhập đầy đủ email và mật khẩu');
+      return;
+    }
+    const emailRe = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRe.test(emailTrim)) {
+      setMsgError('Email không đúng định dạng');
+      return;
+    }
+
+    setLoading(true);
     try {
-      const response = await fetch(`${API_URL}/login`, {
+      const data = await apiRequest(`${API_URL}/login`, {
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          email: email.trim(),
-          password: password.trim(),
-        }),
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email: emailTrim, password: passTrim }),
+        silent: true,
       });
 
-      const data = await response.json();
-
-      if (!response.ok) {
-        throw new Error(data.message || 'Login failed');
+      if (!data || !data.status) {
+        throw new Error(data?.message || 'Đăng nhập thất bại');
       }
 
-      // Lưu token vào localStorage
       localStorage.setItem('token', data.data.token);
-      // Lưu thông tin user vào localStorage
       localStorage.setItem('user', JSON.stringify(data.data.user));
-      // Chuyển hướng về trang chủ
-      router.push('/');
+      window.dispatchEvent(new Event('storage'));
+
+      await refreshCartCount?.();
+      toast.success('Đăng nhập thành công', { position: 'top-center', autoClose: 1500 });
+
+      const redirect = router.query?.redirect;
+      router.push(typeof redirect === 'string' && redirect ? redirect : '/');
     } catch (error) {
-      setMsgError(getErrorMessage(error));
+      setMsgError(error?.message || 'Đăng nhập thất bại');
     } finally {
       setLoading(false);
     }
   }
 
   return (
-    <PageContainer title="MANH STORE - Login">
+    <PageContainer title="MANH STORE - Đăng nhập">
       <FormContainer>
         <form onSubmit={handleSubmit}>
           <h3 className="formTitle">Đăng nhập</h3>
@@ -75,20 +87,20 @@ export default function Login() {
             <Input
               type="password"
               name="password"
-              placeholder="Password"
+              placeholder="Mật khẩu"
               onChange={(value) => setPassword(value)}
               value={password}
             />
 
-            <Button type="submit" title="Login" disabled={loading} />
+            <Button type="submit" title={loading ? 'Đang đăng nhập...' : 'Đăng nhập'} disabled={loading} />
           </InputContainer>
         </form>
 
         <Link href="/user/signup">
-          <a className="switchForm">Tạo tài khoản</a>
+          <a className="switchForm">Tạo tài khoản mới</a>
         </Link>
         <Link href="/user/resetpassword">
-          <a className="switchForm">Quên mật khẩu</a>
+          <a className="switchForm">Quên mật khẩu?</a>
         </Link>
       </FormContainer>
 
@@ -99,17 +111,20 @@ export default function Login() {
         }
         form .formTitle {
           text-align: center;
-          font-size: 38px;
-          font-weight: 1000;
-          letter-spacing: 1.65px;
-          color: #b2b2b2;
+          font-size: 32px;
+          font-weight: 700;
+          letter-spacing: 1.5px;
+          color: #333;
           text-transform: uppercase;
-          margin-bottom: 84px;
+          margin-bottom: 48px;
         }
         .switchForm {
-          color: #b2b2b2;
+          color: #555;
           margin-top: 12px;
           font-weight: 500;
+        }
+        .switchForm:hover {
+          color: #e53935;
         }
       `}</style>
     </PageContainer>
