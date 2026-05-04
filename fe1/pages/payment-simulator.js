@@ -51,6 +51,7 @@ export default function PaymentSimulatorPage() {
     amount = 0,
     qrCodeUrl = '',
     paymentUrl = '',
+    orderInfo = '',
     expiresAt = '',
   } = router.query;
 
@@ -95,6 +96,10 @@ export default function PaymentSimulatorPage() {
   }, [isMomo, qrCodeUrl, paymentUrl, amountNumber, config, orderId]);
 
   const transferContent = `DH ${orderId || 'N/A'}`;
+  const momoOrderContent = useMemo(() => {
+    const raw = String(orderInfo || '').trim();
+    return raw || `Thanh toan don hang #${orderId || 'N/A'}`;
+  }, [orderInfo, orderId]);
 
   /** Gỡ overlay: có URL QR thì chờ ảnh load; không URL (lỗi/thiếu tiền) thì chờ cấu hình VietQR xong. */
   const paymentReady = useMemo(() => {
@@ -270,14 +275,14 @@ export default function PaymentSimulatorPage() {
                       <div className="info-row">
                         <span>Nội dung</span>
                         <div className="info-row-right">
-                          <b>Thanh toan don hang #{orderId || 'N/A'}</b>
+                          <b>{momoOrderContent}</b>
                           <button
                             type="button"
                             className="info-copy-btn"
                             disabled={!paymentReady}
                             aria-label="Sao chép nội dung"
                             onClick={() =>
-                              copyToClipboard(`Thanh toan don hang #${orderId || 'N/A'}`, 'nội dung')
+                              copyToClipboard(momoOrderContent, 'nội dung')
                             }
                           >
                             <FaCopy />

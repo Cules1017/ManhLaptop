@@ -6,6 +6,7 @@ use App\Models\CartItem;
 use App\Models\Order;
 use App\Models\OrderItem;
 use App\Models\PaymentSetting;
+use App\Models\Product;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Http;
@@ -56,6 +57,28 @@ class MomoController extends Controller
             DB::commit();
 
             $amount = (int) round((float) $order->total_price);
+            $productIds = collect($request->items)
+                ->pluck('product_id')
+                ->filter()
+                ->unique()
+                ->values();
+            $firstProductId = $productIds->first();
+            $firstProductName = $firstProductId ? (string) Product::where('id', $firstProductId)->value('name') : '';
+            $productCount = (int) $productIds->count();
+            $orderInfoRaw = $firstProductName
+                ? (
+                    $productCount > 1
+                        ? ("Thanh toan {$firstProductName} va " . ($productCount - 1) . ' san pham tai Manh Store')
+                        : ("Thanh toan {$firstProductName} tai Manh Store")
+                )
+                : ('Thanh toan don hang ' . $order->id . ' tai Manh Store');
+            $orderInfo = Str::ascii($orderInfoRaw);
+            $orderInfo = preg_replace('/[^A-Za-z0-9 ]+/', ' ', $orderInfo) ?? '';
+            $orderInfo = preg_replace('/\s+/', ' ', trim($orderInfo)) ?? '';
+            $orderInfo = mb_substr($orderInfo, 0, 50);
+            if ($orderInfo === '') {
+                $orderInfo = 'Thanh toan tai Manh Store';
+            }
 
             $endpoint = PaymentSetting::getValue('momo_endpoint', env('MOMO_ENDPOINT', 'https://test-payment.momo.vn/v2/gateway/api/create'));
             $partnerCode = PaymentSetting::getValue('momo_partner_code', env('MOMO_PARTNER_CODE', ''));
@@ -64,6 +87,7 @@ class MomoController extends Controller
             $redirectUrl = PaymentSetting::getValue('momo_redirect_url', env('MOMO_REDIRECT_URL', 'http://localhost:3001/momo-return'));
             $ipnUrl = PaymentSetting::getValue('momo_ipn_url', env('MOMO_IPN_URL', 'http://127.0.0.1:8000/api/momo/ipn'));
             $requestType = PaymentSetting::getValue('momo_request_type', env('MOMO_REQUEST_TYPE', 'captureWallet'));
+            $storeId = PaymentSetting::getValue('momo_store_id', env('MOMO_STORE_ID', 'MomoTestStore'));
 
             if (!$partnerCode || !$accessKey || !$secretKey) {
                 return response()->json([
@@ -73,14 +97,14 @@ class MomoController extends Controller
                         'order_id' => $order->id,
                         'redirect_url' => 'http://localhost:3001/payment-simulator?method=momo&orderId='
                             . urlencode((string) $order->id)
-                            . '&amount=' . urlencode((string) $amount),
+                            . '&amount=' . urlencode((string) $amount)
+                            . '&orderInfo=' . urlencode($orderInfo),
                     ],
                 ]);
             }
 
             $requestId = (string) Str::uuid();
             $momoOrderId = 'ORDER_' . $order->id . '_' . now()->format('YmdHis');
-            $orderInfo = 'Thanh toan don hang ' . $order->id;
             $extraData = base64_encode(json_encode(['order_id' => $order->id]));
 
             $rawHash = "accessKey={$accessKey}"
@@ -99,7 +123,7 @@ class MomoController extends Controller
             $payload = [
                 'partnerCode' => $partnerCode,
                 'partnerName' => 'Laptop Shop',
-                'storeId' => 'LaptopShop',
+                'storeId' => $storeId,
                 'requestId' => $requestId,
                 'amount' => (string) $amount,
                 'orderId' => $momoOrderId,
@@ -120,7 +144,9 @@ class MomoController extends Controller
 
             $result = $momoResponse->json();
             if ((int) ($result['resultCode'] ?? -1) !== 0) {
-                throw new \RuntimeException('MoMo create payment failed: ' . ($result['message'] ?? 'Unknown error'));
+                $resultCode = (int) ($result['resultCode'] ?? -1);
+                $message = (string) ($result['message'] ?? 'Unknown error');
+                throw new \RuntimeException("MoMo create payment failed [{$resultCode}]: {$message}");
             }
 
             $qrCodeUrl = $result['qrCodeUrl'] ?? null;
@@ -139,6 +165,7 @@ class MomoController extends Controller
                         . '&amount=' . urlencode((string) $amount)
                         . '&qrCodeUrl=' . urlencode((string) ($qrCodeUrl ?? ''))
                         . '&paymentUrl=' . urlencode((string) ($result['payUrl'] ?? ''))
+                        . '&orderInfo=' . urlencode($orderInfo)
                         . '&expiresAt=' . urlencode($expiresAt),
                     'raw_response' => $result,
                 ],
