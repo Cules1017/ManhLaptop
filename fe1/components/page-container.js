@@ -17,16 +17,30 @@ export default function PageContainer({ title, description, children }) {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <main>{children}</main>
+      <main className="page-transition">{children}</main>
 
       <style jsx>{`
         main {
           display: flex;
-          background-color: #fafafa;
+          background-color: transparent;
           align-items: center;
           justify-content: center;
           flex-direction: column;
-          font-family: Roboto;
+          min-height: 100vh;
+        }
+        .page-transition {
+          animation: fadeIn var(--transition-smooth) forwards;
+          width: 100%;
+        }
+        @keyframes fadeIn {
+          from {
+            opacity: 0;
+            transform: translateY(15px);
+          }
+          to {
+            opacity: 1;
+            transform: translateY(0);
+          }
         }
       `}</style>
     </div>

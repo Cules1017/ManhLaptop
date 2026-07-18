@@ -1,0 +1,29 @@
+[
+  {
+    "name": "Lenovo ThinkPad X1 Carbon Gen 11",
+    "price": 45000000,
+    "description": "Intel Core i7-1355U, 16GB LPDDR5, 512GB SSD, Intel Iris Xe Graphics, 14\" WUXGA",
+    "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/4/4b/Lenovo_ThinkPad_X1_Carbon.jpg/800px-Lenovo_ThinkPad_X1_Carbon.jpg",
+    "rating": 4.8,
+    "discount": 10,
+    "quantity": 25
+  },
+  {
+    "name": "Lenovo ThinkPad T14 Gen 4",
+    "price": 32000000,
+    "description": "Intel Core i5-1335U, 16GB DDR5, 512GB SSD, Intel Iris Xe Graphics, 14\" WUXGA",
+    "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d4/Lenovo_ThinkPad_T470s.jpg/800px-Lenovo_ThinkPad_T470s.jpg",
+    "rating": 4.6,
+    "discount": 5,
+    "quantity": 40
+  },
+  {
+    "name": "Lenovo ThinkPad E14 Gen 5",
+    "price": 22000000,
+    "description": "AMD Ryzen 5 7530U, 16GB DDR4, 512GB SSD, AMD Radeon Graphics, 14\" WUXGA",
+    "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/8/87/Lenovo_ThinkPad_E14_Gen_2_Front.jpg/800px-Lenovo_ThinkPad_E14_Gen_2_Front.jpg",
+    "rating": 4.4,
+    "discount": 15,
+    "quantity": 50
+  }
+]

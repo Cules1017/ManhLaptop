@@ -1,0 +1,29 @@
+[
+  {
+    "name": "MSI Titan 18 HX AI (RTX 5090)",
+    "price": 175000000,
+    "description": "Intel Core Ultra 9 285HX, 192GB DDR5, NVIDIA GeForce RTX 5090 24GB, 18\" UHD+ Mini-LED 120Hz",
+    "image": "https://m.media-amazon.com/images/I/81P8m2eJ9oL._AC_SL1500_.jpg",
+    "rating": 4.8,
+    "discount": 5,
+    "quantity": 15
+  },
+  {
+    "name": "MSI Titan 18 HX AI (RTX 5080)",
+    "price": 120000000,
+    "description": "Intel Core Ultra 9 285HX, 64GB DDR5, NVIDIA GeForce RTX 5080 16GB, 18\" UHD+ Mini-LED 120Hz",
+    "image": "https://m.media-amazon.com/images/I/71t+rFwD8BL._AC_SL1500_.jpg",
+    "rating": 4.6,
+    "discount": 10,
+    "quantity": 25
+  },
+  {
+    "name": "MSI Titan 18 HX Dragon Edition",
+    "price": 185000000,
+    "description": "Special Edition, Intel Core Ultra 9 285HX, 128GB DDR5, NVIDIA GeForce RTX 5090 24GB, 18\" UHD+ Mini-LED 120Hz",
+    "image": "https://m.media-amazon.com/images/I/81R6-fS4sOL._AC_SL1500_.jpg",
+    "rating": 5.0,
+    "discount": 0,
+    "quantity": 12
+  }
+]

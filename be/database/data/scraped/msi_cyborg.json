@@ -1,0 +1,29 @@
+[
+  {
+    "name": "MSI Cyborg 15 A12VE",
+    "price": 21500000,
+    "description": "Intel Core i7-12650H, 8GB RAM, RTX 4050 6GB, 15.6\" FHD 144Hz",
+    "image": "https://images.fpt.shop/unsafe/fit-in/800x800/filters:quality(90):fill(white)/fptshop.com.vn/Uploads/Originals/2023/8/16/638277980315801736_msi-cyborg-15-a12ucx-den-1.jpg",
+    "rating": 4.5,
+    "discount": 10,
+    "quantity": 25
+  },
+  {
+    "name": "MSI Cyborg 15 A13VE",
+    "price": 29990000,
+    "description": "Intel Core i5-13420H, 16GB RAM, RTX 4050 6GB, 15.6\" FHD 144Hz",
+    "image": "https://images.fpt.shop/unsafe/fit-in/800x800/filters:quality(90):fill(white)/fptshop.com.vn/Uploads/Originals/2023/12/12/638379769363574945_msi-cyborg-15-a13ucx-den-1.jpg",
+    "rating": 4.7,
+    "discount": 5,
+    "quantity": 40
+  },
+  {
+    "name": "MSI Cyborg 14 A13VE",
+    "price": 26490000,
+    "description": "Intel Core i7-13620H, 16GB RAM, RTX 4050 6GB, 14\" FHD+ 144Hz",
+    "image": "https://images.fpt.shop/unsafe/fit-in/800x800/filters:quality(90):fill(white)/fptshop.com.vn/Uploads/Originals/2024/3/26/638470557404495570_msi-cyborg-14-a13ucx-den-1.jpg",
+    "rating": 4.8,
+    "discount": 15,
+    "quantity": 12
+  }
+]

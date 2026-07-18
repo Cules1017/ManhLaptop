@@ -1,0 +1,29 @@
+[
+  {
+    "name": "Acer Swift Edge 14 AI",
+    "price": 32000000,
+    "description": "AMD Ryzen AI 9 HX 370, 32GB LPDDR5X RAM, AMD Radeon 890M, 14-inch 3K OLED",
+    "image": "https://images.unsplash.com/photo-1593642632823-8f785ba67e45?auto=format&fit=crop&q=80&w=1000",
+    "rating": 4.8,
+    "discount": 12,
+    "quantity": 25
+  },
+  {
+    "name": "Acer Swift Go 14 AI",
+    "price": 24990000,
+    "description": "Intel Core Ultra 7 258V, 16GB LPDDR5X RAM, Intel Arc Graphics, 14-inch 2.8K OLED",
+    "image": "https://images.unsplash.com/photo-1583394838336-acd977736f90?auto=format&fit=crop&q=80&w=1000",
+    "rating": 4.5,
+    "discount": 5,
+    "quantity": 40
+  },
+  {
+    "name": "Acer Swift X 14",
+    "price": 38500000,
+    "description": "Intel Core Ultra 7 155H, 32GB LPDDR5 RAM, NVIDIA GeForce RTX 4050, 14-inch 2.8K OLED 120Hz",
+    "image": "https://images.unsplash.com/photo-1618424181497-157f25b6ce5e?auto=format&fit=crop&q=80&w=1000",
+    "rating": 4.6,
+    "discount": 8,
+    "quantity": 15
+  }
+]

@@ -111,16 +111,20 @@ export default function ProductItem({ id, name, rating, img_url, price, discount
           <div className={styles['product-content']}>
             <div className={styles['product-image']}>
               <img
-                src={img_url}
+                src={img_url || 'https://placehold.co/400x400/eeeeee/999999?text=No+Image'}
                 alt={name}
                 width={200}
                 height={200}
+                onError={(e) => {
+                  e.target.onerror = null;
+                  e.target.src = 'https://placehold.co/400x400/eeeeee/999999?text=Image+Not+Found';
+                }}
                 style={{
                   objectFit: 'contain',
                   width: '100%',
                   height: '200px',
                   borderRadius: 8,
-                  background: '#fafafa',
+                  mixBlendMode: 'multiply'
                 }}
               />
             </div>

@@ -1,0 +1,29 @@
+[
+  {
+    "name": "HP Omen 16",
+    "price": 45000000,
+    "description": "Intel Core i7-13700HX, 16GB RAM, 1TB SSD, NVIDIA GeForce RTX 4060, 16.1-inch FHD 165Hz",
+    "image": "https://m.media-amazon.com/images/I/71DCZOdq92S._AC_SL1500_.jpg",
+    "rating": 4.6,
+    "discount": 10,
+    "quantity": 25
+  },
+  {
+    "name": "HP Omen 17",
+    "price": 65000000,
+    "description": "Intel Core i9-13900HX, 32GB RAM, 2TB SSD, NVIDIA GeForce RTX 4080, 17.3-inch QHD 240Hz",
+    "image": "https://m.media-amazon.com/images/I/81xH6g4k8WL._AC_SL1500_.jpg",
+    "rating": 4.8,
+    "discount": 5,
+    "quantity": 12
+  },
+  {
+    "name": "HP Omen Transcend 14",
+    "price": 52000000,
+    "description": "Intel Core Ultra 7 155H, 16GB RAM, 1TB SSD, NVIDIA GeForce RTX 4060, 14-inch OLED 120Hz",
+    "image": "https://m.media-amazon.com/images/I/71YyO3cOhtL._AC_SL1500_.jpg",
+    "rating": 4.9,
+    "discount": 15,
+    "quantity": 30
+  }
+]

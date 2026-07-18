@@ -1,0 +1,29 @@
+[
+  {
+    "name": "Asus Zenbook 14 OLED (UX3402)",
+    "price": 20990000,
+    "description": "Intel Core i5-1240P, 16GB LPDDR5, 512GB SSD, Intel Iris Xe Graphics, 14.0-inch 2.8K OLED 90Hz",
+    "image": "https://vn.store.asus.com/media/catalog/product/u/x/ux3402_blue_02.jpg",
+    "rating": 4.8,
+    "discount": 10,
+    "quantity": 25
+  },
+  {
+    "name": "Asus Zenbook S 13 OLED (UX5304)",
+    "price": 34290000,
+    "description": "Intel Core i7-1355U, 16GB LPDDR5, 512GB SSD, Intel Iris Xe Graphics, 13.3-inch 2.8K OLED",
+    "image": "https://vn.store.asus.com/media/catalog/product/u/x/ux5304_basalt_grey_01.jpg",
+    "rating": 4.9,
+    "discount": 5,
+    "quantity": 15
+  },
+  {
+    "name": "Asus Zenbook Pro 14 Duo OLED (UX8402)",
+    "price": 54990000,
+    "description": "Intel Core i7-12700H, 16GB LPDDR5, 1TB SSD, NVIDIA GeForce RTX 3050 Ti, 14.5-inch 2.8K OLED 120Hz",
+    "image": "https://vn.store.asus.com/media/catalog/product/u/x/ux8402_tech_black_01.jpg",
+    "rating": 4.7,
+    "discount": 15,
+    "quantity": 30
+  }
+]

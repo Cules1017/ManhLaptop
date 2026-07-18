@@ -5,27 +5,14 @@ export default function FormContainer({ children }) {
 
       <style jsx>{`
         .formContainer {
-          height: 100vh;
-          width: 60vw;
-          margin-top: 10%;
+          min-height: calc(100vh - 200px);
+          width: 100%;
           display: flex;
           flex-direction: column;
           align-items: center;
-        }
-        .formContainer .title {
-          color: #4d4d4d;
-          font-size: 38px;
-          text-transform: uppercase;
-          font-weight: 1000;
-          letter-spacing: 1.65px;
-          -webkit-letter-spacing: 1.65px;
-          margin-bottom: 32px;
-        }
-        @media (min-width: 1400px) {
-          .formContainer {
-            width: 840px;
-            margin-top: 5%;
-          }
+          justify-content: center;
+          padding: 40px 16px;
+          box-sizing: border-box;
         }
       `}</style>
     </>

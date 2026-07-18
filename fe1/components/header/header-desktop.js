@@ -76,7 +76,7 @@ export default function HeaderDesktop({ user }) {
           >
             <Link href="/cart">
               <a>
-                <FaShoppingCart color="#808080" />
+                <FaShoppingCart />
                 <p>
                   <sup className="items-total">{cartCount}</sup> Giỏ hàng
                 </p>
@@ -132,14 +132,20 @@ export default function HeaderDesktop({ user }) {
           </div>
           <Link href="/wishlist">
             <a className="nav-buttons-wishlist">
-              <FaRegHeart color="#808080" />
+              <FaRegHeart />
               <p>Yêu thích</p>
+            </a>
+          </Link>
+          <Link href="/contact">
+            <a className="nav-buttons-contact">
+              <FaClipboardList />
+              <p>Liên hệ</p>
             </a>
           </Link>
           {!user && (
             <Link href="/user/login">
               <a className="nav-buttons-signin">
-                <FaUser color="#808080" />
+                <FaUser />
                 <p>Đăng nhập</p>
               </a>
             </Link>
@@ -148,13 +154,13 @@ export default function HeaderDesktop({ user }) {
             <>
               <Link href="/orders">
                 <a className="nav-buttons-orders">
-                  <FaClipboardList color="#1976d2" />
+                  <FaClipboardList />
                   <p>Đơn hàng</p>
                 </a>
               </Link>
               <Link href="/profile">
                 <a className="nav-buttons-profile">
-                  <FaUser color="#808080" />
+                  <FaUser />
                   <p>{user.name}</p>
                 </a>
               </Link>
@@ -185,103 +191,115 @@ export default function HeaderDesktop({ user }) {
           display: flex;
           flex-direction: row;
           align-items: center;
-          margin-left: 24px;
+          margin-left: 32px;
           font-style: normal;
           font-weight: 500;
-          font-size: 14px;
+          font-size: 15px;
           text-decoration: none;
-          color: #808080;
+          color: var(--text-muted);
+          transition: all var(--transition-smooth);
         }
         .nav-buttons .items-total {
-          font-size: 12px;
+          font-size: 11px;
+          font-weight: bold;
           align-self: flex-end;
-          background: #e53935;
-          color: #fff;
-          border-radius: 10px;
-          padding: 0 6px;
-          margin-right: 4px;
+          background: var(--accent);
+          color: var(--text-main);
+          border-radius: 12px;
+          padding: 2px 6px;
+          margin-right: 6px;
+          box-shadow: 0 0 8px var(--accent-glow);
         }
         .nav-buttons .nav-buttons-signout {
-          margin-left: 12px;
+          margin-left: 16px;
         }
         .nav-buttons a:hover {
-          color: #e53935;
+          color: var(--accent);
         }
         .nav-buttons a p {
-          margin-left: 8px;
+          margin-left: 10px;
         }
         .cart-hover-area {
           position: relative;
         }
         .cart-dropdown {
           position: absolute;
-          top: 40px;
+          top: 48px;
           right: 0;
-          width: 340px;
-          background: #fff;
-          border: 1px solid #eee;
-          box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
-          border-radius: 8px;
+          width: 380px;
+          background: var(--surface);
+          backdrop-filter: blur(16px);
+          border: 1px solid var(--surface-border);
+          box-shadow: var(--shadow-lg);
+          border-radius: var(--radius);
           z-index: 100;
           padding: 16px 0 0 0;
+          overflow: hidden;
         }
         .cart-dropdown ul {
           list-style: none;
           margin: 0;
-          padding: 0 16px 0 16px;
+          padding: 0 16px;
           max-height: 320px;
           overflow-y: auto;
         }
         .cart-dropdown-item {
           display: flex;
           align-items: center;
-          gap: 12px;
-          padding: 8px 0;
-          border-bottom: 1px solid #f0f0f0;
+          gap: 14px;
+          padding: 12px 0;
+          border-bottom: 1px solid var(--surface-border);
         }
         .cart-dropdown-item img {
-          width: 48px;
-          height: 48px;
+          width: 56px;
+          height: 56px;
           object-fit: contain;
-          border-radius: 4px;
-          background: #fafafa;
+          border-radius: var(--radius-sm);
+          background: var(--surface-hover);
         }
         .cart-dropdown-name {
           font-weight: 500;
           font-size: 15px;
-          margin-bottom: 2px;
+          color: var(--text-main);
+          margin-bottom: 4px;
         }
         .cart-dropdown-qty,
         .cart-dropdown-price {
           font-size: 13px;
-          color: #888;
+          color: var(--text-muted);
         }
         .cart-dropdown-empty {
-          padding: 24px 16px;
+          padding: 32px 16px;
           text-align: center;
-          color: #888;
+          color: var(--text-muted);
         }
         .cart-dropdown-footer {
-          border-top: 1px solid #eee;
-          padding: 12px 16px;
+          border-top: 1px solid var(--surface-border);
+          padding: 16px;
           text-align: right;
+          background: var(--surface-hover);
         }
         .cart-dropdown-footer a {
-          color: #1875f0;
-          font-weight: 500;
+          color: var(--accent);
+          font-weight: 600;
           margin: 0;
+          transition: all var(--transition-fast);
+        }
+        .cart-dropdown-footer a:hover {
+          color: var(--accent-hover);
         }
         .cart-dropdown-viewall {
           text-align: center;
-          padding: 8px 0;
+          padding: 12px 0;
           font-weight: 500;
-          color: #1875f0;
-          cursor: pointer;
         }
         .cart-dropdown-viewall a {
-          color: #1875f0;
-          text-decoration: underline;
+          color: var(--accent);
+          text-decoration: none;
           margin: 0;
+        }
+        .cart-dropdown-viewall a:hover {
+          color: var(--accent-hover);
         }
       `}</style>
     </>

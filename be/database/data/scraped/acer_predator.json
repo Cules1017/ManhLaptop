@@ -1,0 +1,29 @@
+[
+  {
+    "name": "Acer Predator Helios Neo 16",
+    "price": 35000000,
+    "description": "Intel Core i7-13700HX, 16GB DDR5, NVIDIA GeForce RTX 4060, 16-inch WQXGA 165Hz",
+    "image": "https://m.media-amazon.com/images/I/71RMDWA400L._AC_SL1500_.jpg",
+    "rating": 4.6,
+    "discount": 12,
+    "quantity": 25
+  },
+  {
+    "name": "Acer Predator Helios 18",
+    "price": 75000000,
+    "description": "Intel Core i9-13900HX, 32GB DDR5, NVIDIA GeForce RTX 4080, 18-inch WQXGA 240Hz",
+    "image": "https://m.media-amazon.com/images/I/81I-q4SjBwL._AC_SL1500_.jpg",
+    "rating": 4.9,
+    "discount": 8,
+    "quantity": 14
+  },
+  {
+    "name": "Acer Predator Triton 14",
+    "price": 45000000,
+    "description": "Intel Core i7-13700H, 16GB LPDDR5, NVIDIA GeForce RTX 4070, 14-inch WQXGA 165Hz",
+    "image": "https://m.media-amazon.com/images/I/71Xm-gD4vGL._AC_SL1500_.jpg",
+    "rating": 4.8,
+    "discount": 5,
+    "quantity": 30
+  }
+]

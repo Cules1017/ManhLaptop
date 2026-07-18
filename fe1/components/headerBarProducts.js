@@ -19,68 +19,62 @@ export default function HeaderBarProducts({ onSortChange = () => {}, sortParams 
 
   return (
     <div className="header-bar-products">
-      <div className="container">
-        <div className="header-bar-products__content">
-          <div className="header-bar-products__left">
-            <h2>Sản phẩm nổi bật</h2>
-          </div>
+      <div className="header-bar-products__content">
+        <div className="header-bar-products__left">
+          <h2>Sản phẩm nổi bật</h2>
+        </div>
 
-          <div className="header-bar-products__right">
-            <div className="sort-options">
-              <button
-                id="hot-products"
-                className={
-                  activeSort.field === 'rating' && activeSort.order === 'DESC'
-                    ? 'active'
-                    : ''
-                }
-                onClick={() => handleSort('rating', 'DESC')}
-              >
-                Hot nhất
-              </button>
-              <button
-                id="newest-products"
-                className={
-                  activeSort.field === 'created_at' && activeSort.order === 'DESC'
-                    ? 'active'
-                    : ''
-                }
-                onClick={() => handleSort('created_at', 'DESC')}
-              >
-                Mới nhất
-              </button>
-              <button
-                id="price-low-to-high"
-                className={
-                  activeSort.field === 'price' && activeSort.order === 'ASC'
-                    ? 'active'
-                    : ''
-                }
-                onClick={() => handleSort('price', 'ASC')}
-              >
-                Giá thấp đến cao
-              </button>
-              <button
-                id="price-high-to-low"
-                className={
-                  activeSort.field === 'price' && activeSort.order === 'DESC'
-                    ? 'active'
-                    : ''
-                }
-                onClick={() => handleSort('price', 'DESC')}
-              >
-                Giá cao đến thấp
-              </button>
-            </div>
+        <div className="header-bar-products__right">
+          <div className="sort-options">
+            <button
+              className={
+                activeSort.field === 'rating' && activeSort.order === 'DESC'
+                  ? 'active'
+                  : ''
+              }
+              onClick={() => handleSort('rating', 'DESC')}
+            >
+              Hot nhất
+            </button>
+            <button
+              className={
+                activeSort.field === 'created_at' && activeSort.order === 'DESC'
+                  ? 'active'
+                  : ''
+              }
+              onClick={() => handleSort('created_at', 'DESC')}
+            >
+              Mới nhất
+            </button>
+            <button
+              className={
+                activeSort.field === 'price' && activeSort.order === 'ASC'
+                  ? 'active'
+                  : ''
+              }
+              onClick={() => handleSort('price', 'ASC')}
+            >
+              Giá thấp đến cao
+            </button>
+            <button
+              className={
+                activeSort.field === 'price' && activeSort.order === 'DESC'
+                  ? 'active'
+                  : ''
+              }
+              onClick={() => handleSort('price', 'DESC')}
+            >
+              Giá cao đến thấp
+            </button>
           </div>
         </div>
       </div>
 
       <style jsx>{`
         .header-bar-products {
-          padding: 20px 0;
-          background: #fff;
-          border-bottom: 1px solid #eee;
+          padding: 0 0 24px 0;
+          background: transparent;
+          border-bottom: none;
         }
 
         .header-bar-products__content {
@@ -91,45 +85,58 @@ export default function HeaderBarProducts({ onSortChange = () => {}, sortParams 
 
         .header-bar-products__left h2 {
           margin: 0;
-          font-size: 24px;
-          font-weight: 600;
-          color: #333;
+          font-size: 1.4rem;
+          font-weight: 700;
+          color: #111;
+          letter-spacing: -0.01em;
         }
 
         .sort-options {
           display: flex;
-          gap: 10px;
+          gap: 8px;
           flex-wrap: wrap;
         }
 
         .sort-options button {
           padding: 8px 16px;
-          border: 1px solid #ddd;
-          background: #fff;
-          color: #666;
+          border: none;
+          background: #e2e8f0;
+          color: #475569;
           cursor: pointer;
-          border-radius: 6px;
-          font-size: 14px;
-          transition: all 0.2s;
+          border-radius: 99px; /* Pill shape */
+          font-size: 0.85rem;
+          font-weight: 500;
+          transition: all 0.2s ease;
         }
 
         .sort-options button:hover {
-          background: #f5f5f5;
-          border-color: #e53935;
-          color: #e53935;
+          background: #cbd5e1;
+          color: #1e293b;
         }
 
         .sort-options button.active {
-          background: #e53935;
+          background: #ef4444; /* Clean solid red */
           color: #fff;
-          border-color: #e53935;
+          box-shadow: 0 2px 8px rgba(239, 68, 68, 0.25);
         }
 
         @media (max-width: 768px) {
           .header-bar-products__content {
             flex-direction: column;
             align-items: flex-start;
-            gap: 12px;
+            gap: 16px;
+          }
+          
+          .sort-options {
+            width: 100%;
+            overflow-x: auto;
+            padding-bottom: 8px;
+            flex-wrap: nowrap;
+          }
+          
+          .sort-options button {
+            white-space: nowrap;
+            flex-shrink: 0;
           }
         }
       `}</style>

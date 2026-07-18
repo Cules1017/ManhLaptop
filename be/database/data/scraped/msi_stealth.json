@@ -1,0 +1,29 @@
+[
+  {
+    "name": "MSI Stealth 16 AI+",
+    "price": 85000000,
+    "description": "Intel Core Ultra 9, 32GB RAM, NVIDIA RTX 5070, 16-inch OLED 240Hz",
+    "image": "https://storage-asset.msi.com/global/picture/features/NB/Stealth16-Studio/Stealth-16-Studio-A13V-Blue-hero.png",
+    "rating": 4.8,
+    "discount": 5,
+    "quantity": 15
+  },
+  {
+    "name": "MSI Stealth A16 AI+",
+    "price": 70000000,
+    "description": "AMD Ryzen AI 9, 32GB RAM, NVIDIA RTX 4070, 16-inch QHD+ 240Hz",
+    "image": "https://storage-asset.msi.com/global/picture/features/NB/Stealth16-Studio/Stealth-16-Studio-A13V-White-hero.png",
+    "rating": 4.6,
+    "discount": 10,
+    "quantity": 25
+  },
+  {
+    "name": "MSI Stealth 14 Studio",
+    "price": 45000000,
+    "description": "Intel Core Ultra 7 155H, 32GB RAM, NVIDIA RTX 4060, 14-inch OLED 120Hz",
+    "image": "https://storage-asset.msi.com/global/picture/features/NB/Stealth14-Studio/Stealth-14-Studio-A13V-White-hero.png",
+    "rating": 4.7,
+    "discount": 15,
+    "quantity": 40
+  }
+]

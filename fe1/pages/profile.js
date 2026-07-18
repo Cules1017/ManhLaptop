@@ -175,19 +175,9 @@ export default function ProfilePage() {
           <div style={{ color: '#e53935', textAlign: 'center', padding: 16 }}>{error}</div>
         )}
         {!loading && !error && user && (
-          <div
-            style={{
-              background: '#fff',
-              borderRadius: 12,
-              boxShadow: '0 2px 8px rgba(0,0,0,0.06)',
-              padding: 24,
-              display: 'flex',
-              flexDirection: 'column',
-              gap: 16,
-            }}
-          >
+          <div className="ecommerce-card profile-card">
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-              <strong style={{ fontSize: 18 }}>Thông tin cá nhân</strong>
+              <strong style={{ fontSize: 18, color: 'var(--text-main)' }}>Thông tin cá nhân</strong>
               {!editing ? (
                 <button className="btn btn-secondary" onClick={() => setEditing(true)}>
                   Chỉnh sửa
@@ -233,7 +223,7 @@ export default function ProfilePage() {
 
             <div className="field">
               <label>Email</label>
-              <div className="val" style={{ color: '#888' }}>
+              <div className="val text-muted">
                 {user.email}
               </div>
             </div>
@@ -248,7 +238,7 @@ export default function ProfilePage() {
                 />
               ) : (
                 <div className="val">
-                  {user.phone || <span style={{ color: '#bbb' }}>(Chưa cập nhật)</span>}
+                  {user.phone || <span className="text-muted">(Chưa cập nhật)</span>}
                 </div>
               )}
             </div>
@@ -295,7 +285,7 @@ export default function ProfilePage() {
                 </>
               ) : (
                 <div className="val">
-                  {user.address || <span style={{ color: '#bbb' }}>(Chưa cập nhật)</span>}
+                  {user.address || <span className="text-muted">(Chưa cập nhật)</span>}
                 </div>
               )}
             </div>
@@ -308,33 +298,49 @@ export default function ProfilePage() {
       </div>
 
       <style jsx>{`
+        .profile-card {
+          padding: 32px;
+          display: flex;
+          flex-direction: column;
+          gap: 20px;
+        }
+        @media (max-width: 640px) {
+          .profile-card {
+            padding: 20px;
+          }
+        }
         .field {
           display: flex;
           flex-direction: column;
-          gap: 6px;
+          gap: 8px;
         }
         .field label {
           font-size: 13px;
-          color: #666;
+          color: var(--text-muted);
           font-weight: 600;
+          text-transform: uppercase;
+          letter-spacing: 0.5px;
         }
         .field input,
         .field select {
-          padding: 10px 12px;
-          border: 1px solid #ddd;
-          border-radius: 6px;
-          font-size: 14px;
+          padding: 12px 14px;
+          border: 1px solid var(--surface-border);
+          border-radius: var(--radius-sm);
+          font-size: 15px;
+          color: var(--text-main);
           outline: none;
-          background: #fff;
+          background: var(--surface);
+          transition: border-color var(--transition-fast), box-shadow var(--transition-fast);
         }
         .field input:focus,
         .field select:focus {
-          border-color: #e53935;
+          border-color: var(--secondary);
+          box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
         }
         .address-grid {
           display: grid;
           grid-template-columns: 1fr 1fr;
-          gap: 10px;
+          gap: 12px;
         }
         @media (max-width: 640px) {
           .address-grid {
@@ -342,38 +348,61 @@ export default function ProfilePage() {
           }
         }
         .field .val {
-          padding: 4px 0;
-          font-size: 15px;
-          color: #333;
+          padding: 6px 0;
+          font-size: 16px;
+          color: var(--text-main);
+          font-weight: 500;
+        }
+        .text-muted {
+          color: var(--text-muted) !important;
+          font-weight: 400 !important;
         }
         .btn {
-          padding: 10px 18px;
+          padding: 10px 20px;
           border: none;
-          border-radius: 6px;
+          border-radius: var(--radius-sm);
           cursor: pointer;
           font-weight: 600;
           font-size: 14px;
-          transition: opacity 0.2s;
+          transition: all var(--transition-fast);
         }
         .btn:disabled {
           opacity: 0.6;
           cursor: not-allowed;
         }
         .btn-primary {
-          background: #1976d2;
-          color: #fff;
+          background: var(--secondary);
+          color: white;
+        }
+        .btn-primary:hover:not(:disabled) {
+          background: #1d4ed8;
+          box-shadow: 0 4px 12px rgba(37, 99, 235, 0.2);
         }
         .btn-secondary {
-          background: #f5f5f5;
-          color: #333;
+          background: var(--bg-color);
+          color: var(--text-main);
+          border: 1px solid var(--surface-border);
+        }
+        .btn-secondary:hover {
+          background: var(--surface-hover);
         }
         .btn-cancel {
-          background: #eee;
-          color: #555;
+          background: transparent;
+          color: var(--text-muted);
+        }
+        .btn-cancel:hover {
+          color: var(--text-main);
+          background: var(--surface-hover);
         }
         .btn-danger {
-          background: #e53935;
-          color: #fff;
+          background: transparent;
+          color: var(--danger);
+          border: 1px solid var(--danger);
+          margin-top: 16px;
+        }
+        .btn-danger:hover {
+          background: var(--danger);
+          color: white;
         }
       `}</style>
     </Page>

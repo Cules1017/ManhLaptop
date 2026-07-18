@@ -321,27 +321,27 @@ export default function Checkout() {
                     value={editData.name}
                     onChange={handleEditChange}
                     placeholder="Họ tên"
-                    className="checkout-edit-input"
+                    className="form-input"
                   />
                   <input
                     name="phone"
                     value={editData.phone}
                     onChange={handleEditChange}
                     placeholder="Số điện thoại"
-                    className="checkout-edit-input"
+                    className="form-input"
                   />
                   <input
                     name="addressDetail"
                     value={editData.addressDetail}
                     onChange={handleEditChange}
-                    placeholder="So nha, ten duong"
-                    className="checkout-edit-input"
+                    placeholder="Số nhà, tên đường"
+                    className="form-input"
                   />
                   <select
                     name="city"
                     value={editData.city}
                     onChange={handleEditChange}
-                    className="checkout-edit-input"
+                    className="form-input"
                   >
                     {provinces.map((item) => (
                       <option key={item.code} value={item.name}>
@@ -353,7 +353,7 @@ export default function Checkout() {
                     name="district"
                     value={editData.district}
                     onChange={handleEditChange}
-                    className="checkout-edit-input"
+                    className="form-input"
                   >
                     {districts.map((district) => (
                       <option key={district.code} value={district.name}>
@@ -361,16 +361,19 @@ export default function Checkout() {
                       </option>
                     ))}
                   </select>
-                  <button
-                    onClick={handleSaveAddress}
-                    disabled={saving}
-                    className="checkout-edit-save"
-                  >
-                    {saving ? 'Đang lưu...' : 'Lưu'}
-                  </button>
-                  <button onClick={() => setShowEdit(false)} className="checkout-edit-cancel">
-                    Huỷ
-                  </button>
+                  <div style={{ display: 'flex', gap: '8px', marginTop: '8px' }}>
+                    <button
+                      onClick={handleSaveAddress}
+                      disabled={saving}
+                      className="btn-primary"
+                      style={{ flex: 1 }}
+                    >
+                      {saving ? 'Đang lưu...' : 'Lưu'}
+                    </button>
+                    <button onClick={() => setShowEdit(false)} className="btn-secondary" style={{ flex: 1 }}>
+                      Huỷ
+                    </button>
+                  </div>
                 </div>
               )}
             </div>
@@ -391,7 +394,14 @@ export default function Checkout() {
                   if (!product) return null;
                   return (
                     <div key={item.id} className="checkout-shipping-item">
-                      <img src={product.image || product.img_url} alt={product.name} />
+                      <img 
+                        src={product.image || product.img_url || 'https://placehold.co/400x400/eeeeee/999999?text=No+Image'} 
+                        alt={product.name} 
+                        onError={(e) => {
+                          e.target.onerror = null;
+                          e.target.src = 'https://placehold.co/400x400/eeeeee/999999?text=Image+Not+Found';
+                        }}
+                      />
                       <div className="checkout-shipping-info">
                         <div className="checkout-product-name">{product.name}</div>
                         <div className="checkout-product-qty">
@@ -488,16 +498,18 @@ export default function Checkout() {
                 <span>{formatVND(finalTotal)}</span>
               </div>
               <textarea
-                className="checkout-note"
+                className="form-input"
                 placeholder="Ghi chú cho đơn hàng (tuỳ chọn)"
                 value={note}
                 onChange={(e) => setNote(e.target.value)}
                 rows={2}
+                style={{ resize: 'vertical', marginTop: '12px' }}
               />
               <button
-                className="checkout-order-btn"
+                className="btn-primary"
                 onClick={handleOrder}
                 disabled={ordering || !cartItems.length}
+                style={{ marginTop: '16px' }}
               >
                 {ordering ? 'Đang đặt hàng...' : 'Đặt hàng'}
               </button>
@@ -513,7 +525,7 @@ export default function Checkout() {
       )}
       <style jsx>{`
         .checkout-bg {
-          background: #f7f7fa;
+          background: var(--bg-color);
           min-height: 100vh;
           padding: 24px 16px 40px;
           width: 100%;
@@ -529,8 +541,8 @@ export default function Checkout() {
         .checkout-title-bg :global(h2) {
           text-align: center;
           font-size: 2rem;
-          font-weight: 900;
-          color: #333;
+          font-weight: 800;
+          color: var(--text-main);
           margin: 0;
         }
         .checkout-container {
@@ -538,10 +550,10 @@ export default function Checkout() {
           flex-direction: row;
           justify-content: center;
           align-items: flex-start;
-          gap: 24px;
+          gap: 32px;
           max-width: 1200px;
           margin: 0 auto;
-          font-family: 'Roboto', Arial, sans-serif;
+          font-family: inherit;
         }
         .checkout-left {
           flex: 2;
@@ -553,48 +565,47 @@ export default function Checkout() {
           max-width: 400px;
         }
         .checkout-box {
-          background: #fff;
-          border-radius: 12px;
-          box-shadow: 0 2px 12px rgba(0, 0, 0, 0.05);
-          padding: 20px 24px;
-          margin-bottom: 20px;
+          background: var(--surface);
+          border-radius: var(--radius-lg);
+          box-shadow: var(--shadow-sm);
+          border: 1px solid var(--surface-border);
+          padding: 24px;
+          margin-bottom: 24px;
           transition: box-shadow 0.2s;
-        }
-        .checkout-box:hover {
-          box-shadow: 0 6px 24px rgba(0, 0, 0, 0.08);
         }
         .checkout-box-title {
           display: flex;
           justify-content: space-between;
           align-items: center;
           font-weight: 700;
-          color: #222;
-          margin-bottom: 12px;
-          font-size: 17px;
+          color: var(--text-main);
+          margin-bottom: 16px;
+          font-size: 18px;
         }
         .checkout-change {
-          color: #1a94ff;
+          color: var(--secondary);
           font-size: 14px;
           cursor: pointer;
           font-weight: 500;
         }
         .checkout-user {
-          font-weight: 500;
-          color: #333;
+          font-weight: 600;
+          color: var(--text-main);
           margin-bottom: 4px;
           font-size: 15px;
         }
         .checkout-phone {
-          color: #888;
+          color: var(--text-muted);
           font-size: 14px;
           margin-left: 8px;
+          font-weight: 400;
         }
         .checkout-address {
-          color: #666;
+          color: var(--text-muted);
           font-size: 14px;
         }
         .checkout-shipping-method {
-          margin-bottom: 12px;
+          margin-bottom: 16px;
           display: flex;
           align-items: center;
           gap: 10px;
@@ -602,62 +613,78 @@ export default function Checkout() {
         .checkout-shipping-product {
           display: flex;
           flex-direction: column;
-          gap: 10px;
+          gap: 12px;
         }
         .checkout-shipping-item {
           display: flex;
           align-items: center;
           gap: 14px;
-          background: #f8fafd;
-          border-radius: 8px;
-          padding: 8px 12px;
+          background: var(--surface-hover);
+          border: 1px solid var(--surface-border);
+          border-radius: var(--radius);
+          padding: 12px;
         }
         .checkout-shipping-item img {
-          width: 48px;
-          height: 48px;
+          width: 56px;
+          height: 56px;
           object-fit: contain;
-          border-radius: 6px;
-          background: #fff;
+          border-radius: var(--radius-sm);
+          background: var(--surface);
         }
         .checkout-product-name {
           font-weight: 500;
-          font-size: 14px;
+          font-size: 15px;
+          color: var(--text-main);
+          margin-bottom: 4px;
         }
         .checkout-product-qty {
-          color: #888;
-          font-size: 13px;
+          color: var(--text-muted);
+          font-size: 14px;
         }
         .checkout-payment-method {
           display: flex;
           flex-direction: column;
-          gap: 8px;
+          gap: 10px;
         }
         .checkout-radio-row {
           display: flex;
           align-items: center;
-          gap: 8px;
+          gap: 12px;
           cursor: pointer;
-          padding: 6px 4px;
-          border-radius: 6px;
+          padding: 12px;
+          border-radius: var(--radius);
+          border: 1px solid var(--surface-border);
+          transition: all var(--transition-fast);
         }
-        .checkout-radio-row:hover {
-          background: #f7f7fa;
+        .checkout-radio-row:hover:not(.checkout-radio-disabled-row) {
+          background: var(--surface-hover);
+          border-color: #cbd5e1;
+        }
+        .checkout-radio-row input[type="radio"]:checked {
+          accent-color: var(--secondary);
+        }
+        .checkout-radio-row:has(input[type="radio"]:checked) {
+          border-color: var(--secondary);
+          background: rgba(37, 99, 235, 0.03);
         }
         .checkout-radio-disabled-row {
           cursor: not-allowed;
+          background: #f8fafc;
+          border-color: #e2e8f0;
         }
         .checkout-radio-label {
           font-size: 15px;
           font-weight: 500;
-          color: #333;
+          color: var(--text-main);
         }
         .checkout-radio-disabled {
-          color: #bbb;
+          color: #94a3b8;
         }
         .checkout-summary-title {
           font-weight: 700;
           font-size: 18px;
-          margin-bottom: 14px;
+          margin-bottom: 20px;
+          color: var(--text-main);
         }
         .checkout-summary-row {
           display: flex;
@@ -665,91 +692,40 @@ export default function Checkout() {
           align-items: center;
           font-size: 15px;
           margin-bottom: 12px;
+          color: var(--text-muted);
+        }
+        .checkout-summary-row span:last-child {
+          color: var(--text-main);
+          font-weight: 500;
         }
         .checkout-summary-total {
-          font-weight: 900;
-          color: #e53935;
-          font-size: 18px;
-          border-top: 1px solid #f0f0f0;
-          padding-top: 12px;
-        }
-        .checkout-note {
-          width: 100%;
-          margin: 12px 0;
-          border-radius: 6px;
-          border: 1px solid #ddd;
-          padding: 8px;
-          font-size: 14px;
-          box-sizing: border-box;
-          resize: vertical;
-          font-family: inherit;
-        }
-        .checkout-order-btn {
-          width: 100%;
-          background: #e53935;
-          color: #fff;
           font-weight: 700;
-          font-size: 1.05rem;
-          border: none;
-          border-radius: 8px;
-          padding: 14px 0;
-          margin-top: 10px;
-          cursor: pointer;
-          transition: background 0.2s;
+          color: var(--accent);
+          font-size: 18px;
+          border-top: 1px solid var(--surface-border);
+          padding-top: 16px;
+          margin-top: 8px;
         }
-        .checkout-order-btn:hover:not(:disabled) {
-          background: #c62828;
-        }
-        .checkout-order-btn:disabled {
-          opacity: 0.6;
-          cursor: not-allowed;
+        .checkout-summary-total span:last-child {
+          color: var(--accent);
+          font-weight: 700;
         }
         @media (max-width: 1100px) {
           .checkout-container {
             flex-direction: column;
-            gap: 0;
+            gap: 24px;
           }
           .checkout-right {
             max-width: 100%;
             min-width: 0;
-            margin-top: 24px;
+            width: 100%;
           }
         }
         .checkout-edit-form {
           display: flex;
           flex-direction: column;
-          gap: 10px;
-          margin-top: 10px;
-        }
-        .checkout-edit-input {
-          padding: 10px 12px;
-          border: 1px solid #ddd;
-          border-radius: 6px;
-          font-size: 14px;
-        }
-        .checkout-edit-save {
-          background: #1a94ff;
-          color: #fff;
-          border: none;
-          border-radius: 6px;
-          padding: 10px 0;
-          font-weight: 700;
-          cursor: pointer;
-          margin-top: 6px;
-        }
-        .checkout-edit-save:disabled {
-          opacity: 0.6;
-          cursor: not-allowed;
-        }
-        .checkout-edit-cancel {
-          background: #eee;
-          color: #333;
-          border: none;
-          border-radius: 6px;
-          padding: 10px 0;
-          font-weight: 500;
-          cursor: pointer;
-          margin-top: 2px;
+          gap: 12px;
+          margin-top: 12px;
         }
       `}</style>
     </Page>

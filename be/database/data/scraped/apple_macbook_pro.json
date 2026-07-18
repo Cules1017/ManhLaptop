@@ -1,0 +1,29 @@
+[
+  {
+    "name": "Apple MacBook Pro 14-inch (M3, 2023)",
+    "price": 39990000,
+    "description": "Chip Apple M3 (CPU 8-core, GPU 10-core), RAM 8GB, SSD 512GB, màn hình 14.2 inch Liquid Retina XDR",
+    "image": "https://store.storeimages.cdn-apple.com/4982/as-images.apple.com/is/mbp14-spacegray-select-202310?wid=904&hei=840&fmt=jpeg&qlt=90&.v=1697230830200",
+    "rating": 4.8,
+    "discount": 10,
+    "quantity": 25
+  },
+  {
+    "name": "Apple MacBook Pro 16-inch (M3 Max, 2023)",
+    "price": 79990000,
+    "description": "Chip Apple M3 Max (CPU 14-core, GPU 30-core), RAM 36GB, SSD 1TB, màn hình 16.2 inch Liquid Retina XDR",
+    "image": "https://store.storeimages.cdn-apple.com/4982/as-images.apple.com/is/mbp16-spaceblack-select-202310?wid=904&hei=840&fmt=jpeg&qlt=90&.v=1698169502820",
+    "rating": 4.9,
+    "discount": 5,
+    "quantity": 12
+  },
+  {
+    "name": "Apple MacBook Pro 13-inch (M2, 2022)",
+    "price": 29990000,
+    "description": "Chip Apple M2 (CPU 8-core, GPU 10-core), RAM 8GB, SSD 256GB, màn hình 13.3 inch Retina",
+    "image": "https://store.storeimages.cdn-apple.com/4982/as-images.apple.com/is/mbp-spacegray-select-202206?wid=904&hei=840&fmt=jpeg&qlt=90&.v=1661027969188",
+    "rating": 4.5,
+    "discount": 15,
+    "quantity": 40
+  }
+]

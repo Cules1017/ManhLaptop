@@ -4,21 +4,21 @@ export default function Logo() {
   return (
     <>
       <Link href="/">
-        <a className="logo">MANH STORE</a>
+        <a className="logo text-gradient">MANH STORE</a>
       </Link>
       <style jsx>{`
         .logo {
           font-weight: 900;
-          font-size: 22px;
+          font-size: 24px;
           line-height: 1.3;
-          letter-spacing: 1.2px;
+          letter-spacing: 2px;
           text-transform: uppercase;
-          color: #e53935;
           text-decoration: none;
           white-space: nowrap;
+          transition: text-shadow var(--transition-smooth);
         }
         .logo:hover {
-          color: #c62828;
+          text-shadow: 0 0 12px var(--accent-glow);
         }
       `}</style>
     </>

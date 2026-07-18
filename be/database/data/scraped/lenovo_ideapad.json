@@ -1,0 +1,29 @@
+[
+  {
+    "name": "Lenovo IdeaPad Slim 3",
+    "price": 13490000,
+    "description": "Intel Core i5-12450H, 16GB RAM, Intel UHD Graphics, 15.6\" FHD",
+    "image": "https://upload.wikimedia.org/wikipedia/commons/7/77/Lenovo_IdeaPad_S12_%2812.1%22_laptop%29.jpg",
+    "rating": 4.6,
+    "discount": 10,
+    "quantity": 45
+  },
+  {
+    "name": "Lenovo IdeaPad Slim 5",
+    "price": 17590000,
+    "description": "Intel Core i5-13420H, 16GB RAM, Intel Iris Xe, 16\" WUXGA",
+    "image": "https://upload.wikimedia.org/wikipedia/commons/2/25/Lenovo_IdeaPad_U160.jpg",
+    "rating": 4.8,
+    "discount": 5,
+    "quantity": 20
+  },
+  {
+    "name": "Lenovo IdeaPad Pro 5",
+    "price": 25990000,
+    "description": "Intel Core Ultra 7 155H, 32GB RAM, RTX 3050, 16\" 2.8K OLED",
+    "image": "https://upload.wikimedia.org/wikipedia/commons/4/4b/Lenovo_IdeaPad_U300s_20110530.jpg",
+    "rating": 4.9,
+    "discount": 15,
+    "quantity": 15
+  }
+]

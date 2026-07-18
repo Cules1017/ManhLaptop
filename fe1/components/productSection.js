@@ -31,10 +31,12 @@ export default function ProductSection({ category }) {
           flex-direction: row;
           justify-content: space-between;
           width: 100%;
-          gap: 24px;
+          gap: 32px;
+          padding: 40px 0;
+          scroll-margin-top: 100px; /* Prevents the sticky header from covering content when scrolling to this section */
         }
         #product aside {
-          width: 240px;
+          width: 260px;
           flex-shrink: 0;
         }
         #product .main {
@@ -44,6 +46,8 @@ export default function ProductSection({ category }) {
         @media (max-width: 900px) {
           #product {
             flex-direction: column;
+            gap: 24px;
+            scroll-margin-top: 80px;
           }
           #product aside {
             width: 100%;

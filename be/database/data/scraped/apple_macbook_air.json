@@ -1,0 +1,29 @@
+[
+  {
+    "name": "Apple MacBook Air M1 2020",
+    "price": 18990000,
+    "description": "Apple M1 chip, 8GB RAM, 256GB SSD, 7-core GPU, 13.3-inch Retina display",
+    "image": "https://upload.wikimedia.org/wikipedia/commons/e/ed/Macbook_Air_2020_%28M1%29_-_1.jpg",
+    "rating": 4.8,
+    "discount": 15,
+    "quantity": 25
+  },
+  {
+    "name": "Apple MacBook Air M2 2022",
+    "price": 26990000,
+    "description": "Apple M2 chip, 8GB RAM, 256GB SSD, 8-core GPU, 13.6-inch Liquid Retina display",
+    "image": "https://images.unsplash.com/photo-1611186871348-b1ce696e52c9?w=800&q=80",
+    "rating": 4.9,
+    "discount": 10,
+    "quantity": 40
+  },
+  {
+    "name": "Apple MacBook Air M3 2024",
+    "price": 31990000,
+    "description": "Apple M3 chip, 16GB RAM, 512GB SSD, 10-core GPU, 15.3-inch Liquid Retina display",
+    "image": "https://images.unsplash.com/photo-1517336714731-489689fd1ca8?w=800&q=80",
+    "rating": 4.7,
+    "discount": 5,
+    "quantity": 15
+  }
+]

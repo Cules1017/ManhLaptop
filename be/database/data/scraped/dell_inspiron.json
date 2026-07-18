@@ -1,0 +1,29 @@
+[
+  {
+    "name": "Dell Inspiron 14 5440",
+    "price": 15500000,
+    "description": "Intel Core 5 120U, 16GB RAM, Intel Iris Xe, 14.0\" FHD+",
+    "image": "https://cdn.tgdd.vn/Products/Images/44/326880/dell-inspiron-14-5440-7fn5j-thumb-600x600.jpg",
+    "rating": 4.8,
+    "discount": 5,
+    "quantity": 25
+  },
+  {
+    "name": "Dell Inspiron 14 7440 2-in-1",
+    "price": 19500000,
+    "description": "Intel Core 7 150U, 16GB RAM, Intel Iris Xe, 14.0\" FHD+ Touch",
+    "image": "https://cdn.tgdd.vn/Products/Images/44/326168/dell-inspiron-14-5440-n4i5211w1-thumb-600x600.jpg",
+    "rating": 4.5,
+    "discount": 10,
+    "quantity": 15
+  },
+  {
+    "name": "Dell Inspiron 16 Plus 7640",
+    "price": 22500000,
+    "description": "Intel Core Ultra 7 155H, 16GB RAM, NVIDIA RTX 4050, 16.0\" 2.5K",
+    "image": "https://cdn.tgdd.vn/Products/Images/44/321528/dell-inspiron-15-3520-i5-25w241-thumb-600x600.jpg",
+    "rating": 4.7,
+    "discount": 8,
+    "quantity": 30
+  }
+]

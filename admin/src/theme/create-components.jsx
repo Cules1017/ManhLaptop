@@ -33,15 +33,20 @@ export const createComponents = ({ palette }) => {
     MuiButton: {
       styleOverrides: {
         root: {
+          borderRadius: 8,
+          textTransform: 'none',
           fontWeight: 600
         },
         sizeLarge: {
+          padding: '12px 24px',
           fontSize: 15
         },
         sizeMedium: {
+          padding: '8px 20px',
           fontSize: 14
         },
         sizeSmall: {
+          padding: '6px 16px',
           fontSize: 13
         },
         contained: {
@@ -143,6 +148,38 @@ export const createComponents = ({ palette }) => {
           flexDirection: 'column',
           height: '100%',
           width: '100%'
+        }
+      }
+    },
+    MuiDialog: {
+      styleOverrides: {
+        paper: {
+          borderRadius: 16,
+          boxShadow: `0px 8px 24px ${alpha(palette.neutral[900], 0.12)}`
+        }
+      }
+    },
+    MuiDialogTitle: {
+      styleOverrides: {
+        root: {
+          padding: '24px 24px 16px 24px',
+          fontSize: 20,
+          fontWeight: 700
+        }
+      }
+    },
+    MuiDialogContent: {
+      styleOverrides: {
+        root: {
+          padding: '24px'
+        }
+      }
+    },
+    MuiDialogActions: {
+      styleOverrides: {
+        root: {
+          padding: '16px 24px',
+          backgroundColor: palette.neutral[50]
         }
       }
     },
@@ -349,7 +386,8 @@ export const createComponents = ({ palette }) => {
         root: {
           borderBottomWidth: 1,
           borderBottomStyle: 'solid',
-          borderBottomColor: palette.divider
+          borderBottomColor: palette.divider,
+          padding: '16px 24px'
         }
       }
     },
@@ -362,8 +400,8 @@ export const createComponents = ({ palette }) => {
           borderBottomColor: palette.divider,
           [`.${tableCellClasses.root}`]: {
             color: palette.text.secondary,
-            fontSize: 11,
-            fontWeight: 600,
+            fontSize: 12,
+            fontWeight: 700,
             textTransform: 'uppercase'
           }
         }

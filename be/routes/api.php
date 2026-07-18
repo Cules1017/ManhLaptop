@@ -47,6 +47,20 @@ Route::get('/products', [ProductController::class, 'index']);
 Route::get('/products/{id}', [ProductController::class, 'show']);
 Route::get('/categories', [ProductController::class, 'getCategories']);
 
+// Homepage settings route
+Route::get('/homepage-settings', [\App\Http\Controllers\HomepageSettingController::class, 'index']);
+
+// Contact routes
+Route::post('/contacts', [\App\Http\Controllers\ContactController::class, 'store']);
+
+// AI Chatbot Route
+Route::post('/chat', [\App\Http\Controllers\ChatController::class, 'chat']);
+
+// Public Live Chat Routes
+Route::post('/live-chat/start', [\App\Http\Controllers\LiveChatController::class, 'startSession']);
+Route::get('/live-chat/{sessionId}/messages', [\App\Http\Controllers\LiveChatController::class, 'userGetMessages']);
+Route::post('/live-chat/{sessionId}/messages', [\App\Http\Controllers\LiveChatController::class, 'userSendMessage']);
+
 // Protected routes
 Route::middleware('auth:sanctum')->group(function () {
     
@@ -89,11 +103,26 @@ Route::middleware(['auth:sanctum', 'admin'])->prefix('admin')->group(function ()
     Route::get('/payment-config', [App\Http\Controllers\Admin\PaymentConfigController::class, 'show']);
     Route::put('/payment-config', [App\Http\Controllers\Admin\PaymentConfigController::class, 'update']);
 
+    // Homepage settings routes
+    Route::post('/homepage-settings', [\App\Http\Controllers\HomepageSettingController::class, 'update']);
+    Route::post('/homepage-settings/upload', [\App\Http\Controllers\HomepageSettingController::class, 'uploadImage']);
+
     // User management routes
     Route::get('/users', [App\Http\Controllers\Admin\UserController::class, 'index']);
     Route::get('/users/{id}', [App\Http\Controllers\Admin\UserController::class, 'show']);
     Route::put('/users/{id}', [App\Http\Controllers\Admin\UserController::class, 'update']);
     Route::delete('/users/{id}', [App\Http\Controllers\Admin\UserController::class, 'destroy']);
+
+    // Admin Live Chat Routes
+    Route::get('/live-chat/sessions', [\App\Http\Controllers\LiveChatController::class, 'adminGetSessions']);
+    Route::get('/live-chat/sessions/{sessionId}/messages', [\App\Http\Controllers\LiveChatController::class, 'adminGetMessages']);
+    Route::post('/live-chat/sessions/{sessionId}/messages', [\App\Http\Controllers\LiveChatController::class, 'adminSendMessage']);
+    Route::post('/live-chat/sessions/{sessionId}/close', [\App\Http\Controllers\LiveChatController::class, 'adminCloseSession']);
+
+    // Contact / Customer care routes
+    Route::get('/contacts', [App\Http\Controllers\Admin\ContactController::class, 'index']);
+    Route::put('/contacts/{id}', [App\Http\Controllers\Admin\ContactController::class, 'update']);
+    Route::delete('/contacts/{id}', [App\Http\Controllers\Admin\ContactController::class, 'destroy']);
 });
 
 // Admin Dashboard Routes

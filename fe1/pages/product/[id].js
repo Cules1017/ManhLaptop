@@ -8,6 +8,7 @@ import StarRatings from 'react-star-ratings';
 import { FaCartPlus, FaChevronDown, FaChevronUp } from 'react-icons/fa';
 import { toast } from 'react-toastify';
 import { useCart } from '../../context/CartContext';
+import ProductItem from '../../components/productItem';
 import {
   getOriginalPrice,
   getFinalPrice,
@@ -46,12 +47,45 @@ export default function ProductPage() {
   const [product, setProduct] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [relatedProducts, setRelatedProducts] = useState([]);
   const [quantity, setQuantity] = useState(1);
   const [adding, setAdding] = useState(false);
+  const [selectedImage, setSelectedImage] = useState(null);
   const { refreshCartCount } = useCart();
   const descRef = useRef(null);
   const [descExpanded, setDescExpanded] = useState(false);
   const [descNeedsToggle, setDescNeedsToggle] = useState(false);
+
+  useEffect(() => {
+    if (product) {
+      setSelectedImage(product.image);
+    }
+  }, [product]);
+
+  useEffect(() => {
+    if (!product) return;
+    const allImages = [product.image, ...(product.images || []).map(img => img.image_url)].filter(Boolean);
+    if (allImages.length <= 1) return;
+
+    const interval = setInterval(() => {
+      setSelectedImage((current) => {
+        const currentIndex = allImages.indexOf(current);
+        const nextIndex = currentIndex === -1 ? 0 : (currentIndex + 1) % allImages.length;
+        
+        // Tự động cuộn thumbnail tương ứng vào giữa mà KHÔNG làm nhảy trang (vertical scroll)
+        const thumbEl = document.getElementById(`pd-thumb-${nextIndex}`);
+        const container = document.querySelector('.pd-thumbnail-strip');
+        if (thumbEl && container) {
+          const scrollLeft = thumbEl.offsetLeft - container.offsetWidth / 2 + thumbEl.offsetWidth / 2;
+          container.scrollTo({ left: scrollLeft, behavior: 'smooth' });
+        }
+        
+        return allImages[nextIndex];
+      });
+    }, 2000);
+
+    return () => clearInterval(interval);
+  }, [product]);
 
   useEffect(() => {
     const fetchProduct = async () => {
@@ -61,6 +95,7 @@ export default function ProductPage() {
         const response = await productService.getProductById(id);
         if (response && response.status && response.data) {
           setProduct(response.data);
+          setRelatedProducts(response.related || []);
         } else {
           setError('Không tìm thấy sản phẩm');
         }
@@ -218,8 +253,43 @@ export default function ProductPage() {
         <div className="pd-shell">
           <div className="pd-main-card">
             <div className="pd-gallery">
-              <div className="pd-image-wrap">
-                <img src={resolveMediaUrl(product.image)} alt={product.name} />
+              <div className="pd-gallery-inner">
+                <div className="pd-image-wrap">
+                  <img 
+                    src={resolveMediaUrl(selectedImage || product.image) || 'https://placehold.co/800x800/eeeeee/999999?text=No+Image'} 
+                    alt={product.name} 
+                    onError={(e) => {
+                      e.target.onerror = null;
+                      e.target.src = 'https://placehold.co/800x800/eeeeee/999999?text=Image+Not+Found';
+                    }}
+                  />
+                </div>
+                {product.images && product.images.length > 0 && (
+                  <div className="pd-thumbnail-strip">
+                    {[product.image, ...product.images.map(img => img.image_url)].filter(Boolean).map((imgUrl, idx) => (
+                      <div 
+                        id={`pd-thumb-${idx}`}
+                        key={idx} 
+                        className={`pd-thumbnail ${selectedImage === imgUrl ? 'active' : ''}`}
+                        onClick={(e) => {
+                          setSelectedImage(imgUrl);
+                          const thumbEl = e.currentTarget;
+                          const container = document.querySelector('.pd-thumbnail-strip');
+                          if (thumbEl && container) {
+                            const scrollLeft = thumbEl.offsetLeft - container.offsetWidth / 2 + thumbEl.offsetWidth / 2;
+                            container.scrollTo({ left: scrollLeft, behavior: 'smooth' });
+                          }
+                        }}
+                      >
+                        <img 
+                          src={resolveMediaUrl(imgUrl)} 
+                          alt={`${product.name} thumbnail ${idx}`}
+                          onError={(e) => { e.target.style.display = 'none'; }}
+                        />
+                      </div>
+                    ))}
+                  </div>
+                )}
               </div>
             </div>
 
@@ -356,45 +426,91 @@ export default function ProductPage() {
               </button>
             </div>
           </div>
+
+          {/* RELATED PRODUCTS SECTION */}
+          {relatedProducts && relatedProducts.length > 0 && (
+            <div className="pd-related-section">
+              <h2 className="pd-related-title">Sản phẩm liên quan</h2>
+              <div className="pd-related-grid">
+                {relatedProducts.map(p => (
+                  <ProductItem 
+                    key={p.id} 
+                    id={p.id}
+                    name={p.name}
+                    rating={p.rating}
+                    img_url={resolveMediaUrl(p.image)}
+                    price={p.price}
+                    discount={p.discount}
+                  />
+                ))}
+              </div>
+            </div>
+          )}
         </div>
       </div>
 
       <style jsx>{`
         .pd-page {
-          background: linear-gradient(180deg, #f8faff 0%, #f3f5fb 100%);
+          background: var(--bg-color);
           min-height: calc(100vh - 80px);
-          padding: 24px 16px 40px;
+          padding: 32px 16px 64px;
         }
         .pd-shell {
           max-width: 1280px;
           margin: 0 auto;
         }
+        .pd-related-section {
+          margin-top: 48px;
+        }
+        .pd-related-title {
+          font-size: 24px;
+          font-weight: 800;
+          color: var(--text-main);
+          margin-bottom: 24px;
+          padding-bottom: 12px;
+          border-bottom: 2px solid var(--surface-border);
+        }
+        .pd-related-grid {
+          display: grid;
+          grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+          gap: 24px;
+        }
         .pd-main-card {
           display: grid;
           grid-template-columns: minmax(280px, 1fr) minmax(380px, 1.4fr) minmax(260px, 0.8fr);
-          gap: 24px;
-          background: #fff;
-          border-radius: 20px;
-          box-shadow: 0 14px 34px rgba(17, 24, 39, 0.08);
-          padding: 24px;
-          border: 1px solid #edf2f7;
+          gap: 32px;
+          background: var(--surface);
+          border-radius: var(--radius-lg);
+          box-shadow: var(--shadow-lg);
+          padding: 32px;
+          border: 1px solid var(--surface-border);
         }
         .pd-gallery {
           display: flex;
           justify-content: flex-start;
           align-items: flex-start;
+          min-width: 0;
+        }
+        .pd-gallery-inner {
+          display: flex;
+          flex-direction: column;
+          gap: 16px;
+          width: 100%;
+          min-width: 0;
         }
         .pd-image-wrap {
           width: 100%;
-          border-radius: 16px;
-          background: #f8fafc;
-          border: 1px solid #e2e8f0;
+          border-radius: var(--radius);
+          background: var(--surface);
+          border: 1px solid var(--surface-border);
           min-height: 0;
+          min-width: 0;
+          box-sizing: border-box;
           display: flex;
-          align-items: flex-start;
-          justify-content: flex-start;
+          align-items: center;
+          justify-content: center;
           overflow: hidden;
-          padding: 12px;
+          padding: 24px;
         }
         .pd-image-wrap img {
           width: 100%;
@@ -402,61 +518,107 @@ export default function ProductPage() {
           height: auto;
           object-fit: contain;
           display: block;
+          mix-blend-mode: multiply;
+        }
+        .pd-thumbnail-strip {
+          position: relative;
+          display: flex;
+          gap: 12px;
+          flex-wrap: nowrap;
+          overflow-x: auto;
+          margin-top: 8px;
+          scrollbar-width: none;
+          -ms-overflow-style: none;
+          padding-bottom: 4px;
+        }
+        .pd-thumbnail-strip::-webkit-scrollbar {
+          display: none;
+        }
+        .pd-thumbnail {
+          width: 80px;
+          height: 80px;
+          border: 2px solid transparent;
+          border-radius: var(--radius-sm);
+          overflow: hidden;
+          cursor: pointer;
+          flex-shrink: 0;
+          background: var(--surface);
+          transition: all var(--transition-fast);
+        }
+        .pd-thumbnail:hover {
+          border-color: var(--surface-border);
+        }
+        .pd-thumbnail.active {
+          border-color: var(--accent);
+        }
+        .pd-thumbnail img {
+          width: 100%;
+          height: 100%;
+          object-fit: contain;
+          mix-blend-mode: multiply;
+        }
+        .pd-info {
+          min-width: 0;
         }
         .pd-info h1 {
           margin: 0;
-          font-size: 2rem;
-          line-height: 1.2;
-          color: #0f172a;
+          font-size: 2.25rem;
+          line-height: 1.25;
+          color: var(--text-main);
           font-weight: 800;
         }
         .pd-rating-row {
           display: flex;
           align-items: center;
           gap: 8px;
-          margin-top: 12px;
+          margin-top: 16px;
         }
         .pd-rating-text {
-          color: #64748b;
+          color: var(--text-muted);
           font-weight: 600;
         }
         .pd-meta-grid {
-          margin-top: 18px;
+          margin-top: 24px;
           display: grid;
           grid-template-columns: 1fr 1fr;
-          gap: 10px;
+          gap: 16px;
         }
         .pd-meta-item {
-          background: #f8fafc;
-          border: 1px solid #e2e8f0;
-          border-radius: 12px;
-          padding: 12px;
+          background: var(--surface-hover);
+          border: 1px solid var(--surface-border);
+          border-radius: var(--radius);
+          padding: 16px;
           display: flex;
           flex-direction: column;
-          gap: 4px;
+          gap: 6px;
         }
         .pd-meta-item span {
-          color: #64748b;
+          color: var(--text-muted);
           font-size: 13px;
+          text-transform: uppercase;
+          letter-spacing: 0.05em;
+          font-weight: 600;
         }
         .pd-meta-item b {
-          color: #0f172a;
-          font-size: 15px;
+          color: var(--text-main);
+          font-size: 16px;
         }
-        .stock-ok { color: #15803d !important; }
-        .stock-out { color: #dc2626 !important; }
+        .stock-ok { color: var(--success) !important; }
+        .stock-out { color: var(--danger) !important; }
         .pd-desc-box {
-          margin-top: 16px;
-          background: #fff;
-          border: 1px solid #e2e8f0;
-          border-radius: 12px;
-          padding: 14px;
+          margin-top: 24px;
+          background: var(--surface);
+          border: 1px solid var(--surface-border);
+          border-radius: var(--radius);
+          padding: 24px;
         }
         .pd-desc-title {
-          font-size: 15px;
+          font-size: 1.1rem;
           font-weight: 800;
-          color: #111827;
-          margin-bottom: 6px;
+          color: var(--text-main);
+          margin-bottom: 12px;
+          padding-bottom: 12px;
+          border-bottom: 1px solid var(--surface-border);
         }
         .pd-desc-shell {
           position: relative;
@@ -466,38 +628,36 @@ export default function ProductPage() {
           left: 0;
           right: 0;
           bottom: 0;
-          height: 56px;
+          height: 80px;
           pointer-events: none;
           background: linear-gradient(
             to bottom,
             rgba(255, 255, 255, 0),
-            rgba(255, 255, 255, 0.9),
-            #ffffff
+            var(--surface)
           );
         }
         .pd-desc-toggle-wrap {
           display: flex;
           justify-content: center;
-          margin-top: 12px;
-          padding-top: 2px;
+          margin-top: 20px;
+          padding-top: 8px;
         }
         .pd-desc-toggle {
           display: inline-flex;
           align-items: center;
           justify-content: center;
           gap: 0;
-          padding: 10px 22px;
+          padding: 12px 28px;
           border-radius: 999px;
-          border: 1.5px solid #e2e8f0;
-          background: linear-gradient(180deg, #ffffff 0%, #f1f5f9 100%);
-          color: #0f172a;
-          font-weight: 700;
+          border: 1px solid var(--surface-border);
+          background: var(--surface);
+          color: var(--text-main);
+          font-weight: 600;
           font-size: 14px;
           font-family: inherit;
           cursor: pointer;
-          box-shadow: 0 2px 8px rgba(15, 23, 42, 0.06);
-          transition: transform 0.18s ease, box-shadow 0.18s ease, border-color 0.18s ease,
-            color 0.18s ease;
+          box-shadow: var(--shadow-sm);
+          transition: all var(--transition-fast);
         }
         .pd-desc-toggle__inner {
           display: inline-flex;
@@ -506,130 +666,142 @@ export default function ProductPage() {
         }
         .pd-desc-toggle__icon {
           font-size: 14px;
-          color: #2563eb;
+          color: var(--secondary);
           flex-shrink: 0;
         }
         .pd-desc-toggle__label {
           letter-spacing: 0.01em;
         }
         .pd-desc-toggle:hover {
-          border-color: #93c5fd;
-          color: #1d4ed8;
-          box-shadow: 0 6px 18px rgba(37, 99, 235, 0.15);
+          border-color: var(--secondary);
+          color: var(--secondary);
+          box-shadow: var(--shadow-md);
           transform: translateY(-1px);
-        }
-        .pd-desc-toggle:hover .pd-desc-toggle__icon {
-          color: #1d4ed8;
         }
         .pd-desc-toggle:active {
           transform: translateY(0);
-          box-shadow: 0 2px 6px rgba(15, 23, 42, 0.08);
+          box-shadow: none;
         }
         .pd-desc-toggle:focus-visible {
-          outline: 2px solid #3b82f6;
-          outline-offset: 3px;
+          outline: 2px solid var(--secondary);
+          outline-offset: 2px;
         }
         .pd-buybox {
-          background: linear-gradient(180deg, #f8fafc 0%, #eef2ff 100%);
-          border: 1px solid #dbeafe;
-          border-radius: 14px;
-          padding: 16px;
+          background: var(--surface-hover);
+          border: 1px solid var(--surface-border);
+          border-radius: var(--radius-lg);
+          padding: 24px;
           display: flex;
           flex-direction: column;
-          gap: 14px;
+          gap: 20px;
           height: fit-content;
           position: sticky;
-          top: 16px;
+          top: 24px;
+          min-width: 0;
         }
         .pd-main-price {
-          color: #dc2626;
-          font-size: 2rem;
+          color: var(--accent);
+          font-size: 2.5rem;
           font-weight: 900;
           line-height: 1.1;
         }
         .pd-discount-row {
           display: flex;
           align-items: center;
-          gap: 8px;
-          margin-top: 6px;
+          gap: 12px;
+          margin-top: 8px;
         }
         .pd-old-price {
-          color: #64748b;
+          color: var(--text-muted);
           text-decoration: line-through;
-          font-size: 14px;
+          font-size: 16px;
           font-weight: 500;
         }
         .pd-discount-badge {
           color: #fff;
-          background: #ef4444;
-          border-radius: 999px;
-          padding: 2px 8px;
-          font-size: 12px;
+          background: var(--danger);
+          border-radius: var(--radius-sm);
+          padding: 4px 10px;
+          font-size: 13px;
           font-weight: 800;
         }
         .pd-qty-box > span {
-          color: #334155;
+          color: var(--text-main);
           font-size: 14px;
           font-weight: 700;
+          display: block;
+          margin-bottom: 8px;
         }
         .pd-qty-control {
-          margin-top: 8px;
           display: inline-flex;
           align-items: center;
-          border: 1px solid #cbd5e1;
-          border-radius: 10px;
+          border: 1px solid var(--surface-border);
+          border-radius: var(--radius);
           overflow: hidden;
-          background: #fff;
+          background: var(--surface);
         }
         .pd-qty-control button {
-          width: 36px;
-          height: 36px;
+          width: 44px;
+          height: 44px;
           border: none;
-          background: #fff;
+          background: var(--surface-hover);
           cursor: pointer;
-          font-size: 18px;
+          font-size: 20px;
+          color: var(--text-main);
+          transition: background var(--transition-fast);
+        }
+        .pd-qty-control button:hover {
+          background: var(--surface-border);
         }
         .pd-qty-control input {
-          width: 58px;
-          height: 36px;
+          width: 60px;
+          height: 44px;
           border: none;
-          border-left: 1px solid #e2e8f0;
-          border-right: 1px solid #e2e8f0;
+          border-left: 1px solid var(--surface-border);
+          border-right: 1px solid var(--surface-border);
           text-align: center;
           outline: none;
           font-weight: 700;
+          font-size: 16px;
+          color: var(--text-main);
+          background: var(--surface);
         }
         .pd-buy-now,
         .pd-add-cart {
           width: 100%;
-          border-radius: 10px;
-          padding: 12px 0;
-          font-size: 15px;
+          border-radius: var(--radius);
+          padding: 16px 0;
+          font-size: 16px;
           font-weight: 800;
           cursor: pointer;
-          transition: transform 0.15s ease, box-shadow 0.15s ease;
+          transition: all var(--transition-smooth);
         }
         .pd-buy-now {
           border: none;
           color: #fff;
-          background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
-          box-shadow: 0 10px 24px rgba(220, 38, 38, 0.22);
+          background: var(--accent);
+          box-shadow: 0 4px 14px var(--accent-glow);
         }
-        .pd-buy-now:hover:not(:disabled),
-        .pd-add-cart:hover:not(:disabled) {
-          transform: translateY(-1px);
+        .pd-buy-now:hover:not(:disabled) {
+          background: var(--accent-hover);
+          transform: translateY(-2px);
+          box-shadow: 0 6px 20px var(--accent-glow);
         }
         .pd-add-cart {
-          border: 1.5px solid #ef4444;
-          color: #dc2626;
-          background: #fff;
+          border: 2px solid var(--accent);
+          color: var(--accent);
+          background: transparent;
           display: inline-flex;
           align-items: center;
           justify-content: center;
         }
+        .pd-add-cart:hover:not(:disabled) {
+          background: var(--accent-glow);
+          transform: translateY(-2px);
+        }
         .pd-buy-now:disabled,
         .pd-add-cart:disabled {
-          opacity: 0.55;
+          opacity: 0.5;
           cursor: not-allowed;
           transform: none;
           box-shadow: none;
@@ -649,9 +821,9 @@ export default function ProductPage() {
       <style jsx global>{`
         /* Nội dung TinyMCE: styled-jsx scoped không khớp node con từ dangerouslySetInnerHTML → dùng global dưới .pd-desc-shell */
         .pd-desc-shell .pd-desc-body {
-          color: #374151;
-          line-height: 1.65;
-          font-size: 15px;
+          color: var(--text-main);
+          line-height: 1.7;
+          font-size: 16px;
           text-align: left;
           word-wrap: break-word;
           overflow-wrap: anywhere;
@@ -659,7 +831,7 @@ export default function ProductPage() {
           box-sizing: border-box;
         }
         .pd-desc-shell .pd-desc-body p {
-          margin: 0 0 12px;
+          margin: 0 0 16px;
         }
         .pd-desc-shell .pd-desc-body p:last-child {
           margin-bottom: 0;
@@ -670,15 +842,16 @@ export default function ProductPage() {
           height: auto !important;
           object-fit: contain;
           display: block;
-          margin: 14px 0;
-          border-radius: 8px;
+          margin: 24px auto;
+          border-radius: var(--radius);
           box-sizing: border-box;
+          mix-blend-mode: multiply;
         }
         .pd-desc-shell .pd-desc-body figure,
         .pd-desc-shell .pd-desc-body picture {
           max-width: 100% !important;
-          margin: 12px 0;
-          text-align: left;
+          margin: 16px 0;
+          text-align: center;
           box-sizing: border-box;
         }
         .pd-desc-shell .pd-desc-body svg {
@@ -686,43 +859,50 @@ export default function ProductPage() {
           height: auto;
         }
         .pd-desc-shell .pd-desc-body a {
-          color: #2563eb;
+          color: var(--secondary);
           word-break: break-word;
+          text-decoration: underline;
         }
         .pd-desc-shell .pd-desc-body ul,
         .pd-desc-shell .pd-desc-body ol {
-          margin: 8px 0;
-          padding-left: 1.35em;
+          margin: 12px 0;
+          padding-left: 1.5em;
         }
         .pd-desc-shell .pd-desc-body table {
           width: 100% !important;
           max-width: 100% !important;
           border-collapse: collapse;
-          margin: 12px 0;
-          font-size: 14px;
+          margin: 20px 0;
+          font-size: 15px;
           display: table;
           table-layout: fixed;
           box-sizing: border-box;
         }
         .pd-desc-shell .pd-desc-body th,
         .pd-desc-shell .pd-desc-body td {
-          border: 1px solid #e2e8f0;
-          padding: 8px 10px;
+          border: 1px solid var(--surface-border);
+          padding: 12px;
           text-align: left;
           vertical-align: top;
           word-break: break-word;
+        }
+        .pd-desc-shell .pd-desc-body th {
+          background: var(--surface-hover);
+          font-weight: 600;
         }
         .pd-desc-shell .pd-desc-body h1,
         .pd-desc-shell .pd-desc-body h2,
         .pd-desc-shell .pd-desc-body h3,
         .pd-desc-shell .pd-desc-body h4 {
-          margin: 16px 0 8px;
-          line-height: 1.3;
-          color: #0f172a;
+          margin: 24px 0 16px;
+          line-height: 1.4;
+          color: var(--text-main);
+          font-weight: 700;
         }
         .pd-desc-shell .pd-desc-body video {
           max-width: 100%;
           height: auto;
+          border-radius: var(--radius);
         }
       `}</style>
       </>

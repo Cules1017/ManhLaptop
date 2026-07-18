@@ -1,0 +1,29 @@
+[
+  {
+    "name": "Dell Alienware m16 R2",
+    "price": 60000000,
+    "description": "Intel Core Ultra 9 185H, 32GB RAM, RTX 4070, 16-inch QHD+ 240Hz",
+    "image": "https://upload.wikimedia.org/wikipedia/commons/7/7b/Alienware_m15x_Laptop.jpg",
+    "rating": 4.7,
+    "discount": 5,
+    "quantity": 25
+  },
+  {
+    "name": "Dell Alienware m18 R2",
+    "price": 100000000,
+    "description": "Intel Core i9-14900HX, 64GB RAM, RTX 4090, 18-inch QHD+ 165Hz",
+    "image": "https://upload.wikimedia.org/wikipedia/commons/8/87/Alienware.JPG",
+    "rating": 4.9,
+    "discount": 10,
+    "quantity": 12
+  },
+  {
+    "name": "Dell Alienware x16 R2",
+    "price": 80000000,
+    "description": "Intel Core Ultra 9 185H, 32GB RAM, RTX 4080, 16-inch QHD+ 240Hz",
+    "image": "https://upload.wikimedia.org/wikipedia/commons/c/c8/Alienware_M14x.jpg",
+    "rating": 4.6,
+    "discount": 15,
+    "quantity": 40
+  }
+]

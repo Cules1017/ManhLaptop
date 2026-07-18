@@ -8,25 +8,31 @@ export default function Button({ type, title, disabled = false, ...rest }) {
       <style jsx>{`
         button {
           width: 100%;
-          margin-top: 32px;
-          background-color: #1875f0;
+          margin-top: 24px;
+          background-color: var(--secondary);
           color: #ffffff;
           border: none;
-          width: 50%;
-          font-size: 18px;
-          border-radius: 6px;
-          padding-bottom: 1em;
-          padding-top: 1em;
+          font-size: 16px;
+          font-weight: 600;
+          border-radius: var(--radius-sm);
+          padding: 16px 24px;
           align-self: center;
+          cursor: pointer;
+          transition: all var(--transition-fast);
+          box-shadow: var(--shadow-sm);
+        }
+        button:hover:not(:disabled) {
+          background-color: #1d4ed8; /* darker blue */
+          box-shadow: 0 4px 12px rgba(37, 99, 235, 0.2);
+          transform: translateY(-1px);
+        }
+        button:disabled {
+          opacity: 0.6;
+          cursor: not-allowed;
         }
         @media (max-width: 1000px) {
           button {
-            width: 70vw;
-          }
-        }
-        @media (max-width: 800px) {
-          button {
-            width: 75vw;
+            width: 100%;
           }
         }
       `}</style>

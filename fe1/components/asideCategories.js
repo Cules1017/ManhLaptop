@@ -57,23 +57,27 @@ export default function AsideCategories() {
           margin: 0 0 20px;
           padding: 0;
           width: 100%;
-          background: #fff;
-          border-radius: 8px;
+          background: var(--surface);
+          backdrop-filter: blur(12px);
+          -webkit-backdrop-filter: blur(12px);
+          border: 1px solid var(--surface-border);
+          border-radius: var(--radius-lg);
           overflow: hidden;
-          box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+          box-shadow: var(--shadow-sm);
         }
         .categories .title {
-          padding: 12px 16px;
+          padding: 16px 20px;
           font-weight: 700;
           font-size: 14px;
           text-transform: uppercase;
-          color: #333;
-          background: #f8f8f8;
-          border-bottom: 1px solid #eee;
+          letter-spacing: 1.5px;
+          color: var(--text-main);
+          background: var(--surface-hover);
+          border-bottom: 1px solid var(--surface-border);
         }
         .loading {
-          padding: 14px 16px;
-          color: #888;
+          padding: 16px 20px;
+          color: var(--text-muted);
           font-size: 14px;
         }
       `}</style>

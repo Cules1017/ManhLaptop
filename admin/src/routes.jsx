@@ -10,6 +10,9 @@ import ProductManager from './pages/products';
 import AdminLogin from './pages/login';
 import CategoryManager from './pages/categories';
 import { Users } from './pages/userman';
+import CustomerCare from './pages/customer-care';
+import HomepageSettingsPage from './pages/homepage-settings';
+import LiveChat from './pages/live-chat.jsx';
 
 export const routes = [
   {
@@ -32,6 +35,10 @@ export const routes = [
         element: <SettingsPage />
       },
       {
+        path: 'homepage-settings',
+        element: <HomepageSettingsPage />
+      },
+      {
         path: 'theme',
         element: <ThemePage />
       },
@@ -50,6 +57,14 @@ export const routes = [
       {
         path: 'users',
         element: <Users />
+      },
+      {
+        path: 'customer-care',
+        element: <CustomerCare />
+      },
+      {
+        path: 'live-chat',
+        element: <LiveChat />
       },
       {
         path: 'login',

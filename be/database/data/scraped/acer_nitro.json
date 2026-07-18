@@ -1,0 +1,29 @@
+[
+  {
+    "name": "Acer Nitro 5 Tiger AN515-58-52SP",
+    "price": 21000000,
+    "description": "Intel Core i5-12500H, 8GB RAM, RTX 3050, 15.6\" FHD 144Hz",
+    "image": "https://cdn.tgdd.vn/Products/Images/44/282827/acer-nitro-5-tiger-an515-58-52sp-i5-nhqfksv001-1-1.jpg",
+    "rating": 4.5,
+    "discount": 10,
+    "quantity": 25
+  },
+  {
+    "name": "Acer Nitro V ANV15-51-55V9",
+    "price": 26000000,
+    "description": "Intel Core i5-13420H, 16GB RAM, RTX 4050, 15.6\" FHD 144Hz",
+    "image": "https://cdn.tgdd.vn/Products/Images/44/313331/acer-nitro-v-anv15-51-55v9-i5-nhqp8sv004-thumb-600x600.jpg",
+    "rating": 4.8,
+    "discount": 15,
+    "quantity": 40
+  },
+  {
+    "name": "Acer Nitro 16 Phoenix AN16-41",
+    "price": 28000000,
+    "description": "AMD Ryzen 5 7535HS, 8GB RAM, RTX 4050, 16\" WUXGA 165Hz",
+    "image": "https://cdn.tgdd.vn/Products/Images/44/305220/acer-nitro-16-phoenix-an16-41-r5m4-r5-nhqkbv001-thumb-600x600.jpg",
+    "rating": 4.2,
+    "discount": 5,
+    "quantity": 15
+  }
+]

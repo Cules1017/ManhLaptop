@@ -38,13 +38,20 @@ export const SideNav = () => {
               sx={{
                 flexDirection: 'column',
                 px: 2,
-                py: 1.5
+                py: 1.5,
+                borderRadius: 2,
+                mb: 0.5,
+                backgroundColor: active ? 'action.selected' : 'transparent',
+                '&:hover': {
+                  backgroundColor: 'action.hover'
+                }
               }}
             >
               <ListItemIcon
                 sx={{
                   minWidth: 'auto',
-                  color: active ? 'primary.main' : 'neutral.400'
+                  color: active ? 'primary.main' : 'neutral.400',
+                  mb: 0.5
                 }}
               >
                 {item.icon}

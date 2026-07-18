@@ -18,12 +18,12 @@ export default function Page({ title, description, children }) {
           width: 100%;
           max-width: 1400px;
           margin: 0 auto;
-          padding: 20px 20px 40px;
-          min-height: 60vh;
+          padding: 40px 20px 80px;
+          min-height: calc(100vh - 200px);
         }
         @media (max-width: 768px) {
           .content {
-            padding: 12px;
+            padding: 24px 12px;
           }
         }
       `}</style>

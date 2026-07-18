@@ -13,69 +13,68 @@ import Logo from './logo';
 
 export default function Footer() {
   return (
-    <footer>
+    <footer className="glass-panel">
       <div className="footer footer-top">
         <Logo />
 
         <div className="footer-nav">
-          {/* <Link href="/">
-            <a>Shop</a>
+          <Link href="/">
+            <a className="nav-link">Shop</a>
           </Link>
           <Link href="/">
-            <a>Journal</a>
+            <a className="nav-link">Journal</a>
           </Link>
           <Link href="/">
-            <a>About</a>
+            <a className="nav-link">About</a>
           </Link>
-          <Link href="/">
-            <a>Contacts</a>
-          </Link> */}
+          <Link href="/contact">
+            <a className="nav-link">Contacts</a>
+          </Link>
         </div>
 
         <div className="social-links">
           <Link href="/">
-            <a>
-              <FaFacebookF color="#d8d8d8" size="18px" />
+            <a className="social-icon">
+              <FaFacebookF size="20px" />
             </a>
           </Link>
           <Link href="/">
-            <a>
-              <FaTwitter color="#d8d8d8" size="18px" />
+            <a className="social-icon">
+              <FaTwitter size="20px" />
             </a>
           </Link>
           <Link href="/">
-            <a>
-              <FaInstagram color="#d8d8d8" size="18px" />
+            <a className="social-icon">
+              <FaInstagram size="20px" />
             </a>
           </Link>
           <Link href="/">
-            <a>
-              <FaYoutube color="#d8d8d8" size="18px" />
+            <a className="social-icon">
+              <FaYoutube size="20px" />
             </a>
           </Link>
         </div>
       </div>
       <div className="footer footer-bottom">
         <div className="texts">
-          <p>© 2025 Bản quyền thuộc về MANH STORE</p>
-          <p>Chính sách bảo mật</p>
-          <p>Điều khoản sử dụng</p>
+          <p>© 2025 Bản quyền thuộc về <span className="text-gradient">MANH STORE</span></p>
+          <p className="link-hover">Chính sách bảo mật</p>
+          <p className="link-hover">Điều khoản sử dụng</p>
         </div>
         <div className="payment-info">
-          <p className="text">Phương thức thanh toán</p>
+          <p className="text text-gradient">Phương thức thanh toán</p>
           <div className="payment-methods">
-
-            <div>
-              <FaCcVisa color="#424242" size="32px" />
+            <div className="payment-icon">
+              <FaCcVisa size="36px" />
             </div>
-            <div>
-              <FaCcMastercard color="#424242" size="32px" />
+            <div className="payment-icon">
+              <FaCcMastercard size="36px" />
             </div>
-            <div>
-              <FaCcPaypal color="#424242" size="32px" />
+            <div className="payment-icon">
+              <FaCcPaypal size="36px" />
             </div>
-            <div>
-              <FaCcAmazonPay color="#424242" size="32px" />
+            <div className="payment-icon">
+              <FaCcAmazonPay size="36px" />
             </div>
           </div>
         </div>
@@ -83,80 +82,125 @@ export default function Footer() {
 
       <style jsx>{`
         footer {
-          width: 100vw;
+          width: 100%;
           display: flex;
           flex-direction: column;
-          margin-top: 30px;
-          background-color: #ffffff;
-          box-shadow: 0px -2px 5px rgba(0, 0, 0, 0.05);
-          box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.05);
-          overflow-x: hidden;
+          margin-top: 60px;
+          border-radius: var(--radius-lg) var(--radius-lg) 0 0;
+          border-bottom: none;
+          box-shadow: 0 -4px 15px rgba(0, 0, 0, 0.05);
+          position: relative;
         }
+        
+        /* Decorative top border */
+        footer::before {
+          content: '';
+          position: absolute;
+          top: 0;
+          left: 0;
+          right: 0;
+          height: 1px;
+          background: linear-gradient(90deg, transparent, var(--accent), var(--secondary), transparent);
+          opacity: 0.3;
+        }
+
         .footer {
           display: flex;
           flex-direction: row;
           justify-content: space-between;
           align-items: center;
-          padding: 28px 10vw;
+          padding: 40px 10vw;
+          z-index: 1;
         }
-        .footer-top .footer-nav {
+        .footer-top {
+          padding-bottom: 20px;
+        }
+        .footer-nav {
           display: flex;
           align-items: center;
+          gap: 30px;
         }
-        .footer-top .footer-nav a {
-          font-style: normal;
+        .nav-link {
           font-weight: 500;
           font-size: 16px;
-          color: #666666;
-          text-decoration: none;
-          margin-left: 18px;
-          margin-right: 18px;
+          color: var(--text-muted);
+          transition: color var(--transition-fast);
         }
-        .footer-top .footer-nav a:hover {
-          text-decoration: underline;
+        .nav-link:hover {
+          color: var(--accent-hover);
         }
-        .footer-top .social-links a {
-          margin-left: 12px;
-          margin-right: 12px;
+        .social-links {
+          display: flex;
+          gap: 20px;
         }
-        /* Footer Bottom */
+        .social-icon {
+          color: var(--text-muted);
+          background: var(--surface);
+          padding: 12px;
+          border-radius: 50%;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          border: 1px solid var(--surface-border);
+          transition: all var(--transition-smooth);
+        }
+        .social-icon:hover {
+          color: var(--accent);
+          background: var(--surface-hover);
+          border-color: var(--accent);
+          transform: translateY(-3px);
+        }
+        
         .footer-bottom {
-          border-top: 2px solid #f5f5f5;
+          border-top: 1px solid var(--surface-border);
+          padding-top: 30px;
+          padding-bottom: 30px;
         }
-        .footer-bottom .texts {
+        .texts {
           display: flex;
-          flex-direction: row;
+          align-items: center;
+          gap: 30px;
+        }
+        .texts p {
+          font-weight: 400;
+          font-size: 14px;
+          color: var(--text-muted);
+          margin: 0;
+        }
+        .link-hover {
+          cursor: pointer;
+          transition: color var(--transition-fast);
+        }
+        .link-hover:hover {
+          color: var(--text-main);
+        }
+        .payment-info {
+          display: flex;
+          align-items: center;
+          gap: 20px;
+        }
+        .payment-info .text {
+          font-weight: 600;
+          font-size: 14px;
+          letter-spacing: 0.5px;
+          text-transform: uppercase;
+          margin: 0;
+        }
+        .payment-methods {
+          display: flex;
+          gap: 15px;
+        }
+        .payment-icon {
+          color: var(--text-muted);
+          transition: all var(--transition-smooth);
+          opacity: 0.7;
+          display: flex;
           align-items: center;
         }
-        .footer-bottom .texts p {
-          font-style: normal;
-          font-weight: 500;
-          font-size: 14px;
-          line-height: 60px;
-          color: #b3b3b3;
-          margin-right: 15px;
-          margin-left: 15px;
-        }
-        .footer-bottom .payment-info {
-          display: flex;
-          flex-direction: row;
-          align-items: center;
-        }
-        .footer-bottom .payment-info .text {
-          font-style: normal;
-          font-weight: 500;
-          font-size: 14px;
-          line-height: 60px;
-          color: #b3b3b3;
-        }
-        .footer-bottom .payment-info .payment-methods {
-          display: flex;
-          flex-direction: row;
-          margin-left: 12px;
-        }
-        .footer-bottom .payment-info .payment-methods div {
-          margin-left: 5px;
-          margin-right: 5px;
+        .payment-icon:hover {
+          color: var(--accent);
+          opacity: 1;
+          transform: scale(1.1);
         }
 
         @media (max-width: 1000px) {
@@ -164,29 +208,26 @@ export default function Footer() {
             display: none;
           }
           .footer-bottom {
-            display: flex;
             flex-direction: column;
+            gap: 30px;
           }
-          .footer-bottom .texts {
+          .texts {
             flex-direction: column;
+            gap: 15px;
+            text-align: center;
           }
-          .footer-bottom .texts p {
-            line-height: 40px;
-          }
-          .footer-bottom .payment-info .text {
-            display: none;
-          }
-          .footer-bottom .payment-info {
-            margin-top: 24px;
+          .payment-info {
+            flex-direction: column;
+            gap: 15px;
           }
         }
         @media (max-width: 700px) {
-          .footer-top {
-            display: flex;
-            flex-direction: column;
+          .footer {
+            padding: 30px 5vw;
           }
-          .footer-top .social-links {
-            margin-top: 8px;
+          .footer-top {
+            flex-direction: column;
+            gap: 30px;
           }
         }
       `}</style>

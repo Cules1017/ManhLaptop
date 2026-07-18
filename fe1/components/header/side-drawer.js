@@ -63,7 +63,8 @@ export default function SideDrawer({ closeDrawer, user, isOpen }) {
           .overlay {
             position: fixed;
             inset: 0;
-            background: rgba(0, 0, 0, 0.4);
+            background: rgba(30, 41, 59, 0.4);
+            backdrop-filter: blur(4px);
             z-index: 998;
           }
           .side-drawer {
@@ -76,10 +77,11 @@ export default function SideDrawer({ closeDrawer, user, isOpen }) {
             width: 80%;
             max-width: 340px;
             height: 100vh;
-            background: #fff;
-            box-shadow: 2px 0px 5px rgba(0, 0, 0, 0.3);
+            background: var(--bg-color);
+            border-right: 1px solid var(--surface-border);
+            box-shadow: var(--shadow-lg);
             transform: translateX(-100%);
-            transition: transform 0.3s ease-out;
+            transition: transform var(--transition-smooth);
           }
           .side-drawer.show {
             transform: translateX(0);
@@ -95,21 +97,21 @@ export default function SideDrawer({ closeDrawer, user, isOpen }) {
             width: 100%;
           }
           .side-drawer .items .item {
-            border-bottom: 1px solid #eee;
+            border-bottom: 1px solid var(--surface-border);
           }
           .side-drawer .items .item a {
             display: block;
             padding: 16px 24px;
-            color: #333;
+            color: var(--text-main);
             text-decoration: none;
             font-weight: 500;
             font-size: 1rem;
-            transition: background 0.2s;
+            transition: all var(--transition-fast);
           }
           .side-drawer .items .item a:hover,
           .side-drawer .items .item a:active {
-            background: #f5f5f5;
-            color: #e53935;
+            background: var(--surface-hover);
+            color: var(--accent);
           }
           .side-drawer .close-drawer {
             align-self: flex-end;
@@ -117,11 +119,12 @@ export default function SideDrawer({ closeDrawer, user, isOpen }) {
             background: none;
             border: none;
             font-size: 1.4rem;
-            color: #666;
+            color: var(--text-muted);
             cursor: pointer;
+            transition: color var(--transition-fast);
           }
           .side-drawer .close-drawer:hover {
-            color: #e53935;
+            color: var(--accent);
           }
           .side-drawer .close-drawer:focus {
             outline: none;

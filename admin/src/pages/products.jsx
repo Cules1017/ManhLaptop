@@ -91,6 +91,13 @@ export default function ProductManager() {
   const [categories, setCategories] = useState([]);
   const [imageType, setImageType] = useState('link');
   const [imageFile, setImageFile] = useState(null);
+  
+  // State for multiple images
+  const [existingImages, setExistingImages] = useState([]);
+  const [deletedImages, setDeletedImages] = useState([]);
+  const [additionalImageFiles, setAdditionalImageFiles] = useState([]);
+  const [additionalImageUrls, setAdditionalImageUrls] = useState([]);
+
   const [searchDraft, setSearchDraft] = useState('');
   const [search, setSearch] = useState('');
   const [categoryFilter, setCategoryFilter] = useState('');
@@ -147,6 +154,10 @@ export default function ProductManager() {
     setEditingId(null);
     setImageType('link');
     setImageFile(null);
+    setExistingImages([]);
+    setDeletedImages([]);
+    setAdditionalImageFiles([]);
+    setAdditionalImageUrls([]);
   };
 
   const openCreateDialog = () => {
@@ -167,6 +178,10 @@ export default function ProductManager() {
     });
     setImageType('link');
     setImageFile(null);
+    setExistingImages(product.images || []);
+    setDeletedImages([]);
+    setAdditionalImageFiles([]);
+    setAdditionalImageUrls([]);
     setFormDialogOpen(true);
   };
 
@@ -210,24 +225,39 @@ export default function ProductManager() {
       });
       data.append('image_file', imageFile);
     } else {
-      data = { ...form };
+      data = new FormData();
+      Object.entries(form).forEach(([k, v]) => {
+        data.append(k, v == null ? '' : String(v));
+      });
     }
+
+    // Thêm các ảnh phụ dạng file
+    additionalImageFiles.forEach((file) => {
+      data.append('additional_images[]', file);
+    });
+
+    // Thêm các ảnh phụ dạng url
+    additionalImageUrls.forEach((url) => {
+      if (url.trim()) {
+        data.append('additional_image_urls[]', url.trim());
+      }
+    });
+
+    // Thêm các ảnh đã xóa
+    deletedImages.forEach((id) => {
+      data.append('deleted_images[]', id);
+    });
 
     try {
       if (editingId) {
-        if (imageType === 'file' && imageFile) {
-          await api.post(`/products/${editingId}?_method=PUT`, data, {
-            headers: { 'Content-Type': 'multipart/form-data' },
-          });
-        } else {
-          await api.put(`/products/${editingId}`, data);
-        }
-      } else if (imageType === 'file' && imageFile) {
-        await api.post('/products', data, {
+        data.append('_method', 'PUT');
+        await api.post(`/products/${editingId}`, data, {
           headers: { 'Content-Type': 'multipart/form-data' },
         });
       } else {
-        await api.post('/products', data);
+        await api.post('/products', data, {
+          headers: { 'Content-Type': 'multipart/form-data' },
+        });
       }
       closeDialog();
       await fetchProducts();
@@ -494,7 +524,7 @@ export default function ProductManager() {
                 </TextField>
 
                 <Typography variant="subtitle2" color="text.secondary">
-                  Ảnh đại diện
+                  Ảnh đại diện (Featured Image)
                 </Typography>
                 <RadioGroup row value={imageType} onChange={(e) => setImageType(e.target.value)}>
                   <FormControlLabel value="link" control={<Radio size="small" />} label="URL ảnh" />
@@ -517,6 +547,85 @@ export default function ProductManager() {
                   <Typography variant="body2">{imageFile.name}</Typography>
                 )) ||
                   null}
+
+                <Divider />
+
+                <Typography variant="subtitle2" color="text.secondary">
+                  Ảnh phụ (Nhiều ảnh)
+                </Typography>
+                <Box>
+                  {/* Danh sách ảnh hiện có */}
+                  {existingImages.filter(img => !deletedImages.includes(img.id)).length > 0 && (
+                    <Stack direction="row" spacing={1} sx={{ mb: 2, flexWrap: 'wrap', gap: 1 }}>
+                      {existingImages.filter(img => !deletedImages.includes(img.id)).map((img) => (
+                        <Box key={img.id} sx={{ position: 'relative', width: 80, height: 80, border: '1px solid #ddd', borderRadius: 1 }}>
+                          <img src={resolveImageSrc(img.image_url)} alt="thumbnail" style={{ width: '100%', height: '100%', objectFit: 'contain' }} />
+                          <IconButton 
+                            size="small" 
+                            color="error" 
+                            sx={{ position: 'absolute', top: -10, right: -10, bgcolor: 'white', '&:hover': { bgcolor: '#ffebee' } }}
+                            onClick={() => setDeletedImages([...deletedImages, img.id])}
+                          >
+                            <DeleteOutlineIcon fontSize="small" />
+                          </IconButton>
+                        </Box>
+                      ))}
+                    </Stack>
+                  )}
+
+                  {/* Danh sách ảnh mới upload (files) */}
+                  {additionalImageFiles.length > 0 && (
+                    <Stack direction="row" spacing={1} sx={{ mb: 2, flexWrap: 'wrap', gap: 1 }}>
+                      {additionalImageFiles.map((file, idx) => (
+                        <Box key={`file-${idx}`} sx={{ position: 'relative', width: 80, height: 80, border: '1px dashed #2196f3', borderRadius: 1 }}>
+                          <img src={URL.createObjectURL(file)} alt="preview" style={{ width: '100%', height: '100%', objectFit: 'contain' }} />
+                          <IconButton 
+                            size="small" 
+                            color="error" 
+                            sx={{ position: 'absolute', top: -10, right: -10, bgcolor: 'white', '&:hover': { bgcolor: '#ffebee' } }}
+                            onClick={() => setAdditionalImageFiles(additionalImageFiles.filter((_, i) => i !== idx))}
+                          >
+                            <DeleteOutlineIcon fontSize="small" />
+                          </IconButton>
+                        </Box>
+                      ))}
+                    </Stack>
+                  )}
+
+                  {/* Danh sách ảnh mới (URLs) */}
+                  {additionalImageUrls.map((url, idx) => (
+                    <Stack direction="row" spacing={1} key={`url-${idx}`} sx={{ mb: 1 }}>
+                      <TextField 
+                        size="small" 
+                        fullWidth 
+                        placeholder="Nhập URL ảnh phụ..." 
+                        value={url}
+                        onChange={(e) => {
+                          const newUrls = [...additionalImageUrls];
+                          newUrls[idx] = e.target.value;
+                          setAdditionalImageUrls(newUrls);
+                        }}
+                      />
+                      <IconButton color="error" onClick={() => setAdditionalImageUrls(additionalImageUrls.filter((_, i) => i !== idx))}>
+                        <DeleteOutlineIcon />
+                      </IconButton>
+                    </Stack>
+                  ))}
+
+                  <Stack direction="row" spacing={2} sx={{ mt: 1 }}>
+                    <Button variant="outlined" component="label" size="small" startIcon={<AddIcon />} sx={{ textTransform: 'none' }}>
+                      Thêm file ảnh
+                      <input type="file" hidden accept="image/*" multiple onChange={(e) => {
+                        if (e.target.files) {
+                          setAdditionalImageFiles([...additionalImageFiles, ...Array.from(e.target.files)]);
+                        }
+                      }} />
+                    </Button>
+                    <Button variant="outlined" size="small" startIcon={<AddIcon />} onClick={() => setAdditionalImageUrls([...additionalImageUrls, ''])} sx={{ textTransform: 'none' }}>
+                      Thêm URL ảnh
+                    </Button>
+                  </Stack>
+                </Box>
 
                 <Divider />
 

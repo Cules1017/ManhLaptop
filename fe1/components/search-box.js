@@ -94,7 +94,7 @@ export default function SearchBox() {
     <form onSubmit={handleSubmit} style={{ position: 'relative', flex: 1, maxWidth: 480 }}>
       <div className="search-box">
         <button className="search-button" type="submit" aria-label="Tìm kiếm">
-          <FaSearch color="#999" size="16px" />
+          <FaSearch size="16px" />
         </button>
         <input
           id="search"
@@ -140,7 +140,7 @@ export default function SearchBox() {
                     marginRight: 10,
                     objectFit: 'contain',
                     borderRadius: 4,
-                    background: '#fafafa',
+                    background: 'var(--surface-hover)',
                   }}
                 />
               )}
@@ -154,15 +154,18 @@ export default function SearchBox() {
           display: flex;
           flex-direction: row;
           align-items: center;
-          padding: 0 8px 0 12px;
-          height: 42px;
-          background: #ffffff;
-          border: 1px solid #e0e0e0;
+          padding: 0 8px 0 16px;
+          height: 48px;
+          background: var(--surface);
+          border: 1px solid var(--surface-border);
           box-sizing: border-box;
-          border-radius: 6px;
+          border-radius: var(--radius-lg);
+          transition: all var(--transition-smooth);
+          box-shadow: 0 0 0 rgba(0, 0, 0, 0);
         }
         .search-box:focus-within {
-          border-color: #e53935;
+          border-color: var(--accent);
+          box-shadow: 0 0 15px var(--accent-glow);
         }
         .search-box .search-button {
           display: flex;
@@ -171,16 +174,23 @@ export default function SearchBox() {
           border: none;
           height: 100%;
           cursor: pointer;
+          color: var(--text-muted);
+          transition: color var(--transition-fast);
         }
-        .search-box .search-button:focus {
-          outline: none;
+        .search-box:focus-within .search-button, .search-box .search-button:hover {
+          color: var(--accent);
         }
         .search-box input {
           flex: 1;
           height: 100%;
           border: none;
-          padding: 0 8px;
-          font-size: 14px;
+          background: transparent;
+          color: var(--text-main);
+          padding: 0 12px;
+          font-size: 15px;
+        }
+        .search-box input::placeholder {
+          color: var(--text-muted);
         }
         .search-box input:focus {
           outline: none;
@@ -188,46 +198,54 @@ export default function SearchBox() {
         .search-box select {
           height: 100%;
           max-width: 140px;
-          font-size: 12px;
-          color: #666;
+          font-size: 13px;
+          color: var(--text-main);
           border: none;
-          border-left: 1px solid #eee;
-          background: none;
-          padding: 0 8px;
+          border-left: 1px solid var(--surface-border);
+          background: transparent;
+          padding: 0 8px 0 12px;
           cursor: pointer;
+          transition: color var(--transition-fast);
+        }
+        .search-box select option {
+          background: var(--bg-color);
+          color: var(--text-main);
         }
         .search-box select:focus {
           outline: none;
+          color: var(--accent);
         }
         .suggestions {
           position: absolute;
           top: 100%;
           left: 0;
           right: 0;
-          margin-top: 4px;
-          background: #fff;
-          border: 1px solid #eee;
-          border-radius: 6px;
+          margin-top: 12px;
+          background: var(--surface);
+          backdrop-filter: blur(16px);
+          -webkit-backdrop-filter: blur(16px);
+          border: 1px solid var(--surface-border);
+          border-radius: var(--radius);
           z-index: 100;
           list-style: none;
-          padding: 6px 0;
+          padding: 8px 0;
           max-height: 340px;
           overflow-y: auto;
-          box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+          box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
         }
         .suggestion-item {
-          padding: 8px 12px;
+          padding: 10px 16px;
           cursor: pointer;
           display: flex;
           align-items: center;
-          transition: background 0.15s;
+          transition: background var(--transition-fast);
         }
         .suggestion-item:hover {
-          background: #f8f8f8;
+          background: var(--surface-hover);
         }
         .sugg-name {
           font-size: 14px;
-          color: #333;
+          color: var(--text-main);
         }
       `}</style>
     </form>

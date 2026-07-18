@@ -343,9 +343,13 @@ export default function Cart() {
                     <div className="cart-table-col select-col" />
                     <div className="cart-table-col product-col">
                       <img
-                        src={product.image || product.img_url}
+                        src={product.image || product.img_url || 'https://placehold.co/400x400/eeeeee/999999?text=No+Image'}
                         alt={product.name}
                         className="cart-product-img"
+                        onError={(e) => {
+                          e.target.onerror = null;
+                          e.target.src = 'https://placehold.co/400x400/eeeeee/999999?text=Image+Not+Found';
+                        }}
                       />
                       <div className="cart-product-info">
                         <div className="cart-product-name">{product.name}</div>
@@ -445,27 +449,27 @@ export default function Cart() {
                       value={editData.name}
                       onChange={handleEditChange}
                       placeholder="Họ tên"
-                      className="cart-edit-input"
+                      className="form-input"
                     />
                     <input
                       name="phone"
                       value={editData.phone}
                       onChange={handleEditChange}
                       placeholder="Số điện thoại"
-                      className="cart-edit-input"
+                      className="form-input"
                     />
                     <input
                       name="addressDetail"
                       value={editData.addressDetail}
                       onChange={handleEditChange}
-                      placeholder="So nha, ten duong"
-                      className="cart-edit-input"
+                      placeholder="Số nhà, tên đường"
+                      className="form-input"
                     />
                     <select
                       name="city"
                       value={editData.city}
                       onChange={handleEditChange}
-                      className="cart-edit-input"
+                      className="form-input"
                     >
                       {provinces.map((item) => (
                         <option key={item.code} value={item.name}>
@@ -477,7 +481,7 @@ export default function Cart() {
                       name="district"
                       value={editData.district}
                       onChange={handleEditChange}
-                      className="cart-edit-input"
+                      className="form-input"
                     >
                       {districts.map((district) => (
                         <option key={district.code} value={district.name}>
@@ -485,16 +489,19 @@ export default function Cart() {
                         </option>
                       ))}
                     </select>
-                    <button
-                      onClick={handleSaveAddress}
-                      disabled={saving}
-                      className="cart-edit-save"
-                    >
-                      {saving ? 'Đang lưu...' : 'Lưu'}
-                    </button>
-                    <button onClick={() => setShowEdit(false)} className="cart-edit-cancel">
-                      Huỷ
-                    </button>
+                    <div style={{ display: 'flex', gap: '8px', marginTop: '8px' }}>
+                      <button
+                        onClick={handleSaveAddress}
+                        disabled={saving}
+                        className="btn-primary"
+                        style={{ flex: 1 }}
+                      >
+                        {saving ? 'Đang lưu...' : 'Lưu'}
+                      </button>
+                      <button onClick={() => setShowEdit(false)} className="btn-secondary" style={{ flex: 1 }}>
+                        Huỷ
+                      </button>
+                    </div>
                   </div>
                 )}
               </div>
@@ -517,7 +524,7 @@ export default function Cart() {
                   <span>Tiết kiệm</span>
                   <span>{formatVND(totalSavings)}</span>
                 </div>
-                <button className="cart-summary-checkout" onClick={handleCheckout}>
+                <button className="btn-primary" onClick={handleCheckout} style={{ marginTop: '16px' }}>
                   Mua hàng ({cartItems.length})
                 </button>
               </div>
@@ -527,10 +534,10 @@ export default function Cart() {
       </div>
       <style jsx>{`
         .cart-bg {
-          background: linear-gradient(180deg, #f6f8ff 0%, #f3f5fb 100%);
+          background: var(--bg-color);
           min-height: 100vh;
           padding: 0 16px 40px;
-          font-family: 'Roboto', Arial, sans-serif;
+          font-family: inherit;
           width: 100%;
           box-sizing: border-box;
         }
@@ -539,8 +546,8 @@ export default function Cart() {
           flex-direction: row;
           justify-content: center;
           align-items: flex-start;
-          gap: 28px;
-          max-width: 1320px;
+          gap: 32px;
+          max-width: 1200px;
           margin: 0 auto;
         }
         .cart-main {
@@ -550,9 +557,10 @@ export default function Cart() {
         .cart-table {
           position: relative;
           width: 100%;
-          background: #fff;
-          border-radius: 16px;
-          box-shadow: 0 10px 30px rgba(17, 24, 39, 0.08);
+          background: var(--surface);
+          border-radius: var(--radius-lg);
+          box-shadow: var(--shadow-sm);
+          border: 1px solid var(--surface-border);
           padding: 0 0 24px 0;
           margin-top: 8px;
         }
@@ -563,19 +571,24 @@ export default function Cart() {
         }
         .cart-table-header {
           font-weight: 600;
-          color: #888;
-          background: #f8faff;
+          color: var(--text-muted);
+          background: var(--surface-hover);
           padding: 16px 0;
-          border-bottom: 1px solid #f0f0f0;
+          border-bottom: 1px solid var(--surface-border);
+          border-top-left-radius: var(--radius-lg);
+          border-top-right-radius: var(--radius-lg);
         }
         .cart-table-row {
-          border-bottom: 1px solid #f0f0f0;
+          border-bottom: 1px solid var(--surface-border);
           padding: 16px 0;
         }
+        .cart-table-row:hover {
+          background: var(--surface-hover);
+        }
         .cart-table-row-promo {
-          background: #f8faff;
+          background: var(--surface-hover);
           border-bottom: none;
-          padding: 0 0 18px 0;
+          padding: 16px 0;
         }
         .cart-table-col {
           padding: 0 12px;
@@ -592,7 +605,7 @@ export default function Cart() {
         }
         .price-col {
           width: 140px;
-          color: #dc2626;
+          color: var(--accent);
           font-weight: 700;
           flex-direction: column;
           align-items: flex-start;
@@ -602,7 +615,7 @@ export default function Cart() {
         }
         .total-col {
           width: 140px;
-          color: #dc2626;
+          color: var(--accent);
           font-weight: 700;
         }
         .action-col {
@@ -612,11 +625,11 @@ export default function Cart() {
         .promo-col {
           flex: 1;
           justify-content: flex-start;
-          color: #2563eb;
+          color: var(--secondary);
           font-size: 15px;
         }
         .cart-shipping-info {
-          color: #388e3c;
+          color: var(--success);
           font-size: 14px;
           margin-left: 12px;
         }
@@ -624,9 +637,9 @@ export default function Cart() {
           width: 60px;
           height: 60px;
           object-fit: contain;
-          border-radius: 10px;
+          border-radius: var(--radius-sm);
           margin-right: 16px;
-          background: #fafafa;
+          background: var(--surface-hover);
         }
         .cart-product-info {
           display: flex;
@@ -635,14 +648,15 @@ export default function Cart() {
         .cart-product-name {
           font-weight: 500;
           font-size: 16px;
+          color: var(--text-main);
         }
         .cart-product-price {
-          color: #dc2626;
+          color: var(--accent);
           font-weight: 700;
           font-size: 16px;
         }
         .cart-product-oldprice {
-          color: #888;
+          color: var(--text-muted);
           font-size: 13px;
           text-decoration: line-through;
           margin-top: 2px;
@@ -650,11 +664,17 @@ export default function Cart() {
         .cart-qty-btn {
           width: 28px;
           height: 28px;
-          border: 1px solid #ddd;
-          background: #fff;
+          border: 1px solid var(--surface-border);
+          background: var(--surface);
+          color: var(--text-main);
           font-size: 1.1rem;
           cursor: pointer;
-          border-radius: 4px;
+          border-radius: var(--radius-sm);
+          transition: all var(--transition-fast);
+        }
+        .cart-qty-btn:hover:not(:disabled) {
+          border-color: var(--secondary);
+          color: var(--secondary);
         }
         .cart-qty-btn:disabled {
           opacity: 0.5;
@@ -664,125 +684,132 @@ export default function Cart() {
           width: 48px;
           text-align: center;
           margin: 0 4px;
-          border: 1px solid #ddd;
-          border-radius: 4px;
+          border: 1px solid var(--surface-border);
+          border-radius: var(--radius-sm);
           height: 28px;
+          color: var(--text-main);
+        }
+        .cart-qty-input:focus {
+          outline: none;
+          border-color: var(--secondary);
         }
         .cart-remove-btn {
           background: transparent;
           border: none;
-          color: #888;
+          color: var(--text-muted);
           cursor: pointer;
           padding: 6px 8px;
-          border-radius: 10px;
-          transition: background 0.2s, color 0.2s;
+          border-radius: var(--radius);
+          transition: all var(--transition-fast);
         }
         .cart-remove-btn:hover:not(:disabled) {
-          background: #ffe9e8;
-          color: #dc2626;
+          background: var(--accent-glow);
+          color: var(--danger);
         }
         .cart-remove-btn:disabled {
           opacity: 0.4;
           cursor: not-allowed;
         }
         .cart-product-total {
-          color: #dc2626;
+          color: var(--accent);
           font-weight: 700;
           font-size: 16px;
         }
         .cart-sidebar {
           display: flex;
           flex-direction: column;
-          gap: 28px;
+          gap: 24px;
           min-width: 340px;
           max-width: 380px;
         }
         .cart-shipping-box,
         .cart-summary-box {
-          background: #fff;
-          border-radius: 16px;
-          box-shadow: 0 10px 30px rgba(17, 24, 39, 0.08);
-          padding: 20px 20px;
+          background: var(--surface);
+          border-radius: var(--radius-lg);
+          box-shadow: var(--shadow-sm);
+          border: 1px solid var(--surface-border);
+          padding: 24px;
         }
         .cart-shipping-title {
-          font-weight: 600;
-          color: #222;
-          margin-bottom: 8px;
+          font-weight: 700;
+          color: var(--text-main);
+          margin-bottom: 12px;
           display: flex;
           justify-content: space-between;
           align-items: center;
+          font-size: 18px;
         }
         .cart-shipping-change {
-          color: #2563eb;
+          color: var(--secondary);
           font-size: 14px;
           cursor: pointer;
+          font-weight: 500;
         }
         .cart-shipping-user {
-          font-weight: 500;
-          color: #333;
+          font-weight: 600;
+          color: var(--text-main);
           margin-bottom: 4px;
+          font-size: 15px;
         }
         .cart-shipping-phone {
-          color: #888;
+          color: var(--text-muted);
           font-size: 14px;
           margin-left: 8px;
+          font-weight: 400;
         }
         .cart-shipping-address {
-          color: #666;
+          color: var(--text-muted);
           font-size: 14px;
         }
         .cart-summary-title {
           font-size: 18px;
-          font-weight: 800;
-          color: #0f172a;
+          font-weight: 700;
+          color: var(--text-main);
           margin-bottom: 4px;
         }
         .cart-summary-sub {
           font-size: 13px;
-          color: #64748b;
-          margin-bottom: 16px;
+          color: var(--text-muted);
+          margin-bottom: 20px;
         }
         .cart-summary-row {
           display: flex;
           justify-content: space-between;
           align-items: center;
-          font-size: 16px;
+          font-size: 15px;
+          color: var(--text-muted);
           margin-bottom: 12px;
         }
         .cart-summary-total {
           font-weight: 700;
-          color: #dc2626;
+          color: var(--accent);
+          font-size: 18px;
+          border-top: 1px solid var(--surface-border);
+          padding-top: 16px;
+          margin-top: 4px;
+        }
+        .cart-summary-total span:first-child {
+          color: var(--text-main);
         }
         .cart-summary-saved {
-          color: #388e3c;
+          color: var(--success);
           font-size: 15px;
         }
-        .cart-summary-checkout {
-          width: 100%;
-          background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
-          color: #fff;
-          font-weight: 700;
-          font-size: 1.05rem;
-          border: none;
-          border-radius: 10px;
-          padding: 14px 0;
-          box-shadow: 0 12px 24px rgba(220, 38, 38, 0.25);
-          margin-top: 18px;
-          cursor: pointer;
-          transition: background 0.2s;
+        .cart-edit-form {
+          display: flex;
+          flex-direction: column;
+          gap: 12px;
+          margin-top: 12px;
         }
-        .cart-summary-checkout:hover {
-          background: linear-gradient(135deg, #dc2626 0%, #b91c1c 100%);
-        }
-        @media (max-width: 1100px) {
+        @media (max-width: 1024px) {
           .cart-section {
             flex-direction: column;
-            gap: 0;
+            gap: 24px;
           }
           .cart-sidebar {
             max-width: 100%;
             min-width: 0;
-            margin-top: 32px;
+            width: 100%;
             position: static;
           }
         }

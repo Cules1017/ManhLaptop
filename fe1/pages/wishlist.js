@@ -87,7 +87,14 @@ export default function Wishlist() {
           flex-direction: row;
           justify-content: space-between;
           width: 100%;
-          gap: 30px;
+          max-width: 1200px;
+          margin: 0 auto;
+          padding: 24px 16px;
+          box-sizing: border-box;
+          gap: 32px;
+        }
+        .wishlist aside {
+          flex: 0 0 240px;
         }
         .wishlist .main {
           flex-grow: 1;
@@ -95,6 +102,11 @@ export default function Wishlist() {
         @media (max-width: 768px) {
           .wishlist {
             flex-direction: column;
+            padding: 16px;
+            gap: 20px;
+          }
+          .wishlist aside {
+            flex: auto;
           }
         }
       `}</style>

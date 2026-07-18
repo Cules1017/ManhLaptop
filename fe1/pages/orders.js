@@ -236,7 +236,7 @@ export default function OrdersPage() {
                   <div className="order-foot">
                     <div>
                       <b>Ghi chú:</b>{' '}
-                      {order.note || <span style={{ color: '#bbb' }}>(Không có)</span>}
+                      {order.note || <span className="text-muted">(Không có)</span>}
                     </div>
                     <div className="order-total">Tổng: {formatVND(order.total_price)}</div>
                   </div>
@@ -257,24 +257,27 @@ export default function OrdersPage() {
         .orders-tabs {
           display: flex;
           flex-wrap: wrap;
-          gap: 6px;
-          border-bottom: 2px solid #f0f0f0;
-          margin-bottom: 18px;
+          gap: 8px;
+          border-bottom: 1px solid var(--surface-border);
+          margin-bottom: 24px;
         }
         .orders-tab {
           background: none;
           border: none;
-          padding: 12px 14px;
+          padding: 12px 16px;
           cursor: pointer;
           border-bottom: 2.5px solid transparent;
-          color: #222;
+          color: var(--text-muted);
           font-weight: 500;
           font-size: 15px;
-          transition: color 0.2s, border-color 0.2s;
+          transition: color var(--transition-fast), border-color var(--transition-fast);
+        }
+        .orders-tab:hover {
+          color: var(--text-main);
         }
         .orders-tab.active {
-          border-bottom-color: #1a94ff;
-          color: #1a94ff;
+          border-bottom-color: var(--secondary);
+          color: var(--secondary);
           font-weight: 700;
         }
         .orders-search {
@@ -282,20 +285,28 @@ export default function OrdersPage() {
         }
         .orders-search input {
           width: 100%;
-          padding: 10px 16px;
-          border-radius: 8px;
-          border: 1px solid #ddd;
+          padding: 12px 16px;
+          border-radius: var(--radius-sm);
+          border: 1px solid var(--surface-border);
           font-size: 15px;
-          background: #fafbfc;
+          background: var(--surface);
+          color: var(--text-main);
           box-sizing: border-box;
+          transition: border-color var(--transition-fast), box-shadow var(--transition-fast);
+        }
+        .orders-search input:focus {
+          outline: none;
+          border-color: var(--secondary);
+          box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
         }
         .orders-msg {
-          padding: 32px 16px;
+          padding: 40px 16px;
           text-align: center;
-          color: #666;
+          color: var(--text-muted);
+          font-size: 16px;
         }
         .orders-err {
-          color: #d32f2f;
+          color: var(--danger);
         }
         .orders-list {
           display: flex;
@@ -303,11 +314,21 @@ export default function OrdersPage() {
           gap: 20px;
         }
         .order-card {
-          border: 1px solid #eee;
-          border-radius: 12px;
-          padding: 18px;
-          background: #fff;
-          box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+          border: 1px solid var(--surface-border);
+          border-radius: var(--radius);
+          padding: 24px;
+          background: var(--surface);
+          box-shadow: var(--shadow-sm);
+          transition: transform var(--transition-smooth), box-shadow var(--transition-smooth);
+        }
+        .order-card:hover {
+          box-shadow: var(--shadow-hover);
+          transform: translateY(-2px);
+        }
+        @media (max-width: 640px) {
+          .order-card {
+            padding: 16px;
+          }
         }
         .order-card-head {
           display: flex;
@@ -315,124 +336,149 @@ export default function OrdersPage() {
           align-items: center;
           margin-bottom: 8px;
           flex-wrap: wrap;
-          gap: 8px;
+          gap: 12px;
+          color: var(--text-main);
         }
         .order-status {
           font-weight: 700;
+          font-size: 14px;
+          padding: 4px 12px;
+          background: rgba(0,0,0,0.03);
+          border-radius: 20px;
         }
         .order-date {
-          color: #888;
-          font-size: 13px;
-          margin-bottom: 12px;
+          color: var(--text-muted);
+          font-size: 14px;
+          margin-bottom: 16px;
         }
         .order-items {
           display: flex;
           flex-direction: column;
           gap: 12px;
-          margin-bottom: 12px;
+          margin-bottom: 20px;
         }
         .order-item {
           display: flex;
-          gap: 12px;
+          gap: 16px;
           align-items: flex-start;
-          background: #f7f7fa;
-          border-radius: 8px;
-          padding: 10px;
+          background: var(--surface-hover);
+          border-radius: var(--radius-sm);
+          padding: 12px;
           flex-wrap: wrap;
         }
         .order-item img {
-          width: 56px;
-          height: 56px;
+          width: 72px;
+          height: 72px;
           object-fit: contain;
-          border-radius: 6px;
+          border-radius: var(--radius-sm);
           background: #fff;
+          border: 1px solid var(--surface-border);
           flex-shrink: 0;
         }
         .order-item-info {
           display: flex;
           flex-direction: column;
-          gap: 2px;
+          gap: 4px;
           flex: 1 1 180px;
         }
         .order-item-name {
-          font-weight: 500;
+          font-weight: 600;
           font-size: 15px;
+          color: var(--text-main);
         }
         .order-item-qty {
-          color: #888;
-          font-size: 13px;
+          color: var(--text-muted);
+          font-size: 14px;
         }
         .order-item-price {
-          color: #e53935;
+          color: var(--accent);
           font-weight: 600;
+          font-size: 15px;
         }
         .order-review-box {
-          background: #f8fafc;
-          border: 1px solid #e0e7ef;
-          border-radius: 10px;
-          padding: 12px;
+          background: var(--surface);
+          border: 1px solid var(--surface-border);
+          border-radius: var(--radius-sm);
+          padding: 16px;
           display: flex;
           flex-direction: column;
-          gap: 8px;
+          gap: 12px;
           flex: 1 1 260px;
         }
         .order-review-head {
           display: flex;
           align-items: center;
-          gap: 8px;
+          gap: 12px;
         }
         .order-review-rating-text {
-          color: #888;
-          font-size: 13px;
+          color: var(--text-muted);
+          font-size: 14px;
+          font-weight: 500;
         }
         .order-review-textarea {
           width: 100%;
-          padding: 10px;
-          border-radius: 6px;
-          border: 1px solid #cfd8dc;
+          padding: 12px;
+          border-radius: var(--radius-sm);
+          border: 1px solid var(--surface-border);
           font-size: 14px;
-          min-height: 60px;
+          color: var(--text-main);
+          min-height: 70px;
           resize: vertical;
           box-sizing: border-box;
           font-family: inherit;
+          transition: border-color var(--transition-fast), box-shadow var(--transition-fast);
+        }
+        .order-review-textarea:focus {
+          outline: none;
+          border-color: var(--secondary);
+          box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
         }
         .order-review-textarea.is-readonly {
-          background: #f3f3f3;
+          background: var(--surface-hover);
+          color: var(--text-muted);
         }
         .order-review-actions {
           display: flex;
           justify-content: flex-end;
         }
         .order-review-done {
-          color: #16a34a;
+          color: var(--success);
           font-weight: 600;
           font-size: 14px;
         }
         .order-review-submit {
-          padding: 8px 18px;
-          border-radius: 6px;
+          padding: 10px 20px;
+          border-radius: var(--radius-sm);
           border: none;
-          background: #1976d2;
+          background: var(--secondary);
           color: #fff;
           font-weight: 600;
           cursor: pointer;
+          transition: all var(--transition-fast);
+        }
+        .order-review-submit:hover:not(:disabled) {
+          background: #1d4ed8;
+          box-shadow: 0 4px 12px rgba(37, 99, 235, 0.2);
         }
         .order-review-submit:disabled {
-          background: #90caf9;
+          opacity: 0.6;
           cursor: not-allowed;
         }
         .order-foot {
           display: flex;
           justify-content: space-between;
           align-items: center;
-          margin-top: 8px;
+          margin-top: 16px;
+          padding-top: 16px;
+          border-top: 1px solid var(--surface-border);
           flex-wrap: wrap;
-          gap: 8px;
+          gap: 12px;
+          color: var(--text-main);
         }
         .order-total {
           font-weight: 700;
-          font-size: 16px;
-          color: #e53935;
+          font-size: 18px;
+          color: var(--accent);
         }
       `}</style>
     </Page>

@@ -1,0 +1,29 @@
+[
+  {
+    "name": "Asus ROG Zephyrus G14",
+    "price": 63590000,
+    "description": "AMD Ryzen AI 9 465, 32GB LPDDR5X, NVIDIA RTX 5060, 14-inch OLED 3K 120Hz",
+    "image": "https://dlcdnwebimgs.asus.com/gain/831a2982-f5db-44a6-9818-77b3b3a76387/w800",
+    "rating": 4.8,
+    "discount": 10,
+    "quantity": 25
+  },
+  {
+    "name": "Asus ROG Strix G16",
+    "price": 45000000,
+    "description": "Intel Core Ultra 7 255HX, 16GB DDR5, NVIDIA RTX 5060, 16-inch 2.5K 240Hz",
+    "image": "https://dlcdnwebimgs.asus.com/gain/776bc356-9b19-48b5-b778-98e3b3c3b018/w800",
+    "rating": 4.7,
+    "discount": 5,
+    "quantity": 40
+  },
+  {
+    "name": "Asus ROG Flow X13",
+    "price": 38000000,
+    "description": "AMD Ryzen 9 7940HS, 16GB LPDDR5, NVIDIA RTX 4050, 13.4-inch FHD+ 120Hz Touch",
+    "image": "https://dlcdnwebimgs.asus.com/gain/97f7b243-d7d8-4f16-92b7-bd6f6c771142/w800",
+    "rating": 4.5,
+    "discount": 15,
+    "quantity": 12
+  }
+]

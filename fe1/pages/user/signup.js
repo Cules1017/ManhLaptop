@@ -97,7 +97,7 @@ export default function SignUp() {
   return (
     <PageContainer title="MANH STORE - Đăng ký">
       <FormContainer>
-        <form onSubmit={handleSubmit}>
+        <form className="auth-card" onSubmit={handleSubmit}>
           <h3 className="formTitle">Đăng ký</h3>
 
           {error && <AlertError message={error} />}
@@ -148,26 +148,44 @@ export default function SignUp() {
       </FormContainer>
 
       <style jsx>{`
-        form {
+        .auth-card {
           width: 100%;
+          max-width: 440px;
+          background: var(--surface);
+          border: 1px solid var(--surface-border);
+          border-radius: var(--radius-lg);
+          padding: 40px;
+          box-shadow: var(--shadow-md);
+          display: flex;
+          flex-direction: column;
           align-items: center;
+          margin-top: 40px;
+          box-sizing: border-box;
         }
         form .formTitle {
           text-align: center;
-          font-size: 32px;
+          font-size: 28px;
           font-weight: 700;
-          letter-spacing: 1.5px;
-          color: #333;
-          text-transform: uppercase;
-          margin-bottom: 48px;
+          color: var(--text-main);
+          margin-bottom: 32px;
+          margin-top: 0;
         }
         .switchForm {
-          color: #555;
-          margin-top: 12px;
+          color: var(--text-muted);
+          margin-top: 16px;
+          font-size: 14px;
           font-weight: 500;
+          transition: color var(--transition-fast);
         }
         .switchForm:hover {
-          color: #e53935;
+          color: var(--secondary);
+        }
+        @media (max-width: 640px) {
+          .auth-card {
+            padding: 24px;
+            margin-top: 20px;
+            width: 90%;
+          }
         }
       `}</style>
     </PageContainer>

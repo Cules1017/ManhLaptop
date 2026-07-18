@@ -63,4 +63,12 @@ class Product extends Model
         if (strpos($value, 'http') === 0) return $value;
         return 'http://localhost:8000' . $value;
     }
+
+    /**
+     * Get the sub images for the product.
+     */
+    public function images(): HasMany
+    {
+        return $this->hasMany(ProductImage::class);
+    }
 }

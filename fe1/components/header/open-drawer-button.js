@@ -26,7 +26,11 @@ export default function ToggleDrawerButton({ openDrawer }) {
           width: 100%;
           height: 3px;
           border-radius: 2px;
-          background: #4d4d4d;
+          background: var(--text-main);
+          transition: background var(--transition-fast);
+        }
+        button:hover .button-line {
+          background: var(--accent);
         }
       `}</style>
     </button>

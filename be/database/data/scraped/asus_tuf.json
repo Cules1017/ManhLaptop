@@ -1,0 +1,29 @@
+[
+  {
+    "name": "Asus TUF Gaming A15",
+    "price": 25990000,
+    "description": "AMD Ryzen 7 7735HS, 16GB RAM, RTX 4050, 15.6 inch FHD 144Hz",
+    "image": "https://dlcdnwebimgs.asus.com/gain/55DF26D1-F179-4509-ADDF-453CA6560A6E/w800",
+    "rating": 4.5,
+    "discount": 10,
+    "quantity": 35
+  },
+  {
+    "name": "Asus TUF Gaming F15",
+    "price": 27490000,
+    "description": "Intel Core i7-12700H, 16GB RAM, RTX 4060, 15.6 inch FHD 144Hz",
+    "image": "https://dlcdnwebimgs.asus.com/gain/B5DD32AA-B713-4B33-B9D8-2EE3A44BE531/w800",
+    "rating": 4.8,
+    "discount": 5,
+    "quantity": 20
+  },
+  {
+    "name": "Asus TUF Dash F15",
+    "price": 22990000,
+    "description": "Intel Core i5-12450H, 8GB RAM, RTX 3050, 15.6 inch FHD 144Hz",
+    "image": "https://dlcdnwebimgs.asus.com/gain/F3C16568-1D96-4191-8D97-EB80DFEA283B/w800",
+    "rating": 4.2,
+    "discount": 15,
+    "quantity": 45
+  }
+]

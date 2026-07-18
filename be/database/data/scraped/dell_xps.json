@@ -1,0 +1,29 @@
+[
+  {
+    "name": "Dell XPS 13",
+    "price": 35000000,
+    "description": "Intel Core Ultra 7 155H, 16GB LPDDR5X, Integrated Intel Arc Graphics, 13.4-inch FHD+ InfinityEdge",
+    "image": "https://i.dell.com/is/image/DellContent/content/dam/ss2/product-images/dell-client-products/notebooks/xps-notebooks/13-9340/media-gallery/silver/touch/notebook-xps-13-9340-t-silver-gallery-1.png",
+    "rating": 4.5,
+    "discount": 10,
+    "quantity": 25
+  },
+  {
+    "name": "Dell XPS 14",
+    "price": 45000000,
+    "description": "Intel Core Ultra 7 155H, 32GB LPDDR5X, NVIDIA GeForce RTX 4050, 14.5-inch 3.2K OLED",
+    "image": "https://i.dell.com/is/image/DellContent/content/dam/ss2/product-images/dell-client-products/notebooks/xps-notebooks/14-9440/media-gallery/silver/touch/notebook-xps-14-9440-t-silver-gallery-1.png",
+    "rating": 4.8,
+    "discount": 5,
+    "quantity": 15
+  },
+  {
+    "name": "Dell XPS 16",
+    "price": 65000000,
+    "description": "Intel Core Ultra 9 185H, 64GB LPDDR5X, NVIDIA GeForce RTX 4070, 16.3-inch 4K+ OLED",
+    "image": "https://i.dell.com/is/image/DellContent/content/dam/ss2/product-images/dell-client-products/notebooks/xps-notebooks/16-9640/media-gallery/silver/touch/notebook-xps-16-9640-t-silver-gallery-1.png",
+    "rating": 4.7,
+    "discount": 12,
+    "quantity": 10
+  }
+]

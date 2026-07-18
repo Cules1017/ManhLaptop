@@ -234,9 +234,10 @@ export default function PaymentSimulatorPage() {
                 <div className="payment-note">Quét mã QR để thanh toán qua {methodLabel}.</div>
                 <button
                   type="button"
-                  className="payment-success-btn"
+                  className="btn-primary"
                   onClick={handleSimulateSuccess}
                   disabled={!paymentReady}
+                  style={{ marginTop: '16px' }}
                 >
                   Giả lập thanh toán thành công
                 </button>
@@ -405,10 +406,11 @@ export default function PaymentSimulatorPage() {
         }
         .payment-card {
           position: relative;
-          background: #fff;
-          border-radius: 20px;
-          box-shadow: 0 16px 40px rgba(17, 24, 39, 0.1);
+          background: var(--surface);
+          border-radius: var(--radius-lg);
+          box-shadow: var(--shadow-lg);
           overflow: hidden;
+          border: 1px solid var(--surface-border);
         }
         .payment-card-inner--blocked {
           pointer-events: none;
@@ -434,8 +436,8 @@ export default function PaymentSimulatorPage() {
           width: 44px;
           height: 44px;
           border-radius: 50%;
-          border: 3px solid #e2e8f0;
-          border-top-color: #2563eb;
+          border: 3px solid var(--surface-border);
+          border-top-color: var(--secondary);
           animation: pay-spin 0.75s linear infinite;
         }
         @keyframes pay-spin {
@@ -447,13 +449,13 @@ export default function PaymentSimulatorPage() {
           margin: 0;
           font-size: 17px;
           font-weight: 700;
-          color: #0f172a;
+          color: var(--text-main);
         }
         .payment-loading-hint {
           margin: 0;
           max-width: 320px;
           font-size: 13px;
-          color: #64748b;
+          color: var(--text-muted);
           line-height: 1.45;
         }
         .payment-header {
@@ -462,8 +464,8 @@ export default function PaymentSimulatorPage() {
           justify-content: space-between;
           align-items: flex-start;
           gap: 20px;
-          border-bottom: 1px solid #eef2f7;
-          background: linear-gradient(120deg, #f8fafc 0%, #eff6ff 100%);
+          border-bottom: 1px solid var(--surface-border);
+          background: var(--surface-hover);
         }
         .payment-method-badge {
           display: inline-block;
@@ -478,22 +480,22 @@ export default function PaymentSimulatorPage() {
         .payment-title {
           margin: 0;
           font-size: 30px;
-          color: #111827;
+          color: var(--text-main);
         }
         .payment-subtitle {
           margin: 8px 0 0;
-          color: #64748b;
+          color: var(--text-muted);
           font-size: 14px;
         }
         .payment-amount-wrap {
           text-align: right;
-          color: #64748b;
+          color: var(--text-muted);
           font-size: 13px;
         }
         .payment-amount-wrap b {
           display: block;
           margin-top: 6px;
-          color: #dc2626;
+          color: var(--accent);
           font-size: 30px;
           line-height: 1.1;
         }
@@ -504,13 +506,14 @@ export default function PaymentSimulatorPage() {
           padding: 24px;
         }
         .payment-qr-col {
-          background: #f8fafc;
-          border-radius: 14px;
+          background: var(--surface-hover);
+          border-radius: var(--radius);
           padding: 18px;
           text-align: center;
+          border: 1px solid var(--surface-border);
         }
         .order-meta {
-          color: #334155;
+          color: var(--text-main);
           margin-bottom: 10px;
         }
         .momo-logo-wrap {
@@ -539,54 +542,42 @@ export default function PaymentSimulatorPage() {
         .payment-qr {
           width: 100%;
           max-width: 300px;
-          border-radius: 10px;
-          border: 1px solid #e2e8f0;
-          background: #fff;
+          border-radius: var(--radius);
+          border: 1px solid var(--surface-border);
+          background: var(--surface);
         }
         .payment-qr-empty {
           height: 300px;
-          border: 1px dashed #cbd5e1;
-          border-radius: 10px;
+          border: 1px dashed var(--surface-border);
+          border-radius: var(--radius);
           display: flex;
           align-items: center;
           justify-content: center;
-          color: #64748b;
-          background: #fff;
+          color: var(--text-muted);
+          background: var(--surface);
           padding: 16px;
           text-align: center;
         }
         .payment-note {
           margin-top: 10px;
-          color: #64748b;
+          color: var(--text-muted);
           font-size: 14px;
-        }
-        .payment-success-btn {
-          margin-top: 16px;
-          width: 100%;
-          border: none;
-          background: #16a34a;
-          color: #fff;
-          border-radius: 10px;
-          padding: 12px 14px;
-          font-weight: 800;
-          cursor: pointer;
-          font-size: 15px;
-        }
-        .payment-success-btn:disabled {
-          opacity: 0.45;
-          cursor: not-allowed;
         }
         .payment-open-momo-btn {
           margin-top: 10px;
           width: 100%;
           border: 1px solid #c026d3;
-          background: #fff;
+          background: var(--surface);
           color: #a21caf;
-          border-radius: 10px;
+          border-radius: var(--radius);
           padding: 11px 14px;
           font-weight: 800;
           cursor: pointer;
           font-size: 15px;
+          transition: all var(--transition-fast);
+        }
+        .payment-open-momo-btn:hover:not(:disabled) {
+          background: #fdf4ff;
         }
         .payment-open-momo-btn:disabled {
           opacity: 0.45;
@@ -598,15 +589,15 @@ export default function PaymentSimulatorPage() {
           gap: 16px;
         }
         .info-box {
-          border: 1px solid #e2e8f0;
-          border-radius: 14px;
+          border: 1px solid var(--surface-border);
+          border-radius: var(--radius-lg);
           padding: 16px;
-          background: #fff;
+          background: var(--surface);
         }
         .info-box-title {
           font-size: 16px;
           font-weight: 800;
-          color: #0f172a;
+          color: var(--text-main);
           margin-bottom: 12px;
         }
         .info-row {
@@ -614,10 +605,10 @@ export default function PaymentSimulatorPage() {
           justify-content: space-between;
           align-items: center;
           gap: 12px;
-          border-top: 1px dashed #e2e8f0;
+          border-top: 1px dashed var(--surface-border);
           padding: 10px 0;
           font-size: 14px;
-          color: #475569;
+          color: var(--text-muted);
         }
         .info-row:first-of-type {
           border-top: none;
@@ -631,7 +622,7 @@ export default function PaymentSimulatorPage() {
           min-width: 0;
         }
         .info-row-right b {
-          color: #0f172a;
+          color: var(--text-main);
           text-align: right;
           word-break: break-word;
         }
@@ -642,16 +633,16 @@ export default function PaymentSimulatorPage() {
           justify-content: center;
           width: 36px;
           height: 36px;
-          border-radius: 10px;
-          border: 1px solid #e2e8f0;
-          background: #f8fafc;
-          color: #2563eb;
+          border-radius: var(--radius);
+          border: 1px solid var(--surface-border);
+          background: var(--surface-hover);
+          color: var(--secondary);
           cursor: pointer;
-          transition: background 0.15s ease, border-color 0.15s ease;
+          transition: background var(--transition-fast), border-color var(--transition-fast);
         }
         .info-copy-btn:hover:not(:disabled) {
-          background: #eff6ff;
-          border-color: #93c5fd;
+          background: rgba(37, 99, 235, 0.05);
+          border-color: rgba(37, 99, 235, 0.2);
         }
         .info-copy-btn:disabled {
           opacity: 0.35;

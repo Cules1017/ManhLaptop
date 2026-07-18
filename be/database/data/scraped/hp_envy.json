@@ -1,0 +1,29 @@
+[
+  {
+    "name": "HP Envy x360 14",
+    "price": 24500000,
+    "description": "AMD Ryzen 5 8640HS, 16GB LPDDR5, 512GB PCIe NVMe, 14-inch FHD+ Touch",
+    "image": "https://images.unsplash.com/photo-1517336714731-489689fd1ca8?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
+    "rating": 4.8,
+    "discount": 15,
+    "quantity": 32
+  },
+  {
+    "name": "HP Envy 16",
+    "price": 42990000,
+    "description": "Intel Core i7-13700H, 32GB RAM, 1TB SSD, NVIDIA GeForce RTX 4060, 16-inch WQXGA 120Hz",
+    "image": "https://images.unsplash.com/photo-1618424181497-157f25b6ce5d?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
+    "rating": 4.6,
+    "discount": 10,
+    "quantity": 15
+  },
+  {
+    "name": "HP Envy 17",
+    "price": 32500000,
+    "description": "Intel Core i7-1355U, 16GB RAM, 1TB SSD, Intel Iris Xe, 17.3-inch FHD Touch",
+    "image": "https://images.unsplash.com/photo-1541807084-5c52b6b3adef?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
+    "rating": 4.5,
+    "discount": 5,
+    "quantity": 20
+  }
+]

@@ -5,6 +5,7 @@ import ExclamationTriangleIcon from "@heroicons/react/24/solid/ExclamationTriang
 import ShoppingCartIcon from "@heroicons/react/24/solid/ShoppingCartIcon"
 import StarIcon from "@heroicons/react/24/solid/StarIcon"
 import UsersIcon from "@heroicons/react/24/solid/UsersIcon"
+import ChatBubbleLeftRightIcon from "@heroicons/react/24/solid/ChatBubbleLeftRightIcon"
 import { SvgIcon } from '@mui/material';
 
 export const items = [
@@ -54,6 +55,24 @@ export const items = [
     label: 'Users'
   },
   {
+    href: '/customer-care',
+    icon: (
+      <SvgIcon>
+        <DocumentTextIcon />
+      </SvgIcon>
+    ),
+    label: 'Customer Care'
+  },
+  {
+    href: '/live-chat',
+    icon: (
+      <SvgIcon>
+        <ChatBubbleLeftRightIcon />
+      </SvgIcon>
+    ),
+    label: 'Live Chat'
+  },
+  {
     href: '/settings',
     icon: (
       <SvgIcon>
@@ -61,5 +80,14 @@ export const items = [
       </SvgIcon>
     ),
     label: 'Settings'
+  },
+  {
+    href: '/homepage-settings',
+    icon: (
+      <SvgIcon>
+        <DocumentTextIcon />
+      </SvgIcon>
+    ),
+    label: 'Homepage Config'
   }
 ];

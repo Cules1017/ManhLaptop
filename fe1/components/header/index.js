@@ -39,12 +39,14 @@ export default function Header() {
           width: 100%;
           display: flex;
           flex-direction: column;
-          margin-bottom: 20px;
-          background-color: #ffffff;
-          box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.05);
+          background: var(--surface);
+          backdrop-filter: blur(16px);
+          -webkit-backdrop-filter: blur(16px);
+          border-bottom: 1px solid var(--surface-border);
           position: sticky;
           top: 0;
           z-index: 50;
+          transition: all var(--transition-smooth);
         }
         #mobile {
           display: none;

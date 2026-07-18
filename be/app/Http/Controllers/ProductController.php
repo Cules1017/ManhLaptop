@@ -12,7 +12,7 @@ class ProductController extends Controller
 {
     public function index(Request $request)
     {
-        $query = Product::with('category');
+        $query = Product::with(['category', 'images']);
 
         // Lọc theo keyword (tìm trong name, description)
         if ($request->has('search') && $request->search) {
@@ -65,11 +65,18 @@ class ProductController extends Controller
 
     public function show($id)
     {
-        $product = Product::with('category')->findOrFail($id);
+        $product = Product::with(['category', 'images'])->findOrFail($id);
+        
+        $relatedProducts = Product::with(['category'])
+            ->where('category_id', $product->category_id)
+            ->where('id', '!=', $product->id)
+            ->take(8)
+            ->get();
         
         return response()->json([
             'status' => true,
-            'data' => $product
+            'data' => $product,
+            'related' => $relatedProducts
         ]);
     }
 
@@ -98,6 +105,10 @@ class ProductController extends Controller
             'category_id' => 'required|exists:categories,id',
             'image'       => 'nullable|string|max:255',
             'image_file'  => 'nullable|file|image|max:2048',
+            'additional_images'   => 'nullable|array',
+            'additional_images.*' => 'nullable|file|image|max:2048',
+            'additional_image_urls'   => 'nullable|array',
+            'additional_image_urls.*' => 'nullable|string|max:255',
         ]);
         if ($validator->fails()) {
             return response()->json(['status' => false, 'errors' => $validator->errors()], 422);
@@ -109,7 +120,31 @@ class ProductController extends Controller
             $data['image'] = '/storage/' . $path;
         }
         $product = Product::create($data);
-        return response()->json(['status' => true, 'data' => $product]);
+
+        // Lưu ảnh phụ (files)
+        if ($request->hasFile('additional_images')) {
+            foreach ($request->file('additional_images') as $file) {
+                $path = $file->store('uploads/products', 'public');
+                \App\Models\ProductImage::create([
+                    'product_id' => $product->id,
+                    'image_url' => '/storage/' . $path,
+                ]);
+            }
+        }
+
+        // Lưu ảnh phụ (URLs)
+        if ($request->has('additional_image_urls') && is_array($request->additional_image_urls)) {
+            foreach ($request->additional_image_urls as $url) {
+                if (!empty($url)) {
+                    \App\Models\ProductImage::create([
+                        'product_id' => $product->id,
+                        'image_url' => $url,
+                    ]);
+                }
+            }
+        }
+
+        return response()->json(['status' => true, 'data' => $product->load('images')]);
     }
 
     // Cập nhật sản phẩm (chỉ admin)
@@ -128,6 +163,12 @@ class ProductController extends Controller
             'category_id' => 'sometimes|required|exists:categories,id',
             'image'       => 'nullable|string|max:255',
             'image_file'  => 'nullable|file|image|max:2048',
+            'additional_images'   => 'nullable|array',
+            'additional_images.*' => 'nullable|file|image|max:2048',
+            'additional_image_urls'   => 'nullable|array',
+            'additional_image_urls.*' => 'nullable|string|max:255',
+            'deleted_images' => 'nullable|array',
+            'deleted_images.*' => 'exists:product_images,id',
         ]);
         if ($validator->fails()) {
             return response()->json(['status' => false, 'errors' => $validator->errors()], 422);
@@ -139,7 +180,36 @@ class ProductController extends Controller
             $data['image'] = '/storage/' . $path;
         }
         $product->update($data);
-        return response()->json(['status' => true, 'data' => $product]);
+
+        // Xóa ảnh phụ được yêu cầu xóa
+        if ($request->has('deleted_images') && is_array($request->deleted_images)) {
+            \App\Models\ProductImage::whereIn('id', $request->deleted_images)->delete();
+        }
+
+        // Thêm ảnh phụ (files)
+        if ($request->hasFile('additional_images')) {
+            foreach ($request->file('additional_images') as $file) {
+                $path = $file->store('uploads/products', 'public');
+                \App\Models\ProductImage::create([
+                    'product_id' => $product->id,
+                    'image_url' => '/storage/' . $path,
+                ]);
+            }
+        }
+
+        // Thêm ảnh phụ (URLs)
+        if ($request->has('additional_image_urls') && is_array($request->additional_image_urls)) {
+            foreach ($request->additional_image_urls as $url) {
+                if (!empty($url)) {
+                    \App\Models\ProductImage::create([
+                        'product_id' => $product->id,
+                        'image_url' => $url,
+                    ]);
+                }
+            }
+        }
+
+        return response()->json(['status' => true, 'data' => $product->load('images')]);
     }
 
     // Xoá sản phẩm (chỉ admin)
