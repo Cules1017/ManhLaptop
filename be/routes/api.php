@@ -85,6 +85,9 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::put('/categories/{id}', [CategoryController::class, 'update']);
     Route::delete('/categories/{id}', [CategoryController::class, 'destroy']);
     Route::post('/review', [ProductController::class, 'review']);
+    Route::post('/coupons/apply', [\App\Http\Controllers\CouponController::class, 'apply']);
+    Route::post('/lucky-wheel/spin', [\App\Http\Controllers\LuckyWheelController::class, 'spin']);
+    Route::get('/lucky-wheel/status', [\App\Http\Controllers\LuckyWheelController::class, 'status']);
 
 });
 
@@ -123,6 +126,13 @@ Route::middleware(['auth:sanctum', 'admin'])->prefix('admin')->group(function ()
     Route::get('/contacts', [App\Http\Controllers\Admin\ContactController::class, 'index']);
     Route::put('/contacts/{id}', [App\Http\Controllers\Admin\ContactController::class, 'update']);
     Route::delete('/contacts/{id}', [App\Http\Controllers\Admin\ContactController::class, 'destroy']);
+    
+    // Coupon management routes
+    Route::get('/coupons', [\App\Http\Controllers\Admin\CouponController::class, 'index']);
+    Route::post('/coupons', [\App\Http\Controllers\Admin\CouponController::class, 'store']);
+    Route::get('/coupons/{id}', [\App\Http\Controllers\Admin\CouponController::class, 'show']);
+    Route::put('/coupons/{id}', [\App\Http\Controllers\Admin\CouponController::class, 'update']);
+    Route::delete('/coupons/{id}', [\App\Http\Controllers\Admin\CouponController::class, 'destroy']);
 });
 
 // Admin Dashboard Routes
@@ -131,4 +141,5 @@ Route::middleware(['auth:sanctum', 'admin'])->prefix('admin/dashboard')->group(f
     Route::get('/revenue', [App\Http\Controllers\Admin\DashboardController::class, 'getRevenue']);
     Route::get('/analytics', [App\Http\Controllers\Admin\DashboardController::class, 'getAnalytics']);
     Route::get('/latest-orders', [App\Http\Controllers\Admin\DashboardController::class, 'getLatestOrders']);
+    Route::get('/export-pdf', [App\Http\Controllers\Admin\DashboardController::class, 'exportPdf']);
 });

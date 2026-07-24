@@ -76,10 +76,11 @@ export default function HeaderDesktop({ user }) {
           >
             <Link href="/cart">
               <a>
-                <FaShoppingCart />
-                <p>
-                  <sup className="items-total">{cartCount}</sup> Giỏ hàng
-                </p>
+                <div className="icon-wrapper">
+                  <FaShoppingCart size={20} />
+                  <sup className="items-total">{cartCount}</sup>
+                </div>
+                <p>Giỏ hàng</p>
               </a>
             </Link>
             {showCartDropdown && (
@@ -132,20 +133,20 @@ export default function HeaderDesktop({ user }) {
           </div>
           <Link href="/wishlist">
             <a className="nav-buttons-wishlist">
-              <FaRegHeart />
+              <FaRegHeart size={20} />
               <p>Yêu thích</p>
             </a>
           </Link>
           <Link href="/contact">
             <a className="nav-buttons-contact">
-              <FaClipboardList />
+              <FaClipboardList size={20} />
               <p>Liên hệ</p>
             </a>
           </Link>
           {!user && (
             <Link href="/user/login">
               <a className="nav-buttons-signin">
-                <FaUser />
+                <FaUser size={20} />
                 <p>Đăng nhập</p>
               </a>
             </Link>
@@ -154,19 +155,19 @@ export default function HeaderDesktop({ user }) {
             <>
               <Link href="/orders">
                 <a className="nav-buttons-orders">
-                  <FaClipboardList />
+                  <FaClipboardList size={20} />
                   <p>Đơn hàng</p>
                 </a>
               </Link>
               <Link href="/profile">
                 <a className="nav-buttons-profile">
-                  <FaUser />
+                  <FaUser size={20} />
                   <p>{user.name}</p>
                 </a>
               </Link>
               <Link href="/user/signout">
                 <a className="nav-buttons-signout" title="Đăng xuất">
-                  <FaSignOutAlt />
+                  <FaSignOutAlt size={20} />
                 </a>
               </Link>
             </>
@@ -199,15 +200,21 @@ export default function HeaderDesktop({ user }) {
           color: var(--text-muted);
           transition: all var(--transition-smooth);
         }
+        .nav-buttons .icon-wrapper {
+          position: relative;
+          display: flex;
+          align-items: center;
+        }
         .nav-buttons .items-total {
-          font-size: 11px;
+          position: absolute;
+          top: -8px;
+          right: -10px;
+          font-size: 10px;
           font-weight: bold;
-          align-self: flex-end;
           background: var(--accent);
           color: var(--text-main);
           border-radius: 12px;
-          padding: 2px 6px;
-          margin-right: 6px;
+          padding: 2px 5px;
           box-shadow: 0 0 8px var(--accent-glow);
         }
         .nav-buttons .nav-buttons-signout {
@@ -217,7 +224,17 @@ export default function HeaderDesktop({ user }) {
           color: var(--accent);
         }
         .nav-buttons a p {
-          margin-left: 10px;
+          margin-left: 8px;
+          font-size: 14px;
+          max-width: 0;
+          opacity: 0;
+          overflow: hidden;
+          white-space: nowrap;
+          transition: all 0.3s ease;
+        }
+        .nav-buttons a:hover p {
+          max-width: 150px;
+          opacity: 1;
         }
         .cart-hover-area {
           position: relative;

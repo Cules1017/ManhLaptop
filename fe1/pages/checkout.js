@@ -46,6 +46,14 @@ export default function Checkout() {
   const [paymentMethod, setPaymentMethod] = useState('COD');
   const [ordering, setOrdering] = useState(false);
   const [showSuccess, setShowSuccess] = useState(false);
+  
+  // Coupon states
+  const [couponCode, setCouponCode] = useState('');
+  const [appliedCoupon, setAppliedCoupon] = useState(null);
+  const [discountAmount, setDiscountAmount] = useState(0);
+  const [applyingCoupon, setApplyingCoupon] = useState(false);
+  const [myVouchers, setMyVouchers] = useState([]);
+
   const router = useRouter();
   const { refreshCartCount } = useCart();
 
@@ -134,6 +142,18 @@ export default function Checkout() {
         );
         const productDetails = await Promise.all(productDetailPromises);
         setProducts(productDetails.map((res) => res.data));
+
+        try {
+          const voucherRes = await apiRequest('http://127.0.0.1:8000/api/lucky-wheel/status', {
+            method: 'GET',
+            silent: true
+          });
+          if (voucherRes.status && voucherRes.data?.history) {
+            setMyVouchers(voucherRes.data.history);
+          }
+        } catch (e) {
+          console.error(e);
+        }
       } catch {
         // apiRequest đã xử lý popup
       } finally {
@@ -182,6 +202,52 @@ export default function Checkout() {
     }
   };
 
+  const handleApplyCoupon = async () => {
+    if (!couponCode.trim()) {
+      toast.error('Vui lòng nhập mã giảm giá', { position: 'top-center' });
+      return;
+    }
+
+    setApplyingCoupon(true);
+    try {
+      // Tính lại tổng tiền tạm tính
+      const currentSubTotal = cartItems.reduce((sum, item) => {
+        const product = products.find((p) => p.id === (item.product_id || item.product?.id));
+        return sum + getFinalPrice(product) * item.quantity;
+      }, 0);
+
+      const res = await apiRequest('http://127.0.0.1:8000/api/coupons/apply', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          code: couponCode.trim(),
+          cart_total: currentSubTotal,
+        }),
+      });
+
+      if (res.status) {
+        setAppliedCoupon(res.data.coupon);
+        setDiscountAmount(res.data.discount_amount);
+        toast.success(res.message, { position: 'top-center' });
+      } else {
+        setAppliedCoupon(null);
+        setDiscountAmount(0);
+        toast.error(res.message || 'Mã giảm giá không hợp lệ', { position: 'top-center' });
+      }
+    } catch {
+      setAppliedCoupon(null);
+      setDiscountAmount(0);
+    } finally {
+      setApplyingCoupon(false);
+    }
+  };
+
+  const handleRemoveCoupon = () => {
+    setCouponCode('');
+    setAppliedCoupon(null);
+    setDiscountAmount(0);
+  };
+
   const handleOrder = async () => {
     if (!cartItems.length) {
       toast.error('Giỏ hàng đang trống', { position: 'top-center' });
@@ -228,6 +294,7 @@ export default function Checkout() {
           shipping_fee: SHIPPING_FEE,
           payment_method: paymentMethod,
           note,
+          coupon_code: appliedCoupon?.code || null,
         }),
       });
       if (res.status) {
@@ -287,7 +354,9 @@ export default function Checkout() {
     const product = products.find((p) => p.id === (item.product_id || item.product?.id));
     return sum + getFinalPrice(product) * item.quantity;
   }, 0);
-  const finalTotal = subTotal + SHIPPING_FEE;
+  
+  // Tổng tiền bao gồm ship và trừ khuyến mãi
+  const finalTotal = Math.max(0, subTotal + SHIPPING_FEE - discountAmount);
 
   return (
     <Page>
@@ -493,6 +562,72 @@ export default function Checkout() {
                 <span>Phí vận chuyển</span>
                 <span>{formatVND(SHIPPING_FEE)}</span>
               </div>
+              
+              <div className="checkout-coupon-section">
+                <div style={{ display: 'flex', gap: '8px', marginBottom: '8px' }}>
+                  <input
+                    className="form-input"
+                    placeholder="Mã giảm giá"
+                    value={couponCode}
+                    onChange={(e) => setCouponCode(e.target.value)}
+                    disabled={!!appliedCoupon}
+                    style={{ flex: 1 }}
+                  />
+                  {!appliedCoupon ? (
+                    <button
+                      className="btn-secondary"
+                      onClick={handleApplyCoupon}
+                      disabled={applyingCoupon || !couponCode.trim()}
+                      style={{ padding: '8px 16px' }}
+                    >
+                      {applyingCoupon ? '...' : 'Áp dụng'}
+                    </button>
+                  ) : (
+                    <button
+                      className="btn-secondary"
+                      onClick={handleRemoveCoupon}
+                      style={{ padding: '8px 16px', color: 'var(--danger)', borderColor: 'var(--danger)' }}
+                    >
+                      Huỷ
+                    </button>
+                  )}
+                </div>
+
+                {myVouchers.length > 0 && !appliedCoupon && (
+                  <div className="checkout-vouchers-list" style={{ marginBottom: '10px' }}>
+                    <div style={{ fontSize: '12px', color: '#666', marginBottom: '4px' }}>Voucher của bạn:</div>
+                    <div style={{ display: 'flex', flexWrap: 'wrap', gap: '6px' }}>
+                      {myVouchers.map((v, idx) => (
+                        <button
+                          key={idx}
+                          type="button"
+                          className="btn-voucher-tag"
+                          onClick={() => setCouponCode(v.coupon_code)}
+                          style={{
+                            padding: '4px 8px',
+                            fontSize: '12px',
+                            background: '#fefce8',
+                            border: '1px solid #eab308',
+                            borderRadius: '4px',
+                            color: '#ca8a04',
+                            cursor: 'pointer'
+                          }}
+                        >
+                          {v.coupon_code} ({v.prize_name})
+                        </button>
+                      ))}
+                    </div>
+                  </div>
+                )}
+
+                {appliedCoupon && (
+                  <div className="checkout-summary-row" style={{ color: 'var(--success)' }}>
+                    <span>Giảm giá ({appliedCoupon.code})</span>
+                    <span>-{formatVND(discountAmount)}</span>
+                  </div>
+                )}
+              </div>
+
               <div className="checkout-summary-row checkout-summary-total">
                 <span>Tổng tiền thanh toán</span>
                 <span>{formatVND(finalTotal)}</span>
@@ -705,6 +840,11 @@ export default function Checkout() {
           border-top: 1px solid var(--surface-border);
           padding-top: 16px;
           margin-top: 8px;
+        }
+        .checkout-coupon-section {
+          margin-top: 16px;
+          padding-top: 16px;
+          border-top: 1px dashed var(--surface-border);
         }
         .checkout-summary-total span:last-child {
           color: var(--accent);

@@ -13,6 +13,7 @@ import { Users } from './pages/userman';
 import CustomerCare from './pages/customer-care';
 import HomepageSettingsPage from './pages/homepage-settings';
 import LiveChat from './pages/live-chat.jsx';
+import CouponManager from './pages/coupons';
 
 export const routes = [
   {
@@ -65,6 +66,10 @@ export const routes = [
       {
         path: 'live-chat',
         element: <LiveChat />
+      },
+      {
+        path: 'coupons',
+        element: <CouponManager />
       },
       {
         path: 'login',

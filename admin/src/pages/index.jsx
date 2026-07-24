@@ -7,12 +7,14 @@ import UsersIcon from '@heroicons/react/24/solid/UsersIcon';
 import {
   Avatar,
   Box,
+  Button,
   Container,
   Stack,
   SvgIcon,
   Typography,
   Unstable_Grid2 as Grid
 } from '@mui/material';
+import ArrowDownTrayIcon from '@heroicons/react/24/solid/ArrowDownTrayIcon';
 import  OverviewKpi  from 'src/sections/overview/overview-kpi';
 import  {OverviewLatestCustomers}  from 'src/sections/overview/overview-latest-customers';
 import  {OverviewSummary}  from 'src/sections/overview/overview-summary';
@@ -37,6 +39,33 @@ const Page = () => {
   const [latestOrders, setLatestOrders] = useState([]);
   const [analytics, setAnalytics] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [exporting, setExporting] = useState(false);
+
+  const handleExportPdf = async () => {
+    setExporting(true);
+    try {
+      const response = await api.get('/admin/dashboard/export-pdf', {
+        responseType: 'blob' // Important for file download
+      });
+      
+      // Create a URL for the blob
+      const url = window.URL.createObjectURL(new Blob([response.data]));
+      const link = document.createElement('a');
+      link.href = url;
+      link.setAttribute('download', 'bao-cao-doanh-thu.pdf');
+      document.body.appendChild(link);
+      link.click();
+      
+      // Clean up
+      link.parentNode.removeChild(link);
+      window.URL.revokeObjectURL(url);
+    } catch (error) {
+      console.error('Error exporting PDF:', error);
+      alert('Không thể xuất báo cáo. Vui lòng thử lại sau.');
+    } finally {
+      setExporting(false);
+    }
+  };
 
   useEffect(() => {
     const fetchDashboardData = async () => {
@@ -92,11 +121,29 @@ const Page = () => {
       >
         <Container maxWidth="xl">
           <Stack spacing={3}>
-            <div>
+            <Stack
+              direction="row"
+              justifyContent="space-between"
+              alignItems="center"
+              spacing={4}
+            >
               <Typography variant="h4">
                 Dashboard
               </Typography>
-            </div>
+              <Button
+                color="primary"
+                variant="contained"
+                startIcon={
+                  <SvgIcon fontSize="small">
+                    <ArrowDownTrayIcon />
+                  </SvgIcon>
+                }
+                onClick={handleExportPdf}
+                disabled={exporting}
+              >
+                {exporting ? 'Đang xuất PDF...' : 'Xuất Báo Cáo PDF'}
+              </Button>
+            </Stack>
             <div>
               <Grid
                 container

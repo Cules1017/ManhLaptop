@@ -9,6 +9,7 @@ use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Barryvdh\DomPDF\Facade\Pdf;
 
 class DashboardController extends Controller
 {
@@ -114,5 +115,53 @@ class DashboardController extends Controller
             ->get();
 
         return response()->json($latestOrders);
+    }
+
+    public function exportPdf()
+    {
+        // Lấy thống kê cơ bản
+        $stats = [
+            'totalOrders' => Order::count(),
+            'totalRevenue' => Order::where('status', 'completed')->sum('total_price'),
+            'pendingOrders' => Order::where('status', 'pending')->count(),
+            'completedOrders' => Order::where('status', 'completed')->count(),
+        ];
+
+        // Doanh thu 7 ngày qua
+        $revenue = Order::where('status', 'completed')
+            ->where('created_at', '>=', Carbon::now()->subDays(7))
+            ->select(
+                DB::raw('DATE(created_at) as date'),
+                DB::raw('COUNT(*) as orders'),
+                DB::raw('SUM(total_price) as revenue')
+            )
+            ->groupBy('date')
+            ->orderBy('date')
+            ->get();
+
+        // 5 đơn hàng mới nhất
+        $latestOrders = Order::with('user')
+            ->select(
+                'orders.id',
+                'orders.created_at',
+                'orders.total_price',
+                'orders.status',
+                'users.name as customer_name'
+            )
+            ->join('users', 'orders.user_id', '=', 'users.id')
+            ->orderBy('orders.created_at', 'desc')
+            ->limit(10)
+            ->get();
+
+        $data = [
+            'title' => 'Báo cáo Doanh thu',
+            'date' => Carbon::now()->format('d/m/Y H:i'),
+            'stats' => $stats,
+            'revenue' => $revenue,
+            'latestOrders' => $latestOrders,
+        ];
+
+        $pdf = Pdf::loadView('pdf.revenue', $data);
+        return $pdf->download('bao-cao-doanh-thu.pdf');
     }
 } 

@@ -6,6 +6,7 @@ import ShoppingCartIcon from "@heroicons/react/24/solid/ShoppingCartIcon"
 import StarIcon from "@heroicons/react/24/solid/StarIcon"
 import UsersIcon from "@heroicons/react/24/solid/UsersIcon"
 import ChatBubbleLeftRightIcon from "@heroicons/react/24/solid/ChatBubbleLeftRightIcon"
+import TicketIcon from "@heroicons/react/24/solid/TicketIcon"
 import { SvgIcon } from '@mui/material';
 
 export const items = [
@@ -53,6 +54,15 @@ export const items = [
       </SvgIcon>
     ),
     label: 'Users'
+  },
+  {
+    href: '/coupons',
+    icon: (
+      <SvgIcon>
+        <TicketIcon />
+      </SvgIcon>
+    ),
+    label: 'Coupons'
   },
   {
     href: '/customer-care',

@@ -8,6 +8,8 @@ use App\Models\OrderItem;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\OrderSuccessMail;
 
 class VnPayController extends Controller
 {
@@ -300,8 +302,23 @@ class VnPayController extends Controller
 
             $order = Order::find($orderId);
             if ($order) {
-                $order->status = $result === 'success' ? 'pending' : 'cancelled';
-                $order->save();
+                $oldStatus = $order->status;
+                $newStatus = $result === 'success' ? 'pending' : 'cancelled';
+                
+                if ($oldStatus !== 'pending' && $newStatus === 'pending') {
+                    $order->status = $newStatus;
+                    $order->save();
+                    
+                    // Send Email on successful VNPay payment
+                    try {
+                        Mail::to($order->user->email)->send(new OrderSuccessMail($order));
+                    } catch (\Exception $e) {
+                        Log::error('VNPay IPN Mail Error: ' . $e->getMessage());
+                    }
+                } else {
+                    $order->status = $newStatus;
+                    $order->save();
+                }
             }
         } catch (\Throwable $th) {
             Log::error('VNPay notify error: ' . $th->getMessage());
