@@ -1,0 +1,422 @@
+[
+    {
+        "name": "MacBook Air M1 8GB 256GB",
+        "description": "MacBook Air M1 8GB 256GB với thiết kế hiện đại, cấu hình mạnh mẽ, đáp ứng hoàn hảo nhu cầu làm việc và giải trí của bạn.",
+        "price": 65000000,
+        "discount": 5,
+        "quantity": 30,
+        "category_id": 6,
+        "image": "https://down-br.img.susercontent.com/file/br-11134207-7r98q-lm92f0gtm5h312",
+        "gallery": [
+            "https://thangpro.vn/uploads/source/laptop/macbook/m1/2023-11-11-13-12-img-2783.jpg",
+            "https://media.tatacroma.com/Croma Assets/Computers Peripherals/Laptop/Images/316814_0_C-dYyx5pgq.png?updatedAt=1753862407603",
+            "https://www.netcomputer.id/wp-content/gallery/mba-m1-2020/MacBook-Air-M1.jpg"
+        ]
+    },
+    {
+        "name": "Apple MacBook Pro M3 Max Màn hình Liquid Retina",
+        "description": "Apple MacBook Pro M3 Max Màn hình Liquid Retina với thiết kế hiện đại, cấu hình mạnh mẽ, đáp ứng hoàn hảo nhu cầu làm việc và giải trí của bạn.",
+        "price": 75000000,
+        "discount": 5,
+        "quantity": 30,
+        "category_id": 6,
+        "image": "https://www.notebookcheck.net/fileadmin/Notebooks/Apple/MacBook_Pro_14_2023_M3_Max/IMG_1008.JPG",
+        "gallery": [
+            "https://image-cdn.hypb.st/https://hypebeast.com/image/2023/10/apple-macbook-m3-chip-launch-reveal-4.jpg?w=1260&amp;format=jpeg&amp;cbr=1&amp;q=90&amp;fit=max",
+            "https://www.sanalsergi.com/icerik/uploads/2023/11/Apple-MacBook-Pro-M3-Max-header.jpeg",
+            "https://i.pcmag.com/imagery/reviews/05r7grG5jUF6QJXZlqKnmiH-1..v1699031377.jpg"
+        ]
+    },
+    {
+        "name": "MacBook Pro M3 Max Màn hình Liquid Retina",
+        "description": "MacBook Pro M3 Max Màn hình Liquid Retina với thiết kế hiện đại, cấu hình mạnh mẽ, đáp ứng hoàn hảo nhu cầu làm việc và giải trí của bạn.",
+        "price": 31000000,
+        "discount": 15,
+        "quantity": 31,
+        "category_id": 6,
+        "image": "https://www.notebookcheck.net/fileadmin/Notebooks/Apple/MacBook_Pro_14_2023_M3_Max/IMG_1008.JPG",
+        "gallery": [
+            "https://static1.xdaimages.com/wordpress/wp-content/uploads/2023/11/macbook-pro-m3-max-xda-review08761.jpg",
+            "http://file.hstatic.net/200000348419/article/macbook-pro-m3-co-the-ket-noi-voi-bao-nhieu-man-hinh-ngoai-0_a2d51a53c72145bca7e6a8a1af6e816c.jpg",
+            "https://cdn.tgdd.vn/News/Thumb/1555940/lg-1200x675.jpg"
+        ]
+    },
+    {
+        "name": "Apple MacBook Pro M2 Màn hình Liquid Retina",
+        "description": "Apple MacBook Pro M2 Màn hình Liquid Retina với thiết kế hiện đại, cấu hình mạnh mẽ, đáp ứng hoàn hảo nhu cầu làm việc và giải trí của bạn.",
+        "price": 44000000,
+        "discount": null,
+        "quantity": 11,
+        "category_id": 6,
+        "image": "http://file.hstatic.net/200000348419/article/macbook-m2-mac-studio-co-the-ket-noi-voi-bao-nhieu-man-hinh-ngoai-0_47a47c5f2eec4d3588511da1d281a6f3.jpg",
+        "gallery": [
+            "https://cdn.mos.cms.futurecdn.net/STBwPPqTfu4Zrmxo2dibtC.jpg",
+            "https://www.apple.com/newsroom/images/product/mac/standard/Apple-MacBook-Pro-M2-Pro-and-M2-Max-2-up-230117_big.jpg.large_2x.jpg",
+            "https://techcrunch.com/wp-content/uploads/2022/06/CMC_1384.jpg"
+        ]
+    },
+    {
+        "name": "Apple MacBook Air M2 18GB 512GB",
+        "description": "Apple MacBook Air M2 18GB 512GB với thiết kế hiện đại, cấu hình mạnh mẽ, đáp ứng hoàn hảo nhu cầu làm việc và giải trí của bạn.",
+        "price": 66000000,
+        "discount": 20,
+        "quantity": 15,
+        "category_id": 6,
+        "image": "https://techlovers.com/img/macbook-air-m2.webp",
+        "gallery": [
+            "https://thehikaku.net/pc/apple/image/22macbook-air-m2/x1400.jpg",
+            "https://m.media-amazon.com/images/I/71ifX4fhbnL._AC_SL1500_.jpg",
+            "https://photos5.appleinsider.com/price_guide/macbook-air-m2-midnight-pp-header.png"
+        ]
+    },
+    {
+        "name": "MacBook Pro 16-inch 16GB 512GB",
+        "description": "MacBook Pro 16-inch 16GB 512GB với thiết kế hiện đại, cấu hình mạnh mẽ, đáp ứng hoàn hảo nhu cầu làm việc và giải trí của bạn.",
+        "price": 67000000,
+        "discount": 10,
+        "quantity": 43,
+        "category_id": 6,
+        "image": "https://m.media-amazon.com/images/I/717Cm8+ARXL._AC_.jpg",
+        "gallery": [
+            "https://gs-com.bz/cdn/shop/files/laptop-dell-pro-pc16250-bk-hd-fhd-gallery-2.jpg?v=1748621759",
+            "https://www.topmarket.co.il/images/detailed/272/cee6d1a29a5d5f090219fa311ca7d88bb7fdaf76.jpg",
+            "https://appleworlds.pk/wp-content/uploads/2023/11/Macbook-Pro-2019-16-inch-scaled.jpg"
+        ]
+    },
+    {
+        "name": "Apple MacBook Pro 16-inch 8GB 256GB",
+        "description": "Apple MacBook Pro 16-inch 8GB 256GB với thiết kế hiện đại, cấu hình mạnh mẽ, đáp ứng hoàn hảo nhu cầu làm việc và giải trí của bạn.",
+        "price": 75000000,
+        "discount": 15,
+        "quantity": 7,
+        "category_id": 6,
+        "image": "https://cdn.mos.cms.futurecdn.net/P8CDQsD8kmEUVn3k54acCd.jpg",
+        "gallery": [
+            "https://photos5.appleinsider.com/price_guide/macbook-pro-16-inch-2023-pp-header.png",
+            "https://www.techadvisor.com/wp-content/uploads/2023/11/space-black-macbook-pro-back-angle-1.jpg?quality=50&amp;strip=all",
+            "https://sm.pcmag.com/t/pcmag_au/review/a/apple-macb/apple-macbook-pro-16-inch-2023-m2-max_7zsb.1920.jpg"
+        ]
+    },
+    {
+        "name": "Apple MacBook Pro M2 Chính hãng VN/A",
+        "description": "Apple MacBook Pro M2 Chính hãng VN/A với thiết kế hiện đại, cấu hình mạnh mẽ, đáp ứng hoàn hảo nhu cầu làm việc và giải trí của bạn.",
+        "price": 14000000,
+        "discount": null,
+        "quantity": 48,
+        "category_id": 6,
+        "image": "https://www.apple.com/newsroom/images/product/mac/standard/Apple-MacBook-Pro-M2-Pro-and-M2-Max-2-up-230117_big.jpg.large_2x.jpg",
+        "gallery": [
+            "https://media.cnn.com/api/v1/images/stellar/prod/220621172156-macbook-pro-2022-lead.jpg?c=original",
+            "https://www.notebookcheck.net/fileadmin/Notebooks/Apple/MacBook_Pro_14_2023_M2_Pro/AKA8518.jpg",
+            "https://www.apple.com/newsroom/images/product/mac/standard/Apple-MacBook-Pro-M2-Pro-and-M2-Max-hero-230117_Full-Bleed-Image.jpg.large.jpg"
+        ]
+    },
+    {
+        "name": "MacBook Pro 16-inch 36GB 1TB",
+        "description": "MacBook Pro 16-inch 36GB 1TB với thiết kế hiện đại, cấu hình mạnh mẽ, đáp ứng hoàn hảo nhu cầu làm việc và giải trí của bạn.",
+        "price": 79000000,
+        "discount": 20,
+        "quantity": 25,
+        "category_id": 6,
+        "image": "https://ttcenter.com.vn/uploads/product/4iqi99pg-1020-macbook-pro-m3-pro-16-inch-2023-36gb-1tb-new.jpg",
+        "gallery": [
+            "https://pisces.bbystatic.com/image2/BestBuy_US/images/products/c79f9163-6c3e-4947-9ad9-63164bb9cfaa.jpg",
+            "https://cdn.tgdd.vn/Products/Images/44/331579/Slider/vi-vn-macbook-pro-16-inch-m4-max-36gb-1tb-slider-2.jpg",
+            "https://macfinder.co.uk/wp-content/uploads/2023/12/img-MacBook-Pro-Retina-16-Inch-28687.jpg"
+        ]
+    },
+    {
+        "name": "MacBook Pro 14-inch 8GB 256GB",
+        "description": "MacBook Pro 14-inch 8GB 256GB với thiết kế hiện đại, cấu hình mạnh mẽ, đáp ứng hoàn hảo nhu cầu làm việc và giải trí của bạn.",
+        "price": 19000000,
+        "discount": 20,
+        "quantity": 18,
+        "category_id": 6,
+        "image": "https://img.myipadbox.com/sec/product_l/WMC0861.jpg",
+        "gallery": [
+            "https://img.myipadbox.com/sec/product_l/WMC0869.jpg",
+            "https://img.myipadbox.com/upload/store/detail_l/WMC0869_4.jpg",
+            "https://tech.co.za/wp-content/uploads/2023/04/Dell-Latitude-3440-a.png"
+        ]
+    },
+    {
+        "name": "Máy trạm Workstation HP ZBook Core i9 64GB 2TB",
+        "description": "Máy trạm Workstation HP ZBook Core i9 64GB 2TB với thiết kế hiện đại, cấu hình mạnh mẽ, đáp ứng hoàn hảo nhu cầu làm việc và giải trí của bạn.",
+        "price": 53000000,
+        "discount": 10,
+        "quantity": 29,
+        "category_id": 7,
+        "image": "https://lapvip.vn/upload/file/original/hp-zbook-fury-15-g8-2021-mobile-workstation-1-1699506577.jpg",
+        "gallery": [
+            "https://i.pcmag.com/imagery/articles/000Xscoop8PugLKnKUoTYv1-4.png",
+            "https://lapvip.vn/upload/file/original/hp-zbook-fury-15-g8-2021-mobile-workstation-4-1699506560.jpg",
+            "https://laptopxachtay.com.vn/Images/Products/hp-workstation-zbook-15-g5-i7-8750hq-ram-16gb-512g-ssd-pcie-quadro-p2000-4gb-15-6-fhd-sve-win10-pro_38795_4.jpg"
+        ]
+    },
+    {
+        "name": "Máy trạm Workstation ASUS ProArt Studiobook Xeon 32GB 1TB",
+        "description": "Máy trạm Workstation ASUS ProArt Studiobook Xeon 32GB 1TB với thiết kế hiện đại, cấu hình mạnh mẽ, đáp ứng hoàn hảo nhu cầu làm việc và giải trí của bạn.",
+        "price": 65000000,
+        "discount": 10,
+        "quantity": 41,
+        "category_id": 7,
+        "image": "https://dlcdnwebimgs.asus.com/gain/9e985fd7-0ada-4eba-8e39-f14b4b028e39/w1856/h928/fwebp",
+        "gallery": [
+            "https://m.media-amazon.com/images/I/81aYGtq0joL._AC_SL1500_.jpg",
+            "https://i5.walmartimages.com/seo/Restored-ASUS-ProArt-Studiobook-16-Workstation-Laptop-Intel-i9-13980HX-24-Core-32GB-DDR5-5200MHz-RAM-2TB-PCIe-SSD-GeForce-RTX-4070-16-0in-120-Hz-Touc_b37d4db4-12fa-4a99-8420-73bbd8952cd7.521e1f71a1135afa43c05ebf9c715332.jpeg",
+            "https://m.media-amazon.com/images/S/aplus-media-library-service-media/292896b1-ea53-48fd-b582-68532a00e03e.__CR0,0,1464,625_PT0_SX1464_V1___.jpg"
+        ]
+    },
+    {
+        "name": "Laptop Đồ hoạ HP ZBook Chuyên đồ hoạ 3D",
+        "description": "Laptop Đồ hoạ HP ZBook Chuyên đồ hoạ 3D với thiết kế hiện đại, cấu hình mạnh mẽ, đáp ứng hoàn hảo nhu cầu làm việc và giải trí của bạn.",
+        "price": 17000000,
+        "discount": 15,
+        "quantity": 12,
+        "category_id": 7,
+        "image": "https://down-vn.img.susercontent.com/file/vn-11134207-7qukw-lhbpy11tluybf0",
+        "gallery": [
+            "https://onlylap.vn/wp-content/uploads/2025/07/hp-zbook-fury-15-g8-33.webp",
+            "https://file.hstatic.net/1000062656/file/hp_zbook_15g3_3_94c4ba80441945cb9e33c188326b5bc0.jpg",
+            "https://onlylap.vn/wp-content/uploads/2025/07/hp-zbook-fury-15-g8-34.webp"
+        ]
+    },
+    {
+        "name": "Laptop Đồ hoạ Dell Precision Xeon 32GB 1TB",
+        "description": "Laptop Đồ hoạ Dell Precision Xeon 32GB 1TB với thiết kế hiện đại, cấu hình mạnh mẽ, đáp ứng hoàn hảo nhu cầu làm việc và giải trí của bạn.",
+        "price": 5000000,
+        "discount": 5,
+        "quantity": 8,
+        "category_id": 7,
+        "image": "https://vitinhtranphu.com/uploads/Laptop_Dell_Precision_5560.png",
+        "gallery": [
+            "https://laptop365.vn/pic/news/images/laptop-do-hoa-dell-precision.png",
+            "https://laptop365.vn/pic/product/del-precision-7750-laptop365-2_637987622103600202.jpg",
+            "https://laptop365.vn/pic/product/del-precision-7750-laptop365-6_637987621900266647.jpg"
+        ]
+    },
+    {
+        "name": "Máy trạm Workstation MSI Creator Chuyên đồ hoạ 3D",
+        "description": "Máy trạm Workstation MSI Creator Chuyên đồ hoạ 3D với thiết kế hiện đại, cấu hình mạnh mẽ, đáp ứng hoàn hảo nhu cầu làm việc và giải trí của bạn.",
+        "price": 66000000,
+        "discount": 15,
+        "quantity": 50,
+        "category_id": 7,
+        "image": "https://www.phucanh.vn/media/news/2703_MSIDSC01029.jpg",
+        "gallery": [
+            "https://www.reviews.org/app/uploads/2024/01/MSI-Creator-laptops-768x403.jpg",
+            "https://www.tnc.com.vn/uploads/news/20230324_SEO/may-tram-msi-creatorpro-man-hinh-miniled-len-den-4k-gpu-nvidia-3500-ada-pro-cpu-intel-raptor-lake-h-x 2.png",
+            "https://www.workstation-pro.com/images/product_images/original_images/1589_0.jpg"
+        ]
+    },
+    {
+        "name": "Laptop Đồ hoạ HP ZBook RTX 4000 Ada",
+        "description": "Laptop Đồ hoạ HP ZBook RTX 4000 Ada với thiết kế hiện đại, cấu hình mạnh mẽ, đáp ứng hoàn hảo nhu cầu làm việc và giải trí của bạn.",
+        "price": 23000000,
+        "discount": null,
+        "quantity": 8,
+        "category_id": 7,
+        "image": "https://down-vn.img.susercontent.com/file/vn-11134207-7qukw-lhbpy11tluybf0",
+        "gallery": [
+            "https://onlylap.vn/wp-content/uploads/2025/07/hp-zbook-fury-15-g8-33.webp",
+            "https://file.hstatic.net/1000062656/file/hp_zbook_15g3_3_94c4ba80441945cb9e33c188326b5bc0.jpg",
+            "https://onlylap.vn/wp-content/uploads/2025/07/hp-zbook-fury-15-g8-34.webp"
+        ]
+    },
+    {
+        "name": "Máy trạm Workstation MSI Creator Xeon 32GB 1TB",
+        "description": "Máy trạm Workstation MSI Creator Xeon 32GB 1TB với thiết kế hiện đại, cấu hình mạnh mẽ, đáp ứng hoàn hảo nhu cầu làm việc và giải trí của bạn.",
+        "price": 28000000,
+        "discount": 5,
+        "quantity": 18,
+        "category_id": 7,
+        "image": "https://cdn.thepcenthusiast.com/wp-content/uploads/2023/07/MSI-CreatorPro-X17HX-workstation-laptop-01.jpg",
+        "gallery": [
+            "https://cdn.thepcenthusiast.com/wp-content/uploads/2023/07/MSI-CreatorPro-X17HX-workstation-laptop-02.jpg",
+            "https://www.phucanh.vn/media/news/2703_MSIDSC01029.jpg",
+            "https://i.ytimg.com/vi/_GEzK2FUHFs/maxresdefault.jpg"
+        ]
+    },
+    {
+        "name": "Máy trạm Workstation MSI Creator RTX 4000 Ada",
+        "description": "Máy trạm Workstation MSI Creator RTX 4000 Ada với thiết kế hiện đại, cấu hình mạnh mẽ, đáp ứng hoàn hảo nhu cầu làm việc và giải trí của bạn.",
+        "price": 7000000,
+        "discount": null,
+        "quantity": 35,
+        "category_id": 7,
+        "image": "https://cdn.thepcenthusiast.com/wp-content/uploads/2023/07/MSI-CreatorPro-X17HX-workstation-laptop-01.jpg",
+        "gallery": [
+            "https://cdn.thepcenthusiast.com/wp-content/uploads/2023/07/MSI-CreatorPro-X17HX-workstation-laptop-02.jpg",
+            "https://i5.walmartimages.com/seo/MSI-CreatorPro-M16-HX-C14V-Workstation-Laptop-2024-16-1920x1200-FHD-Core-i7-14650HX-1TB-SSD-Hard-Drive-32GB-RAM-Nvidia-RTX-2000-Ada-16-cores-5-2-GHz_b792b4ba-693f-4d9f-9d67-53142e269ffc.5ee65588d18c6ccd2e82d292cdf0e27c.jpeg",
+            "https://www.phucanh.vn/media/news/2703_MSIDSC01029.jpg"
+        ]
+    },
+    {
+        "name": "Máy trạm Workstation HP ZBook Chuyên đồ hoạ 3D",
+        "description": "Máy trạm Workstation HP ZBook Chuyên đồ hoạ 3D với thiết kế hiện đại, cấu hình mạnh mẽ, đáp ứng hoàn hảo nhu cầu làm việc và giải trí của bạn.",
+        "price": 44000000,
+        "discount": 15,
+        "quantity": 25,
+        "category_id": 7,
+        "image": "https://lapvip.vn/upload/file/original/hp-zbook-fury-15-g8-2021-mobile-workstation-1-1699506577.jpg",
+        "gallery": [
+            "https://i.pcmag.com/imagery/articles/000Xscoop8PugLKnKUoTYv1-4.png",
+            "https://lapvip.vn/upload/file/original/hp-zbook-fury-15-g8-2021-mobile-workstation-4-1699506560.jpg",
+            "https://laptopxachtay.com.vn/Images/Products/hp-workstation-zbook-15-g5-i7-8750hq-ram-16gb-512g-ssd-pcie-quadro-p2000-4gb-15-6-fhd-sve-win10-pro_38795_4.jpg"
+        ]
+    },
+    {
+        "name": "Laptop Đồ hoạ Lenovo ThinkPad P-Series Chuyên đồ hoạ 3D",
+        "description": "Laptop Đồ hoạ Lenovo ThinkPad P-Series Chuyên đồ hoạ 3D với thiết kế hiện đại, cấu hình mạnh mẽ, đáp ứng hoàn hảo nhu cầu làm việc và giải trí của bạn.",
+        "price": 74000000,
+        "discount": 20,
+        "quantity": 8,
+        "category_id": 7,
+        "image": "https://techcare.net.vn/image/lenovo-thinkpad-p15-gen-2-9-2uywce5.jpg",
+        "gallery": [
+            "https://cdn.chotot.com/A7UBt5EUReknzsvs_lEleKT6th8gSC8FuBk6H_MrYa4/preset:view/plain/a6a9f8478e3360805199890b7f619ff0-2977725443061300082.jpg",
+            "https://phuongtin.vn/wp-content/uploads/2021/08/laptop-do-hoa-lenovo-thinkpad-p70-9.jpg",
+            "https://techcare.vn/image/laptop-lenovo-thinkpad-p15s-g2-oyrnefu.jpg"
+        ]
+    },
+    {
+        "name": "Laptop giá rẻ Dell Inspiron 3520 Dưới 10 triệu",
+        "description": "Laptop giá rẻ Dell Inspiron 3520 Dưới 10 triệu với thiết kế hiện đại, cấu hình mạnh mẽ, đáp ứng hoàn hảo nhu cầu làm việc và giải trí của bạn.",
+        "price": 58000000,
+        "discount": 5,
+        "quantity": 23,
+        "category_id": 8,
+        "image": "https://nhatminhlaptop.com/Upload/Editor/2024/6/19/dellinspiron-6477.jpg",
+        "gallery": [
+            "https://nhatminhlaptop.com/Upload/FileAttach/dellinspiron5491-2023-09-13-14-18-54.jpg",
+            "http://laptopminhman.com/upload/news/dell-inspiron-5620-gia-re-6956.jpg",
+            "https://nhatminhlaptop.com/Upload/FileAttach/dellinspiron74451-2024-09-04-13-36-32.jpg"
+        ]
+    },
+    {
+        "name": "Laptop phổ thông Dell Inspiron 3520 Pentium 8GB 256GB",
+        "description": "Laptop phổ thông Dell Inspiron 3520 Pentium 8GB 256GB với thiết kế hiện đại, cấu hình mạnh mẽ, đáp ứng hoàn hảo nhu cầu làm việc và giải trí của bạn.",
+        "price": 44000000,
+        "discount": null,
+        "quantity": 29,
+        "category_id": 8,
+        "image": "https://file.hstatic.net/1000374492/file/inspiron_series_78c98ea48f184394a1b5a837dc3cddbb_grande.png",
+        "gallery": [
+            "https://laptop3mien.vn/wp-content/uploads/2025/04/1-1024x1024.png",
+            "https://laptop3mien.vn/wp-content/uploads/2023/11/Dell-Inspiron-san-pham-ly-tuong-trong-phan-khuc-pho-thong.jpg",
+            "https://lapvip.vn/upload/news/original/review-dell-inspiron-7501-co-qua-nhieu-uu-diem-tren-mot-chiec-laptop-pho-thong-1651655917.jpg"
+        ]
+    },
+    {
+        "name": "Laptop giá rẻ Dell Inspiron 3520 Phù hợp học tập",
+        "description": "Laptop giá rẻ Dell Inspiron 3520 Phù hợp học tập với thiết kế hiện đại, cấu hình mạnh mẽ, đáp ứng hoàn hảo nhu cầu làm việc và giải trí của bạn.",
+        "price": 13000000,
+        "discount": 15,
+        "quantity": 9,
+        "category_id": 8,
+        "image": "https://nhatminhlaptop.com/Upload/Editor/2024/6/19/dellinspiron-6477.jpg",
+        "gallery": [
+            "http://laptopminhman.com/upload/news/dell-inspiron-5620-gia-re-6956.jpg",
+            "https://nhatminhlaptop.com/Upload/FileAttach/dellinspiron74451-2024-09-04-13-36-32.jpg",
+            "https://i.ytimg.com/vi/6XD_z5M9oFQ/maxresdefault.jpg"
+        ]
+    },
+    {
+        "name": "Laptop giá rẻ Acer Aspire 3 Ryzen 3 8GB 256GB",
+        "description": "Laptop giá rẻ Acer Aspire 3 Ryzen 3 8GB 256GB với thiết kế hiện đại, cấu hình mạnh mẽ, đáp ứng hoàn hảo nhu cầu làm việc và giải trí của bạn.",
+        "price": 36000000,
+        "discount": null,
+        "quantity": 47,
+        "category_id": 8,
+        "image": "https://phucanhcdn.com/media/product/55505_laptop_acer_aspire_a515_58p_35eu_nx_khjsv_006_0_thumb.jpg",
+        "gallery": [
+            "https://storage.googleapis.com/teko-gae.appspot.com/media/image/2023/6/15/66cc5104-fb8c-48fa-950b-338b3cc83c14/image.jpeg",
+            "https://product.hstatic.net/200000722513/product/gearvn-laptop-acer-aspire-5-a514-56p-562p-1_76cf92a2313a49ad90d0b532ef631fea_1024x1024.png",
+            "https://phucanhcdn.com/media/product/54060_laptop_acer_aspire_gaming_a515_58m_56yx_nx_kq8sv_005_thumb123.jpg"
+        ]
+    },
+    {
+        "name": "Laptop phổ thông Acer Aspire 3 Ryzen 3 8GB 256GB",
+        "description": "Laptop phổ thông Acer Aspire 3 Ryzen 3 8GB 256GB với thiết kế hiện đại, cấu hình mạnh mẽ, đáp ứng hoàn hảo nhu cầu làm việc và giải trí của bạn.",
+        "price": 71000000,
+        "discount": null,
+        "quantity": 43,
+        "category_id": 8,
+        "image": "https://www.acervietnam.com.vn/wp-content/uploads/2023/08/Acer-Gaming-Aspire-5-2023-Bao-Boi-Gaming-Than-Ky-Laptop-Gaming-Pho-Thong-RTX-2050-15-20-Trieu-KV-1.webp",
+        "gallery": [
+            "https://www.acervietnam.com.vn/wp-content/uploads/2025/07/Bao-Hanh-VIP-3S1-2025-Acer-Viet-Nam.webp",
+            "https://storage.googleapis.com/teko-gae.appspot.com/media/image/2023/11/29/7ed95bd2-3750-481e-b41a-9528a6e74556/mua-laptop-acer-17-inch.jpg",
+            "https://www.acervietnam.com.vn/wp-content/uploads/2025/06/Chinh-Sach-Bao-Hanh-VIP-2-Nam-3S1-Acer-Viet-Nam-Website.webp"
+        ]
+    },
+    {
+        "name": "Laptop phổ thông ASUS Vivobook Go Celeron 4GB 128GB",
+        "description": "Laptop phổ thông ASUS Vivobook Go Celeron 4GB 128GB với thiết kế hiện đại, cấu hình mạnh mẽ, đáp ứng hoàn hảo nhu cầu làm việc và giải trí của bạn.",
+        "price": 62000000,
+        "discount": 20,
+        "quantity": 9,
+        "category_id": 8,
+        "image": "https://phongvu.vn/cong-nghe/wp-content/uploads/2025/02/laptop-asus-vivobook-1024x569.jpg",
+        "gallery": [
+            "https://photo.znews.vn/w1250/Uploaded/wyhktpu/2022_08_19/Thumb_2.jpg",
+            "https://cdn.hoanghamobile.vn/Uploads/2025/10/28/laptop-asus-vivobook-go-15-e1504fa-bq1150w-3.jpg;watermark=w;format=webp",
+            "https://cdn2.fptshop.com.vn/unsafe/1920x0/filters:format(webp):quality(75)/danh_gia_asus_vivobook_15x_oled_5d1a5f35e2.png"
+        ]
+    },
+    {
+        "name": "Laptop giá rẻ ASUS Vivobook Go Dưới 10 triệu",
+        "description": "Laptop giá rẻ ASUS Vivobook Go Dưới 10 triệu với thiết kế hiện đại, cấu hình mạnh mẽ, đáp ứng hoàn hảo nhu cầu làm việc và giải trí của bạn.",
+        "price": 67000000,
+        "discount": 20,
+        "quantity": 8,
+        "category_id": 8,
+        "image": "https://newtechshop.vn/wp-content/uploads/2025/12/mua-laptop-asus-vivobook-chinh-hang-tai-newtechshop.webp",
+        "gallery": [
+            "https://phucanhcdn.com/media/product/54693_13.jpg",
+            "https://phucanhcdn.com/media/product/53677_laptop_asus_vivobook_15_x1504va_nj025w_thumb1.jpg",
+            "https://khoavang.vn/resources/cache/600xx1/category/asus-vivobook/asus-vivobook-gia-1688610743.webp"
+        ]
+    },
+    {
+        "name": "Laptop giá rẻ Lenovo IdeaPad 1 Celeron 4GB 128GB",
+        "description": "Laptop giá rẻ Lenovo IdeaPad 1 Celeron 4GB 128GB với thiết kế hiện đại, cấu hình mạnh mẽ, đáp ứng hoàn hảo nhu cầu làm việc và giải trí của bạn.",
+        "price": 65000000,
+        "discount": 5,
+        "quantity": 35,
+        "category_id": 8,
+        "image": "https://laptopminhman.com/upload/hinhthem/26461526e6b31aed43a2-5480.jpg",
+        "gallery": [
+            "https://cdn2.cellphones.com.vn/insecure/rs:fill:1028:1028/enlarge:1/q:100/plain/https://cellphones.com.vn/media/catalog/product/t/e/text_ng_n_10__6_15.png",
+            "https://product.hstatic.net/200000722513/product/ideapad_752d971b304249c38262fedef62f8b8b.png",
+            "https://cdn2.cellphones.com.vn/insecure/rs:fill:1028:1028/enlarge:1/q:100/plain/https://cellphones.com.vn/media/catalog/product/t/e/text_ng_n_12__5_169_1.png"
+        ]
+    },
+    {
+        "name": "Laptop giá rẻ ASUS Vivobook Go Core i3 8GB 256GB",
+        "description": "Laptop giá rẻ ASUS Vivobook Go Core i3 8GB 256GB với thiết kế hiện đại, cấu hình mạnh mẽ, đáp ứng hoàn hảo nhu cầu làm việc và giải trí của bạn.",
+        "price": 79000000,
+        "discount": 15,
+        "quantity": 42,
+        "category_id": 8,
+        "image": "https://phongvu.vn/cong-nghe/wp-content/uploads/2025/03/top-laptop-asus-vivobook-2.jpg",
+        "gallery": [
+            "http://laptopminhman.com/upload/news/asus-vivobook-x407-n5000-6133.png",
+            "https://khoavang.vn/resources/cache/600xx1/category/asus-vivobook/asus-vivobook-1688610743.webp",
+            "https://nhatminhlaptop.com/upload/products/2024-07-08-14-29-16/840g8i5recoveredrecoveredrecovered-1.jpg?v=1"
+        ]
+    },
+    {
+        "name": "Laptop giá rẻ Dell Inspiron 3520 Pentium 8GB 256GB",
+        "description": "Laptop giá rẻ Dell Inspiron 3520 Pentium 8GB 256GB với thiết kế hiện đại, cấu hình mạnh mẽ, đáp ứng hoàn hảo nhu cầu làm việc và giải trí của bạn.",
+        "price": 9000000,
+        "discount": null,
+        "quantity": 18,
+        "category_id": 8,
+        "image": "https://nhatminhlaptop.com/Upload/Editor/2024/6/19/dellinspiron-6477.jpg",
+        "gallery": [
+            "http://laptopminhman.com/upload/news/dell-inspiron-5620-gia-re-6956.jpg",
+            "https://nhatminhlaptop.com/Upload/FileAttach/dellinspiron74451-2024-09-04-13-36-32.jpg",
+            "https://i.ytimg.com/vi/6XD_z5M9oFQ/maxresdefault.jpg"
+        ]
+    }
+]

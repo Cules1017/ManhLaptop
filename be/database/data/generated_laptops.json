@@ -1,0 +1,422 @@
+[
+    {
+        "name": "Máy tính xách tay Gaming ASUS ROG Strix RTX 4070 240Hz",
+        "description": "Máy tính xách tay Gaming ASUS ROG Strix RTX 4070 240Hz với thiết kế hiện đại, cấu hình mạnh mẽ, đáp ứng hoàn hảo nhu cầu làm việc và giải trí của bạn.",
+        "price": 49000000,
+        "discount": 20,
+        "quantity": 11,
+        "category_id": 1,
+        "image": "https://baochau.vn/media/product/7056_23156_laptop_gaming_dell_g15_5530_g15_5530_i7h165w11gr4050_1.jpg",
+        "gallery": [
+            "https://www.hp.com/content/dam/sites/omen/worldwide/laptops/2025-omen-max16-intel/VIDEO-DESKTOP.png",
+            "https://kythuatvtech.com/wp-content/uploads/2023/04/ASUS-ROG-chuyen-cho-game-thu.webp",
+            "https://phucanhcdn.com/media/product/56357_laptop_acer_predator_helios_neo_16_phn16_71_74qr_7.jpg"
+        ]
+    },
+    {
+        "name": "Laptop Gaming HP Omen RTX 3060 144Hz",
+        "description": "Laptop Gaming HP Omen RTX 3060 144Hz với thiết kế hiện đại, cấu hình mạnh mẽ, đáp ứng hoàn hảo nhu cầu làm việc và giải trí của bạn.",
+        "price": 35000000,
+        "discount": null,
+        "quantity": 35,
+        "category_id": 1,
+        "image": "https://m.media-amazon.com/images/I/713iwpnTH5L._AC_.jpg",
+        "gallery": [
+            "https://microless.com/cdn/products/689cdaa7eaa7b7b6845ee27c8524881f-hi.jpg",
+            "https://pisces.bbystatic.com/image2/BestBuy_US/images/products/6409/6409146cv17d.jpg",
+            "https://microless.com/cdn/products/356c3127d18dbbb416669e8b06755f0f-hi.jpg"
+        ]
+    },
+    {
+        "name": "Laptop Gaming ASUS ROG Strix RTX 3060 144Hz",
+        "description": "Laptop Gaming ASUS ROG Strix RTX 3060 144Hz với thiết kế hiện đại, cấu hình mạnh mẽ, đáp ứng hoàn hảo nhu cầu làm việc và giải trí của bạn.",
+        "price": 14000000,
+        "discount": null,
+        "quantity": 34,
+        "category_id": 1,
+        "image": "https://laptopmedia.com/wp-content/uploads/2023/01/3-4-e1672813305688.jpg",
+        "gallery": [
+            "https://dlcdnwebimgs.asus.com/gain/3E9D33EB-0540-43DC-9B86-633E1C3ADBD5",
+            "https://m.media-amazon.com/images/I/71zuMSjwDfL._AC_SL1500_.jpg",
+            "https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhyLUc9ctBucuaEq4SyrnNGU2gCEM0YpYUd0EiuRDKtNJlVlP8D_58xk9h_aFIwvlmA7JrL1veCjihKWEGwCwnIwwOkK6sT7vy72KjoxxhEVrE4411QeY9XLQHegZacwjjXafNaraGQxO6ssrcVYI-_oUSneWqDR5BUPh1q1ITdS3tBMX4TgXB3gUib/s2000/ASUS-ROG-STRIX-G16.png"
+        ]
+    },
+    {
+        "name": "Máy tính xách tay Gaming MSI Katana RTX 3060 144Hz",
+        "description": "Máy tính xách tay Gaming MSI Katana RTX 3060 144Hz với thiết kế hiện đại, cấu hình mạnh mẽ, đáp ứng hoàn hảo nhu cầu làm việc và giải trí của bạn.",
+        "price": 31000000,
+        "discount": 15,
+        "quantity": 14,
+        "category_id": 1,
+        "image": "https://baochau.vn/media/product/7056_23156_laptop_gaming_dell_g15_5530_g15_5530_i7h165w11gr4050_1.jpg",
+        "gallery": [
+            "https://www.hp.com/content/dam/sites/omen/worldwide/laptops/2025-omen-max16-intel/VIDEO-DESKTOP.png",
+            "https://phucanhcdn.com/media/product/56357_laptop_acer_predator_helios_neo_16_phn16_71_74qr_7.jpg",
+            "https://www.hp.com/content/dam/sites/omen/worldwide/laptops/2025-omen-max16-intel/hero-desktop.png"
+        ]
+    },
+    {
+        "name": "Laptop Gaming Acer Nitro 5 RTX 3060 144Hz",
+        "description": "Laptop Gaming Acer Nitro 5 RTX 3060 144Hz với thiết kế hiện đại, cấu hình mạnh mẽ, đáp ứng hoàn hảo nhu cầu làm việc và giải trí của bạn.",
+        "price": 26000000,
+        "discount": null,
+        "quantity": 14,
+        "category_id": 1,
+        "image": "https://m.media-amazon.com/images/I/71ctRE34RuL._AC_.jpg",
+        "gallery": [
+            "https://www.notebookcheck.net/fileadmin/Notebooks/News/_nc3/Acer_Nitro_5_India_Launch.png",
+            "https://m.media-amazon.com/images/I/71Hiqi140OL._AC_.jpg",
+            "https://m.media-amazon.com/images/I/71F-Wcriq4L._AC_SL1500_.jpg"
+        ]
+    },
+    {
+        "name": "Máy tính xách tay Gaming MSI Katana RTX 3050Ti",
+        "description": "Máy tính xách tay Gaming MSI Katana RTX 3050Ti với thiết kế hiện đại, cấu hình mạnh mẽ, đáp ứng hoàn hảo nhu cầu làm việc và giải trí của bạn.",
+        "price": 25000000,
+        "discount": 10,
+        "quantity": 41,
+        "category_id": 1,
+        "image": "https://baochau.vn/media/product/7056_23156_laptop_gaming_dell_g15_5530_g15_5530_i7h165w11gr4050_1.jpg",
+        "gallery": [
+            "https://www.hp.com/content/dam/sites/omen/worldwide/laptops/2025-omen-max16-intel/VIDEO-DESKTOP.png",
+            "https://phucanhcdn.com/media/product/56357_laptop_acer_predator_helios_neo_16_phn16_71_74qr_7.jpg",
+            "https://www.hp.com/content/dam/sites/omen/worldwide/laptops/2025-omen-max16-intel/hero-desktop.png"
+        ]
+    },
+    {
+        "name": "Laptop Doanh nhân Dell Latitude Core i5 16GB 256GB",
+        "description": "Laptop Doanh nhân Dell Latitude Core i5 16GB 256GB với thiết kế hiện đại, cấu hình mạnh mẽ, đáp ứng hoàn hảo nhu cầu làm việc và giải trí của bạn.",
+        "price": 11000000,
+        "discount": 20,
+        "quantity": 5,
+        "category_id": 2,
+        "image": "https://www.phucanh.vn/media/news/2910_LATITUDE-5450.jpg",
+        "gallery": [
+            "https://cdn.mediamart.vn/images/news/dell-latitude-9420-phien-bn-hoan-ho-laptop-doanh-nhan-40_7a6df043.jpg",
+            "https://nhatminhlaptop.com/upload/news/2024/06/18/16/52/24/delllatitudetainhatminhlaptop-1.jpg",
+            "https://saolaptop.vn/wp-content/uploads/2023/02/Dell-Latitude-3410-i5-10310u-ram-16gb-ssd-256-gb-fhd-1-1024x710.jpg"
+        ]
+    },
+    {
+        "name": "Laptop cao cấp HP EliteBook Siêu nhẹ 1kg",
+        "description": "Laptop cao cấp HP EliteBook Siêu nhẹ 1kg với thiết kế hiện đại, cấu hình mạnh mẽ, đáp ứng hoàn hảo nhu cầu làm việc và giải trí của bạn.",
+        "price": 47000000,
+        "discount": 10,
+        "quantity": 33,
+        "category_id": 2,
+        "image": "https://photo2.tinhte.vn/data/attachment-files/2025/01/8618260_dscf1637-54223803657-o.jpg",
+        "gallery": [
+            "https://techcare.vn/image/laptop-hp-elitebook-840-g10-jvebxop.jpg",
+            "https://hoangvucomputer.com/wp-content/uploads/2026/01/Laptop-HP-EliteBook-745-G6-–-Doanh-Nhan-Cao-Cap-Ben-Bi-Gon-Nhe-Hieu-Nang-On-Dinh-4.jpg",
+            "https://hoangvucomputer.com/wp-content/uploads/2026/01/Laptop-HP-EliteBook-745-G6-–-Doanh-Nhan-Cao-Cap-Ben-Bi-Gon-Nhe-Hieu-Nang-On-Dinh-0.jpg"
+        ]
+    },
+    {
+        "name": "Laptop Doanh nhân ThinkPad X1 Carbon Siêu nhẹ 1kg",
+        "description": "Laptop Doanh nhân ThinkPad X1 Carbon Siêu nhẹ 1kg với thiết kế hiện đại, cấu hình mạnh mẽ, đáp ứng hoàn hảo nhu cầu làm việc và giải trí của bạn.",
+        "price": 36000000,
+        "discount": 20,
+        "quantity": 36,
+        "category_id": 2,
+        "image": "https://cohotech.vn/wp-content/uploads/2024/03/Lenovo-ThinkPad-X1-Carbon-Gen-12-01-2048x1152.jpg",
+        "gallery": [
+            "https://nextgold.vn/wp-content/uploads/2024/12/Thinkpad-X1-Yoga-1.png",
+            "https://cohotech.vn/wp-content/uploads/2023/12/Screenshot-166.jpg",
+            "https://hungphatlaptop.com/wp-content/uploads/2023/07/Lenovo-ThinkPad-X1-Carbon-Gen-11-2023-Features-01.jpeg"
+        ]
+    },
+    {
+        "name": "Laptop cao cấp Dell Latitude M3 Pro 18GB 512GB",
+        "description": "Laptop cao cấp Dell Latitude M3 Pro 18GB 512GB với thiết kế hiện đại, cấu hình mạnh mẽ, đáp ứng hoàn hảo nhu cầu làm việc và giải trí của bạn.",
+        "price": 25000000,
+        "discount": 20,
+        "quantity": 7,
+        "category_id": 2,
+        "image": "https://down-vn.img.susercontent.com/file/vn-11134207-7r98o-lyga3lya6un543",
+        "gallery": [
+            "https://st5.tkcomputer.vn/uploads/dell_latitude_7410_2in1_4_1711109962.jpg",
+            "https://www.phucanh.vn/media/news/1809_dell-latitude-7340.jpg",
+            "https://down-vn.img.susercontent.com/file/vn-11134207-7ras8-m4zwpqa0jbiba2"
+        ]
+    },
+    {
+        "name": "Laptop cao cấp ThinkPad X1 Carbon M3 Pro 18GB 512GB",
+        "description": "Laptop cao cấp ThinkPad X1 Carbon M3 Pro 18GB 512GB với thiết kế hiện đại, cấu hình mạnh mẽ, đáp ứng hoàn hảo nhu cầu làm việc và giải trí của bạn.",
+        "price": 40000000,
+        "discount": 10,
+        "quantity": 39,
+        "category_id": 2,
+        "image": "https://down-vn.img.susercontent.com/file/vn-11134207-7ras8-mdtpo92z07u9b6",
+        "gallery": [
+            "https://st2.tkcomputer.vn/uploads/z7098289974769_ab05127233355682e6911ee1398f5c62_1760094342.jpg",
+            "https://st1.tkcomputer.vn/uploads/z6715096928440_c1bd48755e4aeceb5a52a0cb0298027d_1750256618.jpg",
+            "https://nextgold.vn/wp-content/uploads/2025/02/ThinkPad-X1-Carbon-Gen-11-1.png"
+        ]
+    },
+    {
+        "name": "Laptop Doanh nhân Dell Latitude Core i7 16GB 512GB",
+        "description": "Laptop Doanh nhân Dell Latitude Core i7 16GB 512GB với thiết kế hiện đại, cấu hình mạnh mẽ, đáp ứng hoàn hảo nhu cầu làm việc và giải trí của bạn.",
+        "price": 29000000,
+        "discount": 10,
+        "quantity": 19,
+        "category_id": 2,
+        "image": "https://www.phucanh.vn/media/news/2910_LATITUDE-5450.jpg",
+        "gallery": [
+            "https://www.computerchicuong.vn/content_congnghe2nd/upload/Image/TIn tuc/Dell Latitude 7490 mạnh mẽ%2C giá dễ thở_vitinhchicuong.png",
+            "https://nhatminhlaptop.com/upload/news/2024/06/18/16/52/24/delllatitudetainhatminhlaptop-1.jpg",
+            "https://anphat.com.vn/media/product/46298_laptop_dell_latitude_5440_42lt544002__2_.jpg"
+        ]
+    },
+    {
+        "name": "Laptop văn phòng HP Pavilion Core i5 8GB 512GB",
+        "description": "Laptop văn phòng HP Pavilion Core i5 8GB 512GB với thiết kế hiện đại, cấu hình mạnh mẽ, đáp ứng hoàn hảo nhu cầu làm việc và giải trí của bạn.",
+        "price": 35000000,
+        "discount": 15,
+        "quantity": 30,
+        "category_id": 3,
+        "image": "https://down-vn.img.susercontent.com/file/6662b70b72071b9ff3aa8ea9eee7a172",
+        "gallery": [
+            "https://phongvu.vn/cong-nghe/wp-content/uploads/2024/10/Cac-hang-va-dong-laptop-van-phong-6.jpg",
+            "https://i.ytimg.com/vi/eTJXGdITAEQ/maxresdefault.jpg",
+            "https://www.phucanh.vn/media/news/1610_top-laptop-hp-notebook-pavilion-15-7.jpg"
+        ]
+    },
+    {
+        "name": "Máy tính xách tay Lenovo IdeaPad Màn hình 15.6 FHD",
+        "description": "Máy tính xách tay Lenovo IdeaPad Màn hình 15.6 FHD với thiết kế hiện đại, cấu hình mạnh mẽ, đáp ứng hoàn hảo nhu cầu làm việc và giải trí của bạn.",
+        "price": 47000000,
+        "discount": null,
+        "quantity": 29,
+        "category_id": 3,
+        "image": "https://duyhungcomputer.vn/media/product/2332-laptop-lenovo-thinkpad-e14-gen-5-i5-13420h-16gb-512gb-ssd-14-inch-wuxga-win11-black-vo-nhom-2y-01.jpg",
+        "gallery": [
+            "https://cdn1615.cdn4s4.io.vn/media/products/may-tinh-xach-tay/lenovo/thinkpad/e14-gen7/thinkpad e14 gen 7 -1.webp",
+            "https://cdn1615.cdn4s4.io.vn/media/products/may-tinh-xach-tay/lenovo/v14-gen-4/v14 g4 2.webp",
+            "https://duyhungcomputer.vn/media/product/2390-aptop-lenovo-v14-g4-iru-01.jpg"
+        ]
+    },
+    {
+        "name": "Laptop sinh viên ASUS Vivobook Ryzen 7 16GB 512GB",
+        "description": "Laptop sinh viên ASUS Vivobook Ryzen 7 16GB 512GB với thiết kế hiện đại, cấu hình mạnh mẽ, đáp ứng hoàn hảo nhu cầu làm việc và giải trí của bạn.",
+        "price": 50000000,
+        "discount": 10,
+        "quantity": 19,
+        "category_id": 3,
+        "image": "https://kenh14cdn.com/203336854389633024/2024/9/11/photo-3-17260253041261666017013-1726052676491-1726052676700145872158.jpg",
+        "gallery": [
+            "https://phongvu.vn/cong-nghe/wp-content/uploads/2024/07/ASUS-Vivobook-14-OLED-A1405VA-KM095W-5-1344x840.jpg",
+            "https://photo2.tinhte.vn/data/attachment-files/2023/08/7232755_laptop_mong_nhe_gia_re_3.jpg",
+            "https://phongvu.vn/cong-nghe/wp-content/uploads/2024/07/ASUS-Vivobook-14-OLED-A1405VA-KM095W-1-1344x840.jpg"
+        ]
+    },
+    {
+        "name": "Laptop văn phòng Dell Vostro Màn hình 15.6 FHD",
+        "description": "Laptop văn phòng Dell Vostro Màn hình 15.6 FHD với thiết kế hiện đại, cấu hình mạnh mẽ, đáp ứng hoàn hảo nhu cầu làm việc và giải trí của bạn.",
+        "price": 46000000,
+        "discount": null,
+        "quantity": 42,
+        "category_id": 3,
+        "image": "https://bizweb.dktcdn.net/100/372/934/files/laptopnew-dell-vostro-5502-gioi-thieu.jpg?v=1631095440154",
+        "gallery": [
+            "https://sondat.vn/upload/data/images/2022/laptop/dell-vostro-van-phong.png",
+            "https://bizweb.dktcdn.net/thumb/1024x1024/100/330/208/files/untitled-f49a3f53-1d43-4735-8f3f-1602132a611c.png?v=1686539632221",
+            "https://laptop3mien.vn/wp-content/uploads/2023/11/Dell-Vostro-14-3000-Laptop-van-phong-tam-trung.jpg"
+        ]
+    },
+    {
+        "name": "Máy tính xách tay Lenovo IdeaPad Core i5 8GB 512GB",
+        "description": "Máy tính xách tay Lenovo IdeaPad Core i5 8GB 512GB với thiết kế hiện đại, cấu hình mạnh mẽ, đáp ứng hoàn hảo nhu cầu làm việc và giải trí của bạn.",
+        "price": 44000000,
+        "discount": 10,
+        "quantity": 31,
+        "category_id": 3,
+        "image": "https://duyhungcomputer.vn/media/product/2332-laptop-lenovo-thinkpad-e14-gen-5-i5-13420h-16gb-512gb-ssd-14-inch-wuxga-win11-black-vo-nhom-2y-01.jpg",
+        "gallery": [
+            "https://cdn1615.cdn4s4.io.vn/media/products/may-tinh-xach-tay/lenovo/thinkpad/e14-gen7/thinkpad e14 gen 7 -1.webp",
+            "https://duyhungcomputer.vn/media/product/2274-laptop-lenovo-v15-g4-iru-01.jpg",
+            "https://cdn1615.cdn4s4.io.vn/media/products/may-tinh-xach-tay/lenovo/v14-gen-4/v14 g4 2.webp"
+        ]
+    },
+    {
+        "name": "Laptop văn phòng HP Pavilion Ryzen 7 16GB 512GB",
+        "description": "Laptop văn phòng HP Pavilion Ryzen 7 16GB 512GB với thiết kế hiện đại, cấu hình mạnh mẽ, đáp ứng hoàn hảo nhu cầu làm việc và giải trí của bạn.",
+        "price": 37000000,
+        "discount": 20,
+        "quantity": 21,
+        "category_id": 3,
+        "image": "https://down-vn.img.susercontent.com/file/6662b70b72071b9ff3aa8ea9eee7a172",
+        "gallery": [
+            "https://nama.vn/public/img/upload/images_resized/news/2025/original/laptop-hp-paviliob-gia-re.jpg",
+            "https://phongvu.vn/cong-nghe/wp-content/uploads/2024/10/Cac-hang-va-dong-laptop-van-phong-6.jpg",
+            "https://i.ytimg.com/vi/eTJXGdITAEQ/maxresdefault.jpg"
+        ]
+    },
+    {
+        "name": "Ultrabook Dell XPS 13 Core i7 16GB 1TB",
+        "description": "Ultrabook Dell XPS 13 Core i7 16GB 1TB với thiết kế hiện đại, cấu hình mạnh mẽ, đáp ứng hoàn hảo nhu cầu làm việc và giải trí của bạn.",
+        "price": 40000000,
+        "discount": 20,
+        "quantity": 37,
+        "category_id": 4,
+        "image": "https://static1.pocketlintimages.com/wordpress/wp-content/uploads/wm/2025/01/dell-xps-13-intel-core-ultra-series-2-header-image.jpg",
+        "gallery": [
+            "http://benson.ph/cdn/shop/products/xs9320nt-xnb-shot-5-1-sl_17736ffe-5f73-4b36-ac0c-c7797b735c91.jpg?v=1674270544",
+            "https://i.dansdeals.com/wp-content/uploads/2024/11/29122552/ps.png",
+            "https://i.dell.com/sites/csimages/Video_Imagery/all/laptop-xps-13-9345-pdp-design-dynamic-thumb-sl.png"
+        ]
+    },
+    {
+        "name": "Laptop mỏng nhẹ MacBook Air M1 Pin 20 tiếng",
+        "description": "Laptop mỏng nhẹ MacBook Air M1 Pin 20 tiếng với thiết kế hiện đại, cấu hình mạnh mẽ, đáp ứng hoàn hảo nhu cầu làm việc và giải trí của bạn.",
+        "price": 38000000,
+        "discount": 5,
+        "quantity": 30,
+        "category_id": 4,
+        "image": "https://teratron.tech/wp-content/uploads/2023/10/Apple-MacBook-Air-2022-M2-laptop-mong-nhe.jpg",
+        "gallery": [
+            "https://cdn-media.sforum.vn/storage/app/media/ace chu tu/day-la-5-chiec-laptop-tot-nhat-dau-nam-2025-/day-la-5-chiec-laptop-tot-nhat-dau-nam-2025-8.jpg",
+            "https://cdn2.fptshop.com.vn/unsafe/Uploads/images/tin-tuc/154725/Originals/macbook-air-m1-1.jpg",
+            "https://down-vn.img.susercontent.com/file/vn-11134207-7ras8-m2dbw8dlgt6c41"
+        ]
+    },
+    {
+        "name": "Ultrabook LG Gram 14 Core i7 16GB 1TB",
+        "description": "Ultrabook LG Gram 14 Core i7 16GB 1TB với thiết kế hiện đại, cấu hình mạnh mẽ, đáp ứng hoàn hảo nhu cầu làm việc và giải trí của bạn.",
+        "price": 19000000,
+        "discount": 15,
+        "quantity": 35,
+        "category_id": 4,
+        "image": "https://media.us.lg.com/transform/ecomm-PDPGallery-1100x730/58f0a492-9d8e-4550-82dc-71e9ab70b82c/14Z90S-G-ADB8U1_gallery_01_5000x5000?io=transform:fill,width:1536",
+        "gallery": [
+            "https://media.us.lg.com/transform/ecomm-PDPGallery-1100x730/e25243f8-5dfc-4933-bf31-01eaddb4f11c/14Z90RS-K_gallery_1_Consumer-Reports_3000x3000",
+            "https://www.notebookcheck.net/fileadmin/Notebooks/LG/Gram_14Z90Q/4_zu_3_gram.jpg",
+            "https://m.media-amazon.com/images/I/71SjVi8KwdL._AC_.jpg"
+        ]
+    },
+    {
+        "name": "Ultrabook Dell XPS 13 Pin 20 tiếng",
+        "description": "Ultrabook Dell XPS 13 Pin 20 tiếng với thiết kế hiện đại, cấu hình mạnh mẽ, đáp ứng hoàn hảo nhu cầu làm việc và giải trí của bạn.",
+        "price": 24000000,
+        "discount": null,
+        "quantity": 46,
+        "category_id": 4,
+        "image": "https://linhkienlaptop.net/images/2023/07/dac-diem-va-thong-so-cua-pin-laptop-dell-xps-13-9320.jpg",
+        "gallery": [
+            "https://file.hstatic.net/1000079076/file/pin_dell_xps_13_9360_46369700ff824fa18b3a413c4c6c81bf.jpg",
+            "https://static1.xdaimages.com/wordpress/wp-content/uploads/wm/2024/05/dell-xps-13-3.jpg",
+            "https://static1.pocketlintimages.com/wordpress/wp-content/uploads/wm/2025/01/dell-xps-13-intel-core-ultra-series-2-header-image.jpg"
+        ]
+    },
+    {
+        "name": "Laptop mỏng nhẹ ASUS Zenbook M2 8GB 256GB",
+        "description": "Laptop mỏng nhẹ ASUS Zenbook M2 8GB 256GB với thiết kế hiện đại, cấu hình mạnh mẽ, đáp ứng hoàn hảo nhu cầu làm việc và giải trí của bạn.",
+        "price": 10000000,
+        "discount": 15,
+        "quantity": 36,
+        "category_id": 4,
+        "image": "https://file.hstatic.net/1000233206/article/h1_2930af1868db45298558c5b5a32d9010.jpg",
+        "gallery": [
+            "https://hoanghamobile.com/tin-tuc/wp-content/uploads/2023/05/asus-tung-laptop-oled-mong-nhe-nhat-the-gioi-gia-tu-40-trieu-dong-3.png",
+            "https://mmosite.vn/wp-content/uploads/2023/05/UX5304-KV-1.jpg",
+            "https://lookaside.fbsbx.com/lookaside/crawler/media/?media_id=695892349333943"
+        ]
+    },
+    {
+        "name": "Laptop mỏng nhẹ MacBook Air M2 Pin 20 tiếng",
+        "description": "Laptop mỏng nhẹ MacBook Air M2 Pin 20 tiếng với thiết kế hiện đại, cấu hình mạnh mẽ, đáp ứng hoàn hảo nhu cầu làm việc và giải trí của bạn.",
+        "price": 33000000,
+        "discount": 10,
+        "quantity": 9,
+        "category_id": 4,
+        "image": "https://cdn.tgdd.vn/Products/Images/44/282847/Slider/vi-vn-apple-macbook-air-m2-2022-10-core-gpu-02.jpg",
+        "gallery": [
+            "https://cdn-media.sforum.vn/storage/app/media/ace chu tu/day-la-5-chiec-laptop-tot-nhat-dau-nam-2025-/day-la-5-chiec-laptop-tot-nhat-dau-nam-2025-8.jpg",
+            "https://netphukien.com/wp-content/uploads/z4685659738531_8d928626e96669b57a76232701bccdd8.jpg",
+            "https://cdn2.fptshop.com.vn/unsafe/Uploads/images/tin-tuc/185603/Originals/laptop-mong-nhe-dang-mua-nhat-2024-02.jpeg"
+        ]
+    },
+    {
+        "name": "Laptop cảm ứng HP Spectre x360 Kèm bút cảm ứng",
+        "description": "Laptop cảm ứng HP Spectre x360 Kèm bút cảm ứng với thiết kế hiện đại, cấu hình mạnh mẽ, đáp ứng hoàn hảo nhu cầu làm việc và giải trí của bạn.",
+        "price": 49000000,
+        "discount": 20,
+        "quantity": 34,
+        "category_id": 5,
+        "image": "https://nhatminhlaptop.com/Upload/Editor/2023/7/11/hpspectrei74k-5494.jpg",
+        "gallery": [
+            "https://newcdn.onshop.asia/images/laptoptaithinh/laptop-hp-cam-ung-7.jpg",
+            "https://laptopnsc.vn/upload/image/HP/Spectre i7-11 Blue/HP Spectre 15 i7-11 Blue(13).JPG",
+            "https://sualaptopvungtau.com/wp-content/uploads/2023/10/Laptop-HP-Spectre-x360-13.jpg"
+        ]
+    },
+    {
+        "name": "Laptop 2-in-1 ASUS ROG Flow Z13 Kèm bút cảm ứng",
+        "description": "Laptop 2-in-1 ASUS ROG Flow Z13 Kèm bút cảm ứng với thiết kế hiện đại, cấu hình mạnh mẽ, đáp ứng hoàn hảo nhu cầu làm việc và giải trí của bạn.",
+        "price": 14000000,
+        "discount": 10,
+        "quantity": 11,
+        "category_id": 5,
+        "image": "https://m.media-amazon.com/images/I/71oIJjlYwCL._AC_.jpg",
+        "gallery": [
+            "https://b2c-contenthub.com/wp-content/uploads/2025/01/asus-rog-flow-z13.jpg?quality=50&amp;strip=all&amp;w=1200",
+            "https://dlcdnwebimgs.asus.com/files/media/2523515c-4a57-41a5-9004-67490621ae51/v1/images/large/1x/connectivity.jpg",
+            "https://m.media-amazon.com/images/I/71xZUkl5dyL._AC_.jpg"
+        ]
+    },
+    {
+        "name": "Laptop cảm ứng Microsoft Surface Pro 9 Core i7 16GB 512GB",
+        "description": "Laptop cảm ứng Microsoft Surface Pro 9 Core i7 16GB 512GB với thiết kế hiện đại, cấu hình mạnh mẽ, đáp ứng hoàn hảo nhu cầu làm việc và giải trí của bạn.",
+        "price": 39000000,
+        "discount": 20,
+        "quantity": 11,
+        "category_id": 5,
+        "image": "https://chiasetech.com/wp-content/uploads/2025/01/Surface-Laptop-7.jpg",
+        "gallery": [
+            "https://down-vn.img.susercontent.com/file/vn-11134201-23020-je69glg363nvf5",
+            "https://sualaptopbaria.vn/wp-content/uploads/2023/10/Microsoft-Surface-Go.jpg",
+            "https://tienich24h.info/wp-content/uploads/2022/03/4.png"
+        ]
+    },
+    {
+        "name": "Laptop cảm ứng Dell XPS 13 2-in-1 OLED 4K",
+        "description": "Laptop cảm ứng Dell XPS 13 2-in-1 OLED 4K với thiết kế hiện đại, cấu hình mạnh mẽ, đáp ứng hoàn hảo nhu cầu làm việc và giải trí của bạn.",
+        "price": 48000000,
+        "discount": 5,
+        "quantity": 31,
+        "category_id": 5,
+        "image": "https://down-vn.img.susercontent.com/file/sg-11134201-7rdwv-mc1put5zhird2f",
+        "gallery": [
+            "https://laptoptuanminh.vn/upload_images/images/z4674773945156_af8185d2d23ce9bc98d88cd4c765b224.jpg",
+            "https://st1.tkcomputer.vn/uploads/dell_xps_7590_1709388514.jpg",
+            "https://saolaptop.vn/wp-content/uploads/2022/11/Dell-XPS-13-9350-Intel-Core-i7-2048x1420.jpg"
+        ]
+    },
+    {
+        "name": "Laptop cảm ứng Microsoft Surface Pro 9 Kèm bút cảm ứng",
+        "description": "Laptop cảm ứng Microsoft Surface Pro 9 Kèm bút cảm ứng với thiết kế hiện đại, cấu hình mạnh mẽ, đáp ứng hoàn hảo nhu cầu làm việc và giải trí của bạn.",
+        "price": 45000000,
+        "discount": 5,
+        "quantity": 35,
+        "category_id": 5,
+        "image": "https://cohotech.vn/wp-content/uploads/2024/10/Microsoft-Surface-Pro-11-1-1200x675.png",
+        "gallery": [
+            "https://newtechshop.vn/wp-content/uploads/2024/05/Surface-laptop-5-3.jpg",
+            "https://down-vn.img.susercontent.com/file/vn-11134201-23020-je69glg363nvf5",
+            "https://sualaptopvungtau.com/wp-content/uploads/2023/10/Microsoft-Surface-Pro-6.jpg"
+        ]
+    },
+    {
+        "name": "Laptop cảm ứng Dell XPS 13 2-in-1 Kèm bút cảm ứng",
+        "description": "Laptop cảm ứng Dell XPS 13 2-in-1 Kèm bút cảm ứng với thiết kế hiện đại, cấu hình mạnh mẽ, đáp ứng hoàn hảo nhu cầu làm việc và giải trí của bạn.",
+        "price": 38000000,
+        "discount": 5,
+        "quantity": 8,
+        "category_id": 5,
+        "image": "https://down-vn.img.susercontent.com/file/sg-11134201-7rdwv-mc1put5zhird2f",
+        "gallery": [
+            "https://laptoptuanminh.vn/upload_images/images/z4674773945156_af8185d2d23ce9bc98d88cd4c765b224.jpg",
+            "https://st1.tkcomputer.vn/uploads/dell_xps_7590_1709388514.jpg",
+            "https://saolaptop.vn/wp-content/uploads/2022/11/Dell-XPS-13-9350-Intel-Core-i7-2048x1420.jpg"
+        ]
+    }
+]
