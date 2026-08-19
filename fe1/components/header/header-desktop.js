@@ -137,12 +137,7 @@ export default function HeaderDesktop({ user }) {
               <p>Yêu thích</p>
             </a>
           </Link>
-          <Link href="/contact">
-            <a className="nav-buttons-contact">
-              <FaClipboardList size={20} />
-              <p>Liên hệ</p>
-            </a>
-          </Link>
+
           {!user && (
             <Link href="/user/login">
               <a className="nav-buttons-signin">
