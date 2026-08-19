@@ -363,54 +363,7 @@ const Page = () => {
                 </Card>
               </Grid>
 
-              {/* Partner Logos Section */}
-              <Grid xs={12} md={4}>
-                <Typography variant="h6">Partner Logos</Typography>
-                <Typography variant="body2" color="text.secondary">
-                  Danh sách logo của các đối tác, thương hiệu nổi bật.
-                </Typography>
-              </Grid>
-              <Grid xs={12} md={8}>
-                <Card sx={{ p: 3 }}>
-                  <Grid container spacing={2}>
-                    {partnerLogos.map((logo, index) => (
-                      <Grid key={logo.id} xs={6} sm={4} md={3}>
-                        <Box sx={{ position: 'relative', border: '1px solid #eee', p: 1, borderRadius: 1, textAlign: 'center' }}>
-                          <Box sx={{ height: 80, display: 'flex', alignItems: 'center', justifyContent: 'center', mb: 1 }}>
-                            {logo.url ? (
-                               <img src={`http://localhost:8000${logo.url}`} alt="partner logo" style={{ maxWidth: '100%', maxHeight: '100%' }} />
-                            ) : (
-                              <Typography variant="caption">Upload logo</Typography>
-                            )}
-                          </Box>
-                          <input 
-                              type="file" 
-                              accept="image/*" 
-                              onChange={(e) => handleLogoUpload(logo.id, e.target.files[0])} 
-                              style={{ fontSize: '10px', width: '100%' }}
-                          />
-                          <IconButton 
-                            size="small" 
-                            color="error" 
-                            sx={{ position: 'absolute', top: 0, right: 0 }}
-                            onClick={() => handleRemoveLogo(logo.id)}
-                          >
-                            <DeleteIcon fontSize="small" />
-                          </IconButton>
-                        </Box>
-                      </Grid>
-                    ))}
-                    <Grid xs={6} sm={4} md={3}>
-                       <Box 
-                          sx={{ height: '100%', minHeight: 120, border: '1px dashed #ccc', borderRadius: 1, display: 'flex', alignItems: 'center', justifyContent: 'center', cursor: 'pointer' }}
-                          onClick={handleAddLogo}
-                        >
-                          <AddIcon color="action" />
-                       </Box>
-                    </Grid>
-                  </Grid>
-                </Card>
-              </Grid>
+
 
             </Grid>
           </Stack>
