@@ -9,7 +9,7 @@ import SuccessPopup from '../components/SuccessPopup';
 import { useCart } from '../context/CartContext';
 import { getFinalPrice, formatVND } from '../utils/price';
 
-const SHIPPING_FEE = 30000; // VND - phí vận chuyển cố định
+const SHIPPING_FEE = 0; // Miễn phí vận chuyển
 
 /** Bật lại khi muốn mở VNPay trên storefront. */
 const VNPAY_ACTIVE = false;
@@ -452,7 +452,8 @@ export default function Checkout() {
               <div className="checkout-shipping-method">
                 <input type="radio" id="shipping1" name="shipping" defaultChecked readOnly />
                 <label htmlFor="shipping1" className="checkout-radio-label">
-                  Giao tiết kiệm ({formatVND(SHIPPING_FEE)})
+                  <FiTruck size={20} color="#e53935" />
+                  Giao tiêu chuẩn ({SHIPPING_FEE === 0 ? 'Miễn phí' : formatVND(SHIPPING_FEE)})
                 </label>
               </div>
               <div className="checkout-shipping-product">
@@ -560,7 +561,7 @@ export default function Checkout() {
               </div>
               <div className="checkout-summary-row">
                 <span>Phí vận chuyển</span>
-                <span>{formatVND(SHIPPING_FEE)}</span>
+                <span>{SHIPPING_FEE === 0 ? 'Miễn phí' : formatVND(SHIPPING_FEE)}</span>
               </div>
               
               <div className="checkout-coupon-section">

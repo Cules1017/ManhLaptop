@@ -65,15 +65,6 @@ export const items = [
     label: 'Coupons'
   },
   {
-    href: '/customer-care',
-    icon: (
-      <SvgIcon>
-        <DocumentTextIcon />
-      </SvgIcon>
-    ),
-    label: 'Customer Care'
-  },
-  {
     href: '/live-chat',
     icon: (
       <SvgIcon>

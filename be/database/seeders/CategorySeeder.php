@@ -15,33 +15,39 @@ class CategorySeeder extends Seeder
         $categories = [
             [
                 'name' => 'Gaming Laptops',
-                'created_at' => now(),
-                'updated_at' => now()
             ],
             [
                 'name' => 'Business Laptops',
-                'created_at' => now(),
-                'updated_at' => now()
             ],
             [
                 'name' => 'Student Laptops',
-                'created_at' => now(),
-                'updated_at' => now()
             ],
             [
                 'name' => 'Ultrabooks',
-                'created_at' => now(),
-                'updated_at' => now()
             ],
             [
                 'name' => '2-in-1 Laptops',
-                'created_at' => now(),
-                'updated_at' => now()
+            ],
+            // 3 danh mục mới thêm cho file generate_laptops_more.py
+            [
+                'name' => 'MacBooks',
+            ],
+            [
+                'name' => 'Workstation Laptops',
+            ],
+            [
+                'name' => 'Budget Laptops',
             ]
         ];
 
         foreach ($categories as $category) {
-            \App\Models\Category::create($category);
+            \App\Models\Category::firstOrCreate(
+                ['name' => $category['name']],
+                [
+                    'created_at' => now(),
+                    'updated_at' => now()
+                ]
+            );
         }
     }
 }

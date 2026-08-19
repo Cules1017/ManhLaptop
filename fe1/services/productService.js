@@ -19,6 +19,7 @@ export const productService = {
     if (params.sort_by) queryParams.append('sort_by', params.sort_by);
     if (params.sort_order) queryParams.append('sort_order', params.sort_order);
     if (params.per_page) queryParams.append('per_page', params.per_page);
+    if (params.page) queryParams.append('page', params.page);
 
     return apiRequest(`${API_URL}/products?${queryParams.toString()}`, {
       headers: {
