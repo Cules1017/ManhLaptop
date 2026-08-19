@@ -34,33 +34,29 @@ class OrderController extends Controller
 
             if ($request->coupon_code) {
                 $coupon = \App\Models\Coupon::where('code', $request->coupon_code)->lockForUpdate()->first();
-                if ($coupon && $coupon->is_active) {
-                    $now = \Carbon\Carbon::now();
-                    $isValid = true;
-                    if ($coupon->valid_from && $now->lt($coupon->valid_from)) $isValid = false;
-                    if ($coupon->valid_until && $now->gt($coupon->valid_until)) $isValid = false;
-                    if ($coupon->usage_limit !== null && $coupon->used_count >= $coupon->usage_limit) $isValid = false;
-                    if ($request->total_price < $coupon->min_order_value) $isValid = false;
-
-                    if ($isValid) {
-                        $couponId = $coupon->id;
-                        if ($coupon->type === 'fixed') {
-                            $discountAmount = $coupon->value;
-                        } else {
-                            $discountAmount = ($request->total_price * $coupon->value) / 100;
-                            if ($coupon->max_discount !== null && $discountAmount > $coupon->max_discount) {
-                                $discountAmount = $coupon->max_discount;
-                            }
-                        }
-                        if ($discountAmount > $request->total_price) {
-                            $discountAmount = $request->total_price;
-                        }
-                        $finalTotal = $request->total_price - $discountAmount;
-                        
-                        $coupon->used_count += 1;
-                        $coupon->save();
-                    }
+                if (!$coupon) {
+                    DB::rollBack();
+                    return response()->json([
+                        'status' => false,
+                        'message' => 'Mã giảm giá không tồn tại.'
+                    ], 400);
                 }
+                
+                $eligibility = $coupon->checkUserEligibility($user, $request->total_price);
+                if (!$eligibility['status']) {
+                    DB::rollBack();
+                    return response()->json([
+                        'status' => false,
+                        'message' => $eligibility['message']
+                    ], 400);
+                }
+
+                $couponId = $coupon->id;
+                $discountAmount = $coupon->calculateDiscount($request->total_price);
+                $finalTotal = $request->total_price - $discountAmount;
+                
+                $coupon->used_count += 1;
+                $coupon->save();
             }
 
             $order = Order::create([
@@ -80,6 +76,13 @@ class OrderController extends Controller
                     'quantity' => $item['quantity'],
                     'price' => $item['price'],
                 ]);
+
+                // Trừ số lượng tồn kho
+                $product = \App\Models\Product::find($item['product_id']);
+                if ($product) {
+                    $product->quantity = max(0, $product->quantity - $item['quantity']);
+                    $product->save();
+                }
             }
             // Xóa cart của user sau khi đặt hàng
             CartItem::where('user_id', $user->id)->delete();

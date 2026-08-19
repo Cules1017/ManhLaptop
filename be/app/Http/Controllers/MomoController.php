@@ -30,13 +30,47 @@ class MomoController extends Controller
             'total_price' => 'required|numeric|min:0',
             'payment_method' => 'required|in:momo',
             'note' => 'nullable|string',
+            'coupon_code' => 'nullable|string',
         ]);
 
         DB::beginTransaction();
         try {
+            $couponId = null;
+            $discountAmount = 0;
+            $finalTotal = $request->total_price;
+
+            if ($request->coupon_code) {
+                $coupon = \App\Models\Coupon::where('code', $request->coupon_code)->lockForUpdate()->first();
+                if (!$coupon) {
+                    DB::rollBack();
+                    return response()->json([
+                        'status' => false,
+                        'message' => 'Mã giảm giá không tồn tại.'
+                    ], 400);
+                }
+                
+                $eligibility = $coupon->checkUserEligibility($user, $request->total_price);
+                if (!$eligibility['status']) {
+                    DB::rollBack();
+                    return response()->json([
+                        'status' => false,
+                        'message' => $eligibility['message']
+                    ], 400);
+                }
+
+                $couponId = $coupon->id;
+                $discountAmount = $coupon->calculateDiscount($request->total_price);
+                $finalTotal = $request->total_price - $discountAmount;
+                
+                $coupon->used_count += 1;
+                $coupon->save();
+            }
+
             $order = Order::create([
                 'user_id' => $user->id,
-                'total_price' => $request->total_price,
+                'total_price' => $finalTotal,
+                'coupon_id' => $couponId,
+                'discount_amount' => $discountAmount,
             ]);
             $order->payment_method = 'momo';
             $order->status = 'pending';
@@ -50,6 +84,13 @@ class MomoController extends Controller
                     'quantity' => $item['quantity'],
                     'price' => $item['price'],
                 ]);
+
+                // Trừ số lượng tồn kho
+                $product = \App\Models\Product::find($item['product_id']);
+                if ($product) {
+                    $product->quantity = max(0, $product->quantity - $item['quantity']);
+                    $product->save();
+                }
             }
 
             CartItem::where('user_id', $user->id)->delete();
