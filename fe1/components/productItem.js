@@ -22,10 +22,19 @@ export default function ProductItem({ id, name, rating, img_url, price, discount
   // ProductItem được dùng từ nhiều nơi với props khác nhau, nên tự build product-like object
   const product = { price, discount };
 
+  const getWishlistKey = () => {
+    try {
+      const user = JSON.parse(localStorage.getItem('user'));
+      return user && user.id ? `wishlist_${user.id}` : 'wishlist_guest';
+    } catch {
+      return 'wishlist_guest';
+    }
+  };
+
   useEffect(() => {
     if (typeof window === 'undefined') return;
     try {
-      const wishlist = JSON.parse(localStorage.getItem('wishlist') || '{"products": []}');
+      const wishlist = JSON.parse(localStorage.getItem(getWishlistKey()) || '{"products": []}');
       setIsWishlist(wishlist.products.includes(id));
     } catch {
       setIsWishlist(false);
@@ -38,9 +47,10 @@ export default function ProductItem({ id, name, rating, img_url, price, discount
       e.stopPropagation();
     }
     if (typeof window === 'undefined') return;
+    const key = getWishlistKey();
     let wishlist;
     try {
-      wishlist = JSON.parse(localStorage.getItem('wishlist') || '{"products": []}');
+      wishlist = JSON.parse(localStorage.getItem(key) || '{"products": []}');
     } catch {
       wishlist = { products: [] };
     }
@@ -48,7 +58,7 @@ export default function ProductItem({ id, name, rating, img_url, price, discount
     wishlist.products = inList
       ? wishlist.products.filter((pid) => pid !== id)
       : [...wishlist.products, id];
-    localStorage.setItem('wishlist', JSON.stringify(wishlist));
+    localStorage.setItem(key, JSON.stringify(wishlist));
     setIsWishlist(!inList);
     toast.success(inList ? 'Đã xoá khỏi danh sách yêu thích' : 'Đã thêm vào danh sách yêu thích', {
       position: 'top-center',

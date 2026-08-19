@@ -8,6 +8,7 @@ import { toast } from 'react-toastify';
 import SuccessPopup from '../components/SuccessPopup';
 import { useCart } from '../context/CartContext';
 import { getFinalPrice, formatVND } from '../utils/price';
+import { FiTruck } from 'react-icons/fi';
 
 const SHIPPING_FEE = 0; // Miễn phí vận chuyển
 

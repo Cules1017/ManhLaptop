@@ -20,7 +20,9 @@ export default function Wishlist() {
       }
       let wishlist = { products: [] };
       try {
-        wishlist = JSON.parse(localStorage.getItem('wishlist') || '{"products": []}');
+        const user = JSON.parse(localStorage.getItem('user'));
+        const key = user && user.id ? `wishlist_${user.id}` : 'wishlist_guest';
+        wishlist = JSON.parse(localStorage.getItem(key) || '{"products": []}');
       } catch {
         wishlist = { products: [] };
       }
