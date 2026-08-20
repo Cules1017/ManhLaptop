@@ -8,7 +8,7 @@ class LocationController extends Controller
 {
     public function provinces()
     {
-        $response = Http::timeout(15)->get('https://provinces.open-api.vn/api/p/');
+        $response = Http::timeout(15)->get('https://provinces.open-api.vn/api/');
 
         if (!$response->successful()) {
             return response()->json([
@@ -32,7 +32,7 @@ class LocationController extends Controller
 
     public function districts(int $provinceCode)
     {
-        $response = Http::timeout(15)->get("https://provinces.open-api.vn/api/p/{$provinceCode}?depth=2");
+        $response = Http::timeout(15)->get("https://provinces.open-api.vn/api/?depth=2");
 
         if (!$response->successful()) {
             return response()->json([
@@ -41,7 +41,10 @@ class LocationController extends Controller
             ], 502);
         }
 
-        $districts = collect($response->json('districts') ?: [])->map(function ($item) {
+        $allProvinces = $response->json() ?: [];
+        $province = collect($allProvinces)->firstWhere('code', $provinceCode);
+        
+        $districts = collect($province['districts'] ?? [])->map(function ($item) {
             return [
                 'code' => $item['code'] ?? null,
                 'name' => $item['name'] ?? '',
